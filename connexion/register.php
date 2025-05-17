@@ -14,6 +14,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", 
         }
     
         $query = "INSERT INTO users (fullname, email, password) VALUES ('$fullname', '$email', '$password')";
+
         if (mysqli_query($link, $query)) {
             $success = "Félicitations $fullname, votre compte a bien été créé :), vous pouvez maintenant vous connecter";
         } else {

@@ -39,7 +39,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
         
         .hero {
             text-align: center;
-            padding: 30px 0;
+            padding: 3px 0; 
             background-image: url('https://musees-nationaux-alpesmaritimes.fr/chagall/sites/chagall/files/styles/w1920_extra_wide/public/2023-09/Atelier_duBeau_texture_%C3%A9tudiants_1920x960px.jpg?itok=ViyGvrM4');
             background-size: cover;
             background-position: center;
@@ -231,7 +231,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
         <div class="hero-content container">
             <h1 class="cursive-text">Flow Media</h1>
             <p>Cultivez votre curiosité, explorez votre culture</p>
-            <div class="hero-cta-text">Prêt à explorer la culture autrement ?</div>
+            <div class="hero-cta-text">Prêt à explorez la culture autrement ?</div>
             <a href="/connexion/register.php" class="btn btn-large">Créer un compte gratuitement</a>
             <a href="#activities" class="btn btn-large btn-white">Découvrir les activités</a>
         </div>
