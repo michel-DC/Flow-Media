@@ -36,6 +36,10 @@ require_once '../../includes/auth.php';
         section {
             padding: 5rem 0;
         }
+
+        .fin {
+            margin-bottom: 40px;
+        }
         
         h1, h2, h3 {
             font-weight: 600;
@@ -171,36 +175,36 @@ require_once '../../includes/auth.php';
         </div>
     </section>
 
-    <section class="container">
+    <section class="container fin">
         <h2>Notre équipe</h2>
         <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
             <div class="team-member">
                 <div class="image-placeholder" style="border-radius: 50%;">
                     [Photo membre équipe]
                 </div>
-                <h3>Alexandre</h3>
-                <p>Directeur artistique</p>
-            </div>
-            <div class="team-member">
-                <div class="image-placeholder" style="border-radius: 50%;">
-                    [Photo membre équipe]
-                </div>
-                <h3>Camille</h3>
-                <p>Responsable éditoriale</p>
-            </div>
-            <div class="team-member">
-                <div class="image-placeholder" style="border-radius: 50%;">
-                    [Photo membre équipe]
-                </div>
-                <h3>Mehdi</h3>
+                <h3>Michel christ</h3>
                 <p>Développeur web</p>
             </div>
             <div class="team-member">
                 <div class="image-placeholder" style="border-radius: 50%;">
                     [Photo membre équipe]
                 </div>
-                <h3>Léa</h3>
-                <p>Community manager</p>
+                <h3>Michel christ</h3>
+                <p>Développeur web</p>
+            </div>
+            <div class="team-member">
+                <div class="image-placeholder" style="border-radius: 50%;">
+                    [Photo membre équipe]
+                </div>
+                <h3>Michel christ</h3>
+                <p>Développeur web</p>
+            </div>
+            <div class="team-member">
+                <div class="image-placeholder" style="border-radius: 50%;">
+                    [Photo membre équipe]
+                </div>
+                <h3>Michel christ</h3>
+                <p>Développeur web</p>
             </div>
         </div>
     </section>

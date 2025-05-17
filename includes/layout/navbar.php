@@ -12,7 +12,7 @@
                 <div class="nav-dropdown-content">
                     <a href="/pages/about"><i class="fas fa-question-circle"></i> Qui sommes-nous</a>
                     <a href="/pages/domaines-culturels"><i class="fas fa-landmark"></i> Domaines culturels</a>
-                    <a href="/pages/patenaires"><i class="fas fa-handshake"></i> Partenaires</a>
+                    <a href="/pages/partenaires"><i class="fas fa-handshake"></i> Partenaires</a>
                     <a href="/pages/contact"><i class="fas fa-envelope"></i> Nous contacter</a>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                     <a href="/pages/agenda"><i class="fas fa-calendar-alt"></i> Agenda</a>
                     <a href="/pages/activites"><i class="fas fa-landmark"></i> Activités</a>
                     <a href="/pages/podcast"><i class="fas fa-podcast"></i> Podcasts & interview</a>
-                    <a href="/pages/temoignages"><i class="fas fa-comment-alt"></i> Témoignages</a>
+                    <a href="/pages/temoignages"><i class="fas fa-comment-alt"></i> Témoignages & Avis</a>
                 </div>
             </div>
             

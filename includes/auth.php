@@ -35,4 +35,11 @@ if (strpos($chemin, 'devs.php') !== false && isset($_SESSION['role']) && $_SESSI
     header('Location: ../admin/dashboard.php?erreur=acces_interdit_admin');
     exit(); // La fonction exit() permet d'arrêter immédiatement l'exécution du script après la redirection pour éviter que le reste du code ne s'exécute inutilement
 }
+
+// Redirect to error.php when page not found (404)
+if (http_response_code() === 404) {
+    header('Location: ../error.php');
+    exit();
+}
+
 ?>
