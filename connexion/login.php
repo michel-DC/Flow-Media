@@ -26,7 +26,7 @@ if (isset($_POST['login_user'])) {
                 $_SESSION['fullname'] = $user['fullname'];
                 $_SESSION['user_id'] = $user['id'];
                 $success = "Vous êtes connecté en tant que $email, redirection en cours...";
-                header('Location: ../pages/activites');
+                header('Location: ../pages/user/profile.php');
                 exit();
             } else {
                 $error = "Mot de passe incorrect";
