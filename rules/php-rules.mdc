@@ -1,0 +1,12 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+for this project you will not use php object oriented, just web php, only if you need to fetch an api you can use it but you will add comment, so i will understand. 
+
+If you use web php difficult thing or function (you can), but you need to add a quick comment that will help me understand it. 
+
+For exemple for the database side i prefer you not using mysqli_real_escape_string, just use mysqli_fetch_assoc. 
+
+Good luck.

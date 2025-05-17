@@ -1,0 +1,1 @@
+// details d'une activité, avec une page dédié

@@ -1,0 +1,95 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Je développe la page d’accueil du site web de Flow Media, une agence de communication fictive créée dans le cadre de mon projet de première année de BUT MMI.
+Flow Media est mandatée par l’Association des Maires de France (AMF) pour promouvoir la culture auprès des jeunes de 15 à 25 ans.
+Le site a pour objectif de présenter notre agence, notre mission, notre travail culturel, et d’attirer les jeunes vers des activités culturelles accessibles, modernes et adaptées à leurs intérêts.
+
+Cette page d’accueil doit être claire, professionnelle et engageante, avec du contenu textuel de qualité et des visuels bien choisis. Je ne cherche pas une maquette graphique, mais bien une structure de contenu rédactionnel + indications d’images ou médias pertinents.
+
+🎯 Ce que je veux sur cette page :
+1. Hero section (bandeau d’intro en haut de page)
+Un titre accrocheur présentant Flow Media comme une agence dynamique et culturelle.
+
+Une phrase de mission claire : ex. "Nous connectons les jeunes à la culture locale."
+
+Un bouton d’appel à l’action : "Découvrir les activités" ou "Rejoindre la communauté".
+
+Une image ou illustration de jeunes en interaction avec la culture (dans un jardin, un musée, un lieu patrimonial, etc.).
+👉 À chercher : photo libre de droits de jeunes visitant un lieu culturel ou architectural moderne.
+
+2. Présentation de Flow Media
+Un texte court présentant qui nous sommes, notre rôle auprès de l’AMF, notre volonté de valoriser la culture auprès des jeunes.
+
+Ton neutre/pro : "Flow Media est une agence de communication portée par une équipe jeune et créative, au service de la culture et de l’accessibilité."
+
+Une photo d’équipe fictive ou créative, ou image d’agence en action.
+👉 À chercher : image d’équipe en réunion ou collaboration sur un projet.
+
+3. Nos domaines culturels
+Trois blocs :
+
+Architecture → avec un court texte sur l’impact culturel et visuel de l’architecture.
+
+Patrimoine → le lien aux racines, à l’histoire locale.
+
+Jardin & nature → pour reconnecter à l’environnement et au vivant.
+
+Chacun avec une image représentative.
+👉 À chercher : 3 photos illustrant chacun des thèmes (bâtiments, lieux patrimoniaux, jardins publics).
+
+4. Activités culturelles mises en avant
+Afficher les 3 à 4 prochaines activités à venir (titre, lieu, date, image).
+
+Brève description pour chaque.
+
+Bouton : Voir toutes les activités.
+
+👉 Ce bloc peut faire référence aux pages internes (activites.php, fiche_activite.php).
+
+5. Podcasts à la une
+2 podcasts récents disponibles sur YouTube (vignettes + lien d’écoute).
+
+Courte description ou citation tirée du podcast.
+
+👉 À chercher : image de podcast jeune/urbain ou une cover fictive.
+
+6. Pourquoi rejoindre la communauté ?
+Arguments simples pour inciter à l’inscription :
+
+Des contenus réservés (activités premium, podcasts exclusifs)
+
+Des codes promo culture
+
+Des recommandations personnalisées
+
+Bouton : Créer un compte gratuitement
+
+7. Témoignages
+2 ou 3 faux témoignages de jeunes ayant participé à une activité culturelle via Flow Media.
+
+Style très humain, naturel : prénom, ville, petit retour d’expérience.
+
+8. Partenaires
+Logos de partenaires institutionnels et culturels (ex : AMF, musées, mairies locales, etc.)
+
+👉 À chercher : logos publics ou fictifs, en style institutionnel.
+
+9. Pied de page (footer)
+Liens vers les pages : mentions légales, politique de confidentialité, cookies, contact.
+
+Réseaux sociaux fictifs ou icônes symboliques (Instagram, YouTube, etc.)
+
+🖼️ Types d’images à chercher (libres de droits) :
+Jeunes dans un musée, un jardin, ou un bâtiment ancien
+
+Groupes en train de découvrir un lieu culturel
+
+Icônes d’abonnement, contenu audio (podcasts), partenariats
+
+Vignettes YouTube ou illustrations podcast
+
+Ce contexte est centré sur le contenu, pas sur le design. L’IA doit donc m’aider à rédiger les textes de la page d’accueil, à structurer chaque section, et à me suggérer les images les plus pertinentes à intégrer.
+L’objectif est d’avoir une page d’accueil complète, claire, et adaptée à un public jeune, tout en restant institutionnel et crédible.

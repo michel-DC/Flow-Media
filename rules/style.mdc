@@ -1,0 +1,20 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Project Styling Context
+
+For the current stage of this project, the final design from the UI/UX designer is still pending. In the meantime, the styling must be clean, elegant, and modern — not outdated or basic.
+
+Temporary Styling Guidelines:
+Color Palette: Only use black (#000000) and white (#FFFFFF). No additional colors, shades, or gradients should be used for now.
+
+Design Quality: The style must feel polished and high-end — think of Apple’s design principles: clean, modern, minimal, and refined. It should look visually excellent, even with just two colors.
+
+Design System Inspiration: Strongly follow the philosophy and component styling of shadcn/ui — clean lines, utility-first approach, and a focus on user experience. However, ensure the final result looks beautiful and well-crafted, not just functional.
+
+Typography: Use "Space Grotesk" from Google Fonts as the only font throughout the entire project. Import and apply it consistently.
+
+This style should be easily replaceable once the designer provides the final theme, but must in the meantime reflect aesthetic excellence, not just minimalism.
+

@@ -1,0 +1,1 @@
+// politique de cookies et RGPD jsp quoi

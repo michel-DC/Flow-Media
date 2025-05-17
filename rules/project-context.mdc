@@ -1,0 +1,46 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Je suis étudiant en première année de BUT MMI. Dans le cadre d’un projet (SAE), je dois créer une agence de communication fictive chargée de réaliser la communication de l’AMF (Association des Maires de France). Notre objectif est de promouvoir la culture auprès des jeunes de 15 à 25 ans.
+
+Le thème choisi est : Architecture, patrimoine et jardins.
+
+Mon rôle dans l’équipe est d’être le développeur web. Je dois donc concevoir et réaliser le site internet de notre agence. Ce site présentera du contenu culturel, un agenda d’événements, des podcasts, et des activités. Il s’adresse aux jeunes et doit être moderne, dynamique, accessible, sécurisé, et responsive.
+
+Le site devra proposer plusieurs fonctionnalités pour les utilisateurs :
+
+Un espace membre avec inscription et connexion.
+
+Un agenda culturel avec fiches de spectacles (photos, descriptions, vidéos, interviews, podcasts).
+
+Une zone réservée aux abonnés avec des avantages, comme des activités premium, podcasts exclusifs ou codes promo.
+
+Un système d’avis et de critiques.
+
+Un affichage intelligent d’activités recommandées selon le lieu, l’âge et les centres d’intérêt de l’utilisateur.
+
+Un système d’abonnement avec trois niveaux : standard, silver et gold.
+
+Une section pour présenter les partenaires et sponsors.
+
+Le respect des règles RGPD, des cookies, et une bonne optimisation SEO.
+
+Je dois gérer l’ensemble de la base de données, les pages du site, l’interface utilisateur, et certaines logiques de filtrage et de recommandation.
+
+L’utilisateur pourra donc :
+
+Créer un compte.
+
+S’abonner à une offre.
+
+Consulter des activités culturelles.
+
+Réserver une activité.
+
+Écouter ou voir des podcasts.
+
+Donner son avis.
+
+Je souhaite que l’IA m’aide à concevoir, corriger, structurer ou améliorer ce site tout au long du développement.
