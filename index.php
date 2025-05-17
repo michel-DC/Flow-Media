@@ -259,7 +259,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
             </svg>
         </div>
         <div class="nav-links">
-            <!-- <a href="#accueil"><i class="fas fa-home"></i></a> -->
+            <a href="#accueil" style="display: flex; align-items: center;"><i class="fas fa-home"></i></a>
             
             <div class="nav-dropdown">
                 <button class="nav-dropbtn">Découvrir <i class="fa fa-caret-down"></i></button>
@@ -267,14 +267,16 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                     <a href="/pages/about"><i class="fas fa-question-circle"></i> Qui sommes-nous</a>
                     <a href="/pages/domaines-culturels"><i class="fas fa-landmark"></i> Domaines culturels</a>
                     <a href="/pages/patenaires"><i class="fas fa-handshake"></i> Partenaires</a>
+                    <a href="/pages/contact"><i class="fas fa-envelope"></i> Nous contacter</a>
                 </div>
             </div>
             
             <div class="nav-dropdown">
                 <button class="nav-dropbtn">Expériences <i class="fa fa-caret-down"></i></button>
                 <div class="nav-dropdown-content">
-                    <a href="/pages/activites"><i class="fas fa-calendar-alt"></i> Activités</a>
-                    <a href="/pages/podcast"><i class="fas fa-podcast"></i> Podcasts</a>
+                    <a href="/pages/agenda"><i class="fas fa-calendar-alt"></i> Agenda</a>
+                    <a href="/pages/activites"><i class="fas fa-landmark"></i> Activités</a>
+                    <a href="/pages/podcast"><i class="fas fa-podcast"></i> Podcasts & interview</a>
                     <a href="/pages/temoignages"><i class="fas fa-comment-alt"></i> Témoignages</a>
                 </div>
             </div>
