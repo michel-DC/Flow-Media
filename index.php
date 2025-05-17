@@ -1,3 +1,10 @@
+<?php
+require_once 'includes/auth.php'; 
+
+$link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist", "micheldjoumessi_pair-prog");
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -9,33 +16,69 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cookie&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+        
+        :root {
+            --soft-black: #1a1a1a;
+            --white: #f9f9f9;
+        }
+        
         body {
-            font-family: "Poppins", sans-serif;
+            font-family: "Space Grotesk", sans-serif;
             margin: 0;
             padding: 0;
-            color: #000;
-            background: #fff;
+            color: var(--soft-black);
+            background: var(--white);
             line-height: 1.6;
         }
+        
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            padding: 0.50rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--soft-black);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
+        
         .hero {
             text-align: center;
             padding: 30px 0;
-            border-bottom: 1px solid #000;
             background-image: url('https://musees-nationaux-alpesmaritimes.fr/chagall/sites/chagall/files/styles/w1920_extra_wide/public/2023-09/Atelier_duBeau_texture_%C3%A9tudiants_1920x960px.jpg?itok=ViyGvrM4');
             background-size: cover;
             background-position: center;
-            color: #fff;
+            color: var(--white);
             position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+        
         .hero::before {
             content: "";
             position: absolute;
@@ -45,96 +88,120 @@
             height: 100%;
             background: rgba(0,0,0,0.5);
         }
+        
         .hero-content {
             position: relative;
             z-index: 2;
             max-width: 800px;
+            padding: 2rem;
         }
+        
         .cursive-text {
             font-family: "Cookie", cursive;
             font-weight: 400;
             font-style: normal;
             font-size: 10rem;
-            margin-bottom: 10px;
+            margin-bottom: 1rem;
         }
+        
         .hero-content p {
             font-size: 1.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 2rem;
         }
+        
         .hero-cta-text {
             font-size: 2.5rem;
             font-weight: 700;
-            margin-top: 40px;
-            margin-bottom: 20px;
+            margin: 2.5rem 0;
         }
+        
         .btn {
             display: inline-block;
-            padding: 10px 20px; /* Decreased padding */
-            background: #000;
-            color: #fff;
+            padding: 12px 28px;
+            background: var(--soft-black);
+            color: var(--white);
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 50px;
             font-weight: 500;
-            margin-top: 20px;
+            margin: 1rem 0.5rem;
             transition: all 0.3s ease;
-            margin-right: 10px;
+            border: 2px solid var(--soft-black);
         }
-        .btn:last-child {
-             margin-right: 0;
-        }
+        
         .btn:hover {
-            background: #333;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
+        
         .btn-large {
-            padding: 12px 24px; /* Decreased padding */
-            font-size: 1rem; /* Decreased font size */
-            font-weight: 700;
+            padding: 15px 32px;
+            font-size: 1.1rem;
         }
+        
         .btn-white {
-            background: #fff;
-            color: #000;
-            border: 1px solid #000; /* Added border for visibility */
+            background: var(--white);
+            color: var(--soft-black);
         }
+        
         .btn-white:hover {
-            background: #eee; /* Lighter hover effect for white button */
-            color: #000;
-            transform: translateY(-2px);
+            background: var(--soft-black);
+            color: var(--white);
         }
-
+        
         section {
-            padding: 60px 0;
-            border-bottom: 1px solid #000;
+            padding: 5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
         }
+        
         section h2 {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 3rem;
             font-size: 2.5rem;
         }
+
+        #domains .image-placeholder {
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        #domains .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.3s ease;
+        }
+
+        #domains .card:hover img {
+            transform: scale(1.05);
+        }
+        
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
+        
         .card {
-            border: 1px solid #000;
-            padding: 20px;
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 1.5rem;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
+            background: var(--white);
+            border-radius: 8px;
         }
+        
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .card h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-        .card p {
-            flex-grow: 1;
-        }
+        
         .image-placeholder {
             background: #f0f0f0;
             height: 200px;
@@ -146,276 +213,151 @@
             color: #666;
             text-align: center;
         }
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .activity-card {
-            border: 1px solid #000;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-        .activity-card h3 {
-             margin-top: 0;
-             margin-bottom: 5px;
-             font-size: 1.3rem;
-        }
-        .activity-date {
-            font-weight: bold;
-            color: #555;
-            margin-bottom: 10px;
-            font-size: 1rem;
-        }
-        .activity-card p {
-            flex-grow: 1;
-        }
-        .podcast-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .podcast-card {
-            border: 1px solid #000;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        .podcast-card h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-        .podcast-card p {
-            font-style: italic;
-            margin-bottom: 20px;
-            flex-grow: 1;
-        }
-        .testimonials {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin: 30px 0;
-        }
-        .testimonial {
-            padding: 20px;
-            border: 1px solid #000;
-            font-style: italic;
-            display: flex;
-            flex-direction: column;
-        }
-        .testimonial p:first-of-type {
-            flex-grow: 1;
-        }
-        .testimonial-author {
-            font-weight: bold;
-            font-style: normal;
-            margin-top: 10px;
-            text-align: right;
-        }
-        .partners {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            margin: 30px 0;
-        }
-        .partner-logo {
-            max-width: 150px;
-            height: 80px;
-            background: #f0f0f0;
-            border: 1px solid #ccc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-        footer {
-            padding: 40px 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: center;
-        }
-        footer > div:last-child {
-            text-align: right;
-        }
-        .footer-links {
-            display: flex;
-            gap: 15px;
-            justify-content: flex-end;
-        }
-        .footer-links a {
-            color: #000;
-            text-decoration: none;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .social-icons a {
-            color: #000;
-            font-size: 1.5rem;
-        }
 
-        .nav-toggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            background: #000;
-            color: #fff;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        .img-placeholder img {
+            width: 100px;
+            height: 100px
         }
-        .nav-sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 60px;
-            height: 100vh;
-            background: #f0f0f0;
-            z-index: 100;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 100px;
-            display: none;
-        }
-        .nav-sidebar a {
-            margin: 15px 0;
-            color: #000;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-        .nav-sidebar a:hover {
-            transform: scale(1.2);
-        }
-        .nav-fullscreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(8px);
-            z-index: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-        }
-        .nav-fullscreen.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .nav-fullscreen-content {
-            text-align: left;
-        }
-        .nav-fullscreen-content a {
-            display: block;
-            color: #fff;
-            font-size: 2rem;
-            margin: 20px 0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .nav-fullscreen-content a:hover {
-            transform: translateX(10px);
-            color: #ccc;
-        }
-        .close-nav {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
+        
         @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 2.5rem;
+            .navbar {
+                flex-direction: column;
+                padding: 1rem;
             }
+            
+            .nav-links {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .cursive-text {
+                font-size: 5rem;
+            }
+            
             .hero-content p {
                 font-size: 1.2rem;
             }
+            
             .hero-cta-text {
                 font-size: 1.8rem;
             }
-            section h2 {
-                font-size: 2rem;
-            }
-            footer {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            footer > div:last-child {
-                text-align: center;
-                margin-top: 20px;
-            }
-            .footer-links {
-                justify-content: center;
-            }
-            .social-icons {
-                 justify-content: center;
-            }
-            /* Adjust button spacing on small screens */
-            .hero-content .btn {
-                margin-right: 0;
-                margin-bottom: 10px;
-                display: block; /* Stack buttons vertically */
+            
+            .btn {
+                display: block;
+                margin: 0.5rem auto;
+                width: 80%;
             }
         }
     </style>
 </head>
 <body>
-    <button class="nav-toggle" id="navToggle">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div class="nav-fullscreen" id="navFullscreen">
-        <div class="nav-fullscreen-content">
-            <a href="#>Accueil</a>
-            <a href="/pages/about">Qui sommes-nous</a>
-            <a href="/pages/domaines-culturels">Nos domaines culturels</a>
-            <a href="/pages/activites">Activités à venir</a>
-            <a href="/pages/podcast">Nos podcasts</a>
-            <a href="/pages/avis">Témoignages</a>
-            <a href="/pages/partenaires">Nos partenaires</a>
-            <a href="/pages/contact">Contact</a>
-            <a href="/connexion/login.php">Me connecter</a>
+    <nav class="navbar">
+        <div class="logo">
+            <svg width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 8C16 12.4183 12.4183 16 8 16C3.58172 16 0 12.4183 0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8ZM9.25 3.75C9.25 4.44036 8.69036 5 8 5C7.30964 5 6.75 4.44036 6.75 3.75C6.75 3.05964 7.30964 2.5 8 2.5C8.69036 2.5 9.25 3.05964 9.25 3.75ZM12 8H9.41901L11.2047 13H9.081L8 9.97321L6.91901 13H4.79528L6.581 8H4V6H12V8Z" fill="#000000"/>
+            </svg>
         </div>
-    </div>
+        <div class="nav-links">
+            <!-- <a href="#accueil"><i class="fas fa-home"></i></a> -->
+            
+            <div class="nav-dropdown">
+                <button class="nav-dropbtn">Découvrir <i class="fa fa-caret-down"></i></button>
+                <div class="nav-dropdown-content">
+                    <a href="/pages/about"><i class="fas fa-question-circle"></i> Qui sommes-nous</a>
+                    <a href="/pages/domaines-culturels"><i class="fas fa-landmark"></i> Domaines culturels</a>
+                    <a href="/pages/patenaires"><i class="fas fa-handshake"></i> Partenaires</a>
+                </div>
+            </div>
+            
+            <div class="nav-dropdown">
+                <button class="nav-dropbtn">Expériences <i class="fa fa-caret-down"></i></button>
+                <div class="nav-dropdown-content">
+                    <a href="/pages/activites"><i class="fas fa-calendar-alt"></i> Activités</a>
+                    <a href="/pages/podcast"><i class="fas fa-podcast"></i> Podcasts</a>
+                    <a href="/pages/temoignages"><i class="fas fa-comment-alt"></i> Témoignages</a>
+                </div>
+            </div>
+            
+            <?php if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] == 'user'): ?>
+            <div class="nav-dropdown">
+                <button class="nav-dropbtn"><i class="fas fa-user-alt"></i> <i class="fa fa-caret-down"></i></button>
+                <div class="nav-dropdown-content">
+                    <a href="/connexion/login.php">Mon profil</a>
+                    <a href="/connexion/register.php">Mes réservations</a>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <?php if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true): ?>
+                <div class="nav-dropdown">
+                <button class="nav-dropbtn"><i class="fas fa-user-alt"></i> <i class="fa fa-caret-down"></i></button>
+                <div class="nav-dropdown-content">
+                    <a href="/connexion/login.php">Me connecter</a>
+                    <a href="/connexion/register.php">M'inscrire</a>
+                </div>
+            </div>
+            <?php endif; ?>
+        </div>
+        
+        <style>
+            .nav-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            
+            .nav-dropbtn {
+                background-color: transparent;
+                color: var(--soft-black);
+                padding: 12px 16px;
+                font-size: inherit;
+                font-family: inherit;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            
+            .nav-dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: var(--white);
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                border-radius: 4px;
+                right: 0;
+            }
+            
+            .nav-dropdown-content a {
+                color: var(--soft-black);
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+                transition: background-color 0.3s ease;
+            }
+            
+            .nav-dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+            
+            .nav-dropdown:hover .nav-dropdown-content {
+                display: block;
+            }
+            
+            .nav-dropdown:hover .nav-dropbtn {
+                opacity: 0.8;
+            }
+        </style>
+    </nav>
 
     <header class="hero" id="accueil">
         <div class="hero-content container">
             <h1 class="cursive-text">Flow Media</h1>
             <p>Cultivez votre curiosité, explorez votre culture</p>
             <div class="hero-cta-text">Prêt à explorer la culture autrement ?</div>
-            <!-- Applied btn-large to both buttons and btn-white to the second one -->
             <a href="/connexion/register.php" class="btn btn-large">Créer un compte gratuitement</a>
             <a href="#activities" class="btn btn-large btn-white">Découvrir les activités</a>
         </div>
@@ -439,21 +381,21 @@
         <div class="grid">
             <div class="card">
                 <div class="image-placeholder">
-                    [Photo d'architecture contemporaine]
+                    <img class src="https://www.district-immo.com/wp-content/uploads/2023/04/Immeuble-haussmannien-shutterstock.png" alt="">
                 </div>
                 <h3>Architecture</h3>
                 <p>Découvrez l'impact culturel et visuel de l'architecture qui façonne nos villes. Des bâtiments emblématiques aux structures innovantes, explorez les espaces qui racontent notre société et son évolution.</p>
             </div>
             <div class="card">
                 <div class="image-placeholder">
-                    [Photo de lieu patrimonial]
+                    <img src="https://media.lesechos.com/api/v1/images/view/65095a3f3880a20fca650e2f/contenu_article/image.jpg" alt="">
                 </div>
                 <h3>Patrimoine</h3>
                 <p>Plongez dans l'histoire vivante de votre région à travers ses monuments, traditions et savoir-faire. Le patrimoine n'est pas figé dans le passé, il dialogue constamment avec notre présent et inspire notre futur.</p>
             </div>
             <div class="card">
                 <div class="image-placeholder">
-                    [Photo de jardin public ou espace naturel]
+                    <img src="https://www.stiga.com/media/contentmanager/content/symetrie_jardin.jpg" alt="">
                 </div>
                 <h3>Jardin & nature</h3>
                 <p>Reconnectez avec l'environnement et le vivant à travers les jardins historiques, parcs urbains et espaces verts. Découvrez comment la nature s'intègre à notre patrimoine culturel et architectural.</p>
@@ -539,15 +481,15 @@
         <div class="testimonials">
             <div class="testimonial">
                 <p>"La visite nocturne des monuments illuminés a complètement changé ma vision de l'architecture de ma propre ville. Je ne regarderai plus jamais ces bâtiments de la même façon."</p>
-                <p class="testimonial-author">Léa, 19 ans, Lyon</p>
+                <p class="testimonial-author"><b>Léa, 19 ans, Lyon</b></p>
             </div>
             <div class="testimonial">
                 <p>"L'atelier de cyanotype dans le jardin botanique était à la fois un moment de connexion avec la nature et une découverte technique fascinante. Je ne pensais pas que le patrimoine pouvait être aussi vivant et inspirant."</p>
-                <p class="testimonial-author">Maxime, 22 ans, Bordeaux</p>
+                <p class="testimonial-author"><b>Maxime, 22 ans, Bordeaux</b></p>
             </div>
             <div class="testimonial">
                 <p>"Grâce aux podcasts de Flow Media, j'ai découvert des aspects de la culture urbaine que je côtoyais tous les jours sans les remarquer. J'ai maintenant un regard beaucoup plus attentif sur mon environnement."</p>
-                <p class="testimonial-author">Chloé, 17 ans, Nantes</p>
+                <p class="testimonial-author"><b>Chloé, 17 ans, Nantes</b></p>
             </div>
         </div>
     </section>
@@ -583,18 +525,13 @@
     </footer>
 
     <script>
-        const navToggle = document.getElementById('navToggle');
-        const navFullscreen = document.getElementById('navFullscreen');
-
-        // Toggle the 'active' class on navFullscreen when navToggle is clicked
-        navToggle.addEventListener('click', () => {
-            navFullscreen.classList.toggle('active');
-        });
-
-        // Close the fullscreen nav when a link inside it is clicked
-        document.querySelectorAll('.nav-fullscreen-content a').forEach(link => {
-            link.addEventListener('click', () => {
-                navFullscreen.classList.remove('active');
+        // Simple script for smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
