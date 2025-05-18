@@ -1,7 +1,4 @@
 <?php
-
-// modif ce fichier pour add la feature for changer the name of a ville to coordonnées. 
-
 session_start();
 
 if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true) {
@@ -16,10 +13,45 @@ $query = "SELECT * FROM users WHERE id='$user_id'";
 $result = mysqli_query($link, $query);
 $user = mysqli_fetch_assoc($result);
 
+// Get user interests
+$interests_query = "SELECT i.id, i.nom FROM interets i 
+                   JOIN user_interet ui ON i.id = ui.interet_id 
+                   WHERE ui.user_id = '$user_id'";
+$interests_result = mysqli_query($link, $interests_query);
+$user_interests = [];
+while ($row = mysqli_fetch_assoc($interests_result)) {
+    $user_interests[$row['id']] = $row['nom'];
+}
+
+// Get all available interests
+$all_interests_query = "SELECT id, nom FROM interets";
+$all_interests_result = mysqli_query($link, $all_interests_query);
+$all_interests = [];
+while ($row = mysqli_fetch_assoc($all_interests_result)) {
+    $all_interests[$row['id']] = $row['nom'];
+}
+
 if (isset($_POST['update_profile'])) {
     $fullname = mysqli_real_escape_string($link, $_POST['fullname']);
     $email = mysqli_real_escape_string($link, $_POST['email']);
     $ville = mysqli_real_escape_string($link, $_POST['ville']);
+
+    // Handle interests update
+    // Delete all existing interests for this user first
+    $delete_query = "DELETE FROM user_interet WHERE user_id = '$user_id'";
+    mysqli_query($link, $delete_query);
+    
+    // If interests are selected, insert them
+    if (isset($_POST['interests']) && !empty($_POST['interests'])) {
+        $selected_interests = $_POST['interests'];
+        
+        foreach ($selected_interests as $interest_id) {
+            $interest_id = mysqli_real_escape_string($link, $interest_id);
+            $insert_query = "INSERT INTO user_interet (user_id, interet_id) VALUES ('$user_id', '$interest_id')";
+            mysqli_query($link, $insert_query);
+        }
+    }
+    // If no interests are selected, the DELETE query above already removed all interests
 
     $photo_profil = $user['photo_profil']; 
 
@@ -40,7 +72,6 @@ if (isset($_POST['update_profile'])) {
             }
         }
     }
-
 
     $update_query = "UPDATE users SET fullname='$fullname', email='$email', photo_profil='$photo_profil', ville='$ville' WHERE id='$user_id'";
 
@@ -65,7 +96,7 @@ if (isset($_POST['update_profile'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="icon" href="../../assets/icons/icon-test.svg" type="image/svg+xml">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
         body {
             font-family: "Space Grotesk", sans-serif;
@@ -154,6 +185,29 @@ if (isset($_POST['update_profile'])) {
             color: #2E7D32;
             border: 1px solid #A5D6A7;
         }
+        
+        .interests-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 8px;
+        }
+        
+        .interests-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .interest-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .interest-item input {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -202,33 +256,43 @@ if (isset($_POST['update_profile'])) {
                 <datalist id="ville-list"></datalist>
             </div>
 
+            <div class="interests-section">
+                <h3>Mes centres d'intérêt</h3>
+                <p>Sélectionnez vos centres d'intérêt :</p>
+                <div class="interests-container">
+                    <?php foreach ($all_interests as $id => $nom): ?>
+                        <div class="interest-item">
+                            <input type="checkbox" id="interest-<?php echo $id; ?>" name="interests[]" value="<?php echo $id; ?>"
+                                <?php echo isset($user_interests[$id]) ? 'checked' : ''; ?>>
+                            <label for="interest-<?php echo $id; ?>"><?php echo htmlspecialchars($nom); ?></label>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
             <button type="submit" name="update_profile" class="btn">Mettre à jour</button>
         </form>
     </div>
 
     <?php include '../../includes/layout/footer.php'; ?>
 
-    <!-- javascript pour fetch l'api pour l'autocompletion du nom des villes -->
     <script>
-document.getElementById('ville').addEventListener('input', function() {
-    let query = this.value;
-    if (query.length < 2) return;
+        document.getElementById('ville').addEventListener('input', function() {
+            let query = this.value;
+            if (query.length < 2) return;
 
-    fetch('../../algorithme/autocomplete.php?q=' + encodeURIComponent(query))
-        .then(response => response.json())
-        .then(data => {
-            let datalist = document.getElementById('ville-list');
-            datalist.innerHTML = '';
-            data.forEach(ville => {
-                let option = document.createElement('option');
-                option.value = ville;
-                datalist.appendChild(option);
-            });
+            fetch('../../algorithme/autocomplete.php?q=' + encodeURIComponent(query))
+                .then(response => response.json())
+                .then(data => {
+                    let datalist = document.getElementById('ville-list');
+                    datalist.innerHTML = '';
+                    data.forEach(ville => {
+                        let option = document.createElement('option');
+                        option.value = ville;
+                        datalist.appendChild(option);
+                    });
+                });
         });
-});
-</script>
-
-
-
+    </script>
 </body>
 </html>

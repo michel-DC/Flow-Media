@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Dans ma base de donnée j'ai une table "interets" qui liste tout les interets possible que peux avoir un user ou une activité. Ma table "interets" à comme champs un id en primary key auto increment et un champs nom varchar(250).
+
+Dans ma base de donnée j'ai également une table "user_interet" qui liste toute les interets d'un user, cette table contient un champs user_id avec une foreign key vers la table users(id) et un champ interet_id qui a une foreign key vers la table interets(id). 
+
+Ce que je veux ici c'est que dans cette page tu crée une section, avec un tritre et un contenu, dans cette section l'user pourra selectionner ses centres d'interets (et seuelement ceux présent dans la table "interet"), une fois que l'user les à sélectionné et à validé les infos sont inséré dans ma table "user_interet". 
