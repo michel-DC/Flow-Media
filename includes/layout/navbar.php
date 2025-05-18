@@ -31,8 +31,8 @@
             <div class="nav-dropdown">
                 <button class="nav-dropbtn"><i class="fas fa-user-alt"></i> <i class="fa fa-caret-down"></i></button>
                 <div class="nav-dropdown-content">
-                    <a href="/connexion/login.php">Mon profil</a>
-                    <a href="/connexion/register.php">Mes réservations</a>
+                    <a href="../../pages/user/profile.php">Mon profil</a>
+                    <a href="../../pages/reservations">Mes réservations</a>
                     <a href="/connexion/logout-user.php"><i class="fas fa-sign-out-alt"></i> Me deconnecter</a>
                 </div>
             </div>

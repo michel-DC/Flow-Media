@@ -96,10 +96,10 @@ if (isset($_POST['update_profile'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="icon" href="../../assets/icons/icon-test.svg" type="image/svg+xml">
     <style>
-         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
         body {
-            font-family: "Space Grotesk", sans-serif;
+            font-family: "Poppins", sans-serif;
             background-color: #FFFFFF;
             color: #000000;
             margin: 0;
@@ -347,7 +347,7 @@ if (isset($_POST['update_profile'])) {
 
     <div class="abonnement-section">
         <div class="abonnement-card">
-            <h2>Votre abonnement actuel</h2>
+            <h2>Mon abonnement actuel</h2>
             <?php if ($user['abonnement_id'] == 1): ?>
                 <div class="prix">Gratuit</div>
                 <img src="../../assets/icons/black-star.svg" width="108" height="108" style="display: block; margin-left: auto;">
@@ -356,7 +356,7 @@ if (isset($_POST['update_profile'])) {
                     <li>1 activité réservable par mois</li>
                 </ul>
             <?php elseif ($user['abonnement_id'] == 2): ?>
-                <div class="prix">Gold</div>
+                <div class="prix" style="color: gold">Gold</div>
                 <ul class="avantages">
                     <li>Accès à tous les contenus premium</li>
                     <li>5 activités réservables par mois</li>
@@ -365,7 +365,7 @@ if (isset($_POST['update_profile'])) {
                 </ul>
                 <img src="../../assets/icons/gold-star.svg" width="108" height="108" style="display: block; margin-left: auto;">
             <?php elseif ($user['abonnement_id'] == 3): ?>
-                <div class="prix">Platine</div>
+                <div class="prix" style="color: #6E7B8B">Platine</div>
                 <ul class="avantages">
                     <li>Accès à tous les contenus premium</li>
                     <li>10 activités réservables par mois</li>
@@ -376,7 +376,7 @@ if (isset($_POST['update_profile'])) {
                 </ul>
                 <img src="../../assets/icons/plat-star.png" width="108" height="108" style="display: block; margin-left: auto;">
             <?php endif; ?>
-            <a href="../abonnement/index.php?user_id=<?php echo $user_id; ?>" class="btn" name="update_abonnement">Changer d'abonnement</a>
+            <a href="../abonnement/index.php?user_id=<?php echo $user_id; ?>" class="btn" name="update_abonnement">Je change d'abonnement</a>
         </div>
     </div>
 

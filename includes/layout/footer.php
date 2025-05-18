@@ -13,7 +13,7 @@
             <div class="footer-links">
                 <a href="../../legal/politique-confidentialite.php">Politique de confidentialité</a>
                 <a href="../../legal/cookies.php">Cookies</a>
-                <a href="contact.php">Contact</a>
+                <a href="../../pages/contact">Contact</a>
             </div>
         </div>
 </footer>

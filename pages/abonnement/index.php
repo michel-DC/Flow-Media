@@ -24,7 +24,7 @@ $current_sub_result = mysqli_query($link, $current_sub_query);
 $current_sub = mysqli_fetch_assoc($current_sub_result);
 
 // Récupérer les abonnements disponibles (id 2 et 3)
-$query = "SELECT * FROM abonnements WHERE id IN (2, 3)";
+$query = "SELECT * FROM abonnements WHERE id IN (1, 2, 3)";
 $result = mysqli_query($link, $query);
 $abonnements = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -63,7 +63,7 @@ if (isset($_POST['changer_abonnement'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="icon" href="../../assets/icons/icon-test.svg" type="image/svg+xml">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         
         :root {
             --soft-black: #1a1a1a;
@@ -71,7 +71,7 @@ if (isset($_POST['changer_abonnement'])) {
         }
         
         body {
-            font-family: "Space Grotesk", sans-serif;
+            font-family: "Poppins", sans-serif;
             margin: 0;
             padding: 0;
             color: var(--soft-black);
@@ -202,14 +202,25 @@ if (isset($_POST['changer_abonnement'])) {
                     <h2><?php echo htmlspecialchars($abonnement['nom']); ?></h2>
                     <div class="prix"><?php echo htmlspecialchars($abonnement['prix']); ?> €/mois</div>
                     <ul class="avantages">
+                    <?php if ($abonnement['id'] == 1): ?>
+                        <li>Accès aux contenus de base</li>
+                        <li>1 activité réservable par mois</li>
+                    <?php endif; ?>
+                    <?php if ($abonnement['id'] == 2): ?>
                         <li>Accès à tous les contenus premium</li>
-                        <li><?php echo $abonnement['id'] == 2 ? '5' : '10'; ?> activités réservables par mois</li>
+                        <li>5 activités réservables par mois</li>
                         <li>Podcasts exclusifs</li>
                         <li>Codes promo mensuels</li>
-                        <?php if ($abonnement['id'] == 3): ?>
-                            <li>Accès prioritaire aux événements</li>
-                            <li>Invitations VIP</li>
-                        <?php endif; ?>
+                    <?php endif; ?>
+                    <?php if ($abonnement['id'] == 3): ?>
+                        <li>Accès à tous les contenus premium</li>
+                        <li>5 activités réservables par mois</li>
+                        <li>Podcasts exclusifs</li>
+                        <li>Codes promo mensuels</li>
+                        <li>Accès prioritaire aux événements</li>
+                        <li>Invitations VIP</li>
+                    <?php endif; ?>
+                        
                     </ul>
                     <form method="POST">
                         <input type="hidden" name="abonnement_id" value="<?php echo $abonnement['id']; ?>">

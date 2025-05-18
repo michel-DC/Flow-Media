@@ -38,7 +38,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", 
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            font-family: "Space Grotesk", sans-serif;
+            font-family: "Poppins", sans-serif;
             background-color: #FFFFFF; 
             color: #000000; 
         }
@@ -68,7 +68,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", 
         }
 
         h1 {
-            font-family: "Space Grotesk", sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 32px;
             color: #000000;
             text-align: center;
