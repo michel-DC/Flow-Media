@@ -7,8 +7,21 @@ if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true) {
     exit();
 }
 
+// Vérifier si l'ID de l'utilisateur est fourni et correspond à l'utilisateur connecté
+if (!isset($_GET['user_id']) || $_GET['user_id'] != $_SESSION['user_id']) {
+    header('Location: ../user/profile.php?erreur=acces_non_autorise');
+    exit();
+}
+
+$user_id = $_GET['user_id'];
+
 // Connexion à la base de données
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
+    
+// Récupérer l'abonnement actuel de l'utilisateur
+$current_sub_query = "SELECT abonnement_id FROM users WHERE id = '$user_id'";
+$current_sub_result = mysqli_query($link, $current_sub_query);
+$current_sub = mysqli_fetch_assoc($current_sub_result);
 
 // Récupérer les abonnements disponibles (id 2 et 3)
 $query = "SELECT * FROM abonnements WHERE id IN (2, 3)";
@@ -19,13 +32,24 @@ $abonnements = mysqli_fetch_all($result, MYSQLI_ASSOC);
 if (isset($_POST['changer_abonnement'])) {
     $nouvel_abonnement_id = $_POST['abonnement_id'];
     
-    // Mettre à jour l'abonnement de l'utilisateur
-    $user_id = $_SESSION['user_id'];
-    $update_query = "UPDATE users SET abonnement_id = $nouvel_abonnement_id WHERE id = $user_id";
-    if (mysqli_query($link, $update_query)) {
-        $success = "Votre abonnement a été mis à jour avec succès !";
+    // Vérifier que l'utilisateur modifie bien son propre abonnement
+    if ($_POST['user_id'] != $user_id) {
+        $error = "Action non autorisée.";
     } else {
-        $error = "Une erreur est survenue lors de la mise à jour de votre abonnement.";
+        // Vérifier si l'utilisateur essaie de choisir son abonnement actuel
+        if ($nouvel_abonnement_id == $current_sub['abonnement_id']) {
+            $error = "Vous possédez déjà cet abonnement.";
+        } else {
+            // Mettre à jour l'abonnement de l'utilisateur
+            $update_query = "UPDATE users SET abonnement_id = $nouvel_abonnement_id WHERE id = $user_id";
+            if (mysqli_query($link, $update_query)) {
+                $success = "Votre abonnement a été mis à jour avec succès !";
+                // Rediriger vers le profil après 2 secondes
+                header("refresh:2;url=../user/profile.php");
+            } else {
+                $error = "Une erreur est survenue lors de la mise à jour de votre abonnement.";
+            }
+        }
     }
 }
 ?>
@@ -189,6 +213,7 @@ if (isset($_POST['changer_abonnement'])) {
                     </ul>
                     <form method="POST">
                         <input type="hidden" name="abonnement_id" value="<?php echo $abonnement['id']; ?>">
+                        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
                         <button type="submit" name="changer_abonnement" class="btn-abonnement">
                             Choisir cet abonnement
                         </button>

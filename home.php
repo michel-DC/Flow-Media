@@ -39,7 +39,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
         
         .hero {
             text-align: center;
-            padding: 3px 0; 
+            padding: 0; 
             background-image: url('https://musees-nationaux-alpesmaritimes.fr/chagall/sites/chagall/files/styles/w1920_extra_wide/public/2023-09/Atelier_duBeau_texture_%C3%A9tudiants_1920x960px.jpg?itok=ViyGvrM4');
             background-size: cover;
             background-position: center;
@@ -188,37 +188,107 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
 
         .img-placeholder img {
             width: 100px;
-            height: 100px
+            height: 100px;
         }
         
-        @media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                padding: 1rem;
+        /* Laptop/Tablet (768px - 1024px) */
+        @media (max-width: 1024px) {
+            .cursive-text {
+                font-size: 8rem;
             }
             
-            .nav-links {
-                margin-top: 1rem;
-                flex-wrap: wrap;
-                justify-content: center;
+            .hero-content p {
+                font-size: 1.3rem;
+            }
+            
+            .hero-cta-text {
+                font-size: 2rem;
+            }
+            
+            section {
+                padding: 4rem 0;
+            }
+            
+            section h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* Mobile (up to 768px) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero {
+                min-height: 90vh;
+            }
+            
+            .hero-content {
+                padding: 1.5rem;
             }
             
             .cursive-text {
                 font-size: 5rem;
+                margin-bottom: 0.5rem;
             }
             
             .hero-content p {
                 font-size: 1.2rem;
+                margin-bottom: 1.5rem;
             }
             
             .hero-cta-text {
                 font-size: 1.8rem;
+                margin: 1.5rem 0;
             }
             
             .btn {
                 display: block;
                 margin: 0.5rem auto;
                 width: 80%;
+                max-width: 300px;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            section h2 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .card {
+                padding: 1rem;
+            }
+            
+            .image-placeholder {
+                height: 180px;
+            }
+        }
+        
+        /* Small Mobile (up to 480px) */
+        @media (max-width: 480px) {
+            .cursive-text {
+                font-size: 4rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-cta-text {
+                font-size: 1.5rem;
+            }
+            
+            section h2 {
+                font-size: 1.8rem;
             }
         }
     </style>

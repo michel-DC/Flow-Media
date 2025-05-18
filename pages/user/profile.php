@@ -350,20 +350,22 @@ if (isset($_POST['update_profile'])) {
             <h2>Votre abonnement actuel</h2>
             <?php if ($user['abonnement_id'] == 1): ?>
                 <div class="prix">Gratuit</div>
+                <img src="../../assets/icons/black-star.svg" width="108" height="108" style="display: block; margin-left: auto;">
                 <ul class="avantages">
                     <li>Accès aux contenus de base</li>
                     <li>1 activité réservable par mois</li>
                 </ul>
             <?php elseif ($user['abonnement_id'] == 2): ?>
-                <div class="prix">12.99 €/mois</div>
+                <div class="prix">Gold</div>
                 <ul class="avantages">
                     <li>Accès à tous les contenus premium</li>
                     <li>5 activités réservables par mois</li>
                     <li>Podcasts exclusifs</li>
                     <li>Codes promo mensuels</li>
                 </ul>
+                <img src="../../assets/icons/gold-star.svg" width="108" height="108" style="display: block; margin-left: auto;">
             <?php elseif ($user['abonnement_id'] == 3): ?>
-                <div class="prix">17.99 €/mois</div>
+                <div class="prix">Platine</div>
                 <ul class="avantages">
                     <li>Accès à tous les contenus premium</li>
                     <li>10 activités réservables par mois</li>
@@ -372,8 +374,9 @@ if (isset($_POST['update_profile'])) {
                     <li>Accès prioritaire aux événements</li>
                     <li>Invitations VIP</li>
                 </ul>
+                <img src="../../assets/icons/plat-star.png" width="108" height="108" style="display: block; margin-left: auto;">
             <?php endif; ?>
-            <button class="btn" onclick="window.location.href='../abonnement/index.php'">Changer d'abonnement</button>
+            <a href="../abonnement/index.php?user_id=<?php echo $user_id; ?>" class="btn" name="update_abonnement">Changer d'abonnement</a>
         </div>
     </div>
 
