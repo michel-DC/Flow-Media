@@ -13,6 +13,11 @@ $query = "SELECT * FROM users WHERE id='$user_id'";
 $result = mysqli_query($link, $query);
 $user = mysqli_fetch_assoc($result);
 
+// Get user's subscription details
+$abonnement_query = "SELECT a.* FROM abonnements a JOIN users u ON a.id = u.abonnement_id WHERE u.id = '$user_id'";
+$abonnement_result = mysqli_query($link, $abonnement_query);
+$abonnement = mysqli_fetch_assoc($abonnement_result);
+
 $interests_query = "SELECT i.id, i.nom FROM interets i 
                    JOIN user_interet ui ON i.id = ui.interet_id 
                    WHERE ui.user_id = '$user_id'";
@@ -203,6 +208,76 @@ if (isset($_POST['update_profile'])) {
         .interest-item input {
             margin-right: 5px;
         }
+
+        .abonnement-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .abonnement-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--soft-black);
+        }
+        
+        .abonnement-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--soft-black);
+        }
+        
+        .prix {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            color: var(--soft-black);
+        }
+        
+        .avantages {
+            list-style-type: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        
+        .avantages li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .avantages li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--soft-black);
+            font-weight: bold;
+        }
+        
+        .btn-abonnement {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--soft-black);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-abonnement:hover {
+            background: #333;
+        }
+
+        .btn a {
+            text-decoration: none !important;
+        }
     </style>
 </head>
 <body>
@@ -269,6 +344,39 @@ if (isset($_POST['update_profile'])) {
         </form>
 
     </div>
+
+    <div class="abonnement-section">
+        <div class="abonnement-card">
+            <h2>Votre abonnement actuel</h2>
+            <?php if ($user['abonnement_id'] == 1): ?>
+                <div class="prix">Gratuit</div>
+                <ul class="avantages">
+                    <li>Accès aux contenus de base</li>
+                    <li>1 activité réservable par mois</li>
+                </ul>
+            <?php elseif ($user['abonnement_id'] == 2): ?>
+                <div class="prix">12.99 €/mois</div>
+                <ul class="avantages">
+                    <li>Accès à tous les contenus premium</li>
+                    <li>5 activités réservables par mois</li>
+                    <li>Podcasts exclusifs</li>
+                    <li>Codes promo mensuels</li>
+                </ul>
+            <?php elseif ($user['abonnement_id'] == 3): ?>
+                <div class="prix">17.99 €/mois</div>
+                <ul class="avantages">
+                    <li>Accès à tous les contenus premium</li>
+                    <li>10 activités réservables par mois</li>
+                    <li>Podcasts exclusifs</li>
+                    <li>Codes promo mensuels</li>
+                    <li>Accès prioritaire aux événements</li>
+                    <li>Invitations VIP</li>
+                </ul>
+            <?php endif; ?>
+            <button class="btn" onclick="window.location.href='../abonnement/index.php'">Changer d'abonnement</button>
+        </div>
+    </div>
+
 
     <?php include '../../includes/layout/footer.php'; ?>
 
