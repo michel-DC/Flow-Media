@@ -13,7 +13,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", 
             $error_password = "Les mots de passe ne correspondent pas, veuillez réessayer";
         }
     
-        $query = "INSERT INTO users (fullname, email, password) VALUES ('$fullname', '$email', '$password')";
+        $query = "INSERT INTO users (fullname, email, password, abonnement_id) VALUES ('$fullname', '$email', '$password', 1)";
 
         if (mysqli_query($link, $query)) {
             $success = "Félicitations $fullname, votre compte a bien été créé :), vous pouvez maintenant vous connecter";
