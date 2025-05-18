@@ -38,53 +38,69 @@ if (isset($_POST['update_profile'])) {
     $fullname = mysqli_real_escape_string($link, $_POST['fullname']);
     $email = mysqli_real_escape_string($link, $_POST['email']);
     $ville = mysqli_real_escape_string($link, $_POST['ville']);
+    $age = mysqli_real_escape_string($link, $_POST['age']);
 
-    $delete_query = "DELETE FROM user_interet WHERE user_id = '$user_id'";
-    mysqli_query($link, $delete_query);
-    
-    // If interests are selected, insert them
-    if (isset($_POST['interests']) && !empty($_POST['interests'])) {
-        $selected_interests = $_POST['interests'];
+        require_once '../../algorithme/geocode.php';
+        $geocode_result = geocodeCity($ville);
         
-        foreach ($selected_interests as $interest_id) {
-            $interest_id = mysqli_real_escape_string($link, $interest_id);
-            $insert_query = "INSERT INTO user_interet (user_id, interet_id) VALUES ('$user_id', '$interest_id')";
-            mysqli_query($link, $insert_query);
-        }
-    }
+        $latitude = $geocode_result ? $geocode_result['latitude'] : 'NULL';
+        $longitude = $geocode_result ? $geocode_result['longitude'] : 'NULL';
 
-    $photo_profil = $user['photo_profil']; 
-
-    if (isset($_FILES['profile_picture']) && !empty($_FILES['profile_picture']['name'])) {
-        $upload_dir = __DIR__ . '/../../assets/uploads/profiles/';
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0755, true);
-        }
-
-        $filename = basename($_FILES["profile_picture"]["name"]);
-        $target_file = $upload_dir . $filename;
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
-        if ($check !== false && in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
-            if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
-                $photo_profil = $filename;
+        $delete_query = "DELETE FROM user_interet WHERE user_id = '$user_id'";
+        mysqli_query($link, $delete_query);
+        
+        // If interests are selected, insert them
+        if (isset($_POST['interests']) && !empty($_POST['interests'])) {
+            $selected_interests = $_POST['interests'];
+            
+            foreach ($selected_interests as $interest_id) {
+                $interest_id = mysqli_real_escape_string($link, $interest_id);
+                $insert_query = "INSERT INTO user_interet (user_id, interet_id) VALUES ('$user_id', '$interest_id')";
+                mysqli_query($link, $insert_query);
             }
         }
+
+        $photo_profil = $user['photo_profil']; 
+
+        if (isset($_FILES['profile_picture']) && !empty($_FILES['profile_picture']['name'])) {
+            $upload_dir = __DIR__ . '/../../assets/uploads/profiles/';
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
+
+            $filename = basename($_FILES["profile_picture"]["name"]);
+            $target_file = $upload_dir . $filename;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+            $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
+            if ($check !== false && in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+                if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
+                    $photo_profil = $filename;
+                }
+            }
+        }
+
+        $update_query = "UPDATE users SET 
+            fullname='$fullname', 
+            email='$email', 
+            photo_profil='$photo_profil', 
+            ville='$ville',
+            age='$age',
+            latitude=$latitude,
+            longitude=$longitude
+            WHERE id='$user_id'";
+
+        if (mysqli_query($link, $update_query)) {
+            $_SESSION['fullname'] = $fullname;
+            $_SESSION['email'] = $email;
+            $success = "Profil mis à jour avec succès!";
+            $result = mysqli_query($link, $query);
+            $user = mysqli_fetch_assoc($result);
+        } else {
+            $error = "Erreur lors de la mise à jour du profil: " . mysqli_error($link);
+        }
     }
 
-    $update_query = "UPDATE users SET fullname='$fullname', email='$email', photo_profil='$photo_profil', ville='$ville' WHERE id='$user_id'";
-
-    if (mysqli_query($link, $update_query)) {
-        $_SESSION['fullname'] = $fullname;
-        $_SESSION['email'] = $email;
-        $success = "Profil mis à jour avec succès!";
-        $result = mysqli_query($link, $query);
-        $user = mysqli_fetch_assoc($result);
-    } else {
-        $error = "Erreur lors de la mise à jour du profil: " . mysqli_error($link);
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -106,15 +122,53 @@ if (isset($_POST['update_profile'])) {
             padding: 0;
         }
 
-        .container {
-            max-width: 800px;
+        .page-content {
+            max-width: 1200px;
             margin: 50px auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
-        .profile-header {
+        .profile-header-section {
             text-align: center;
             margin-bottom: 30px;
+        }
+
+        .content-columns {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+        }
+
+        .profile-form-column {
+            flex: 1;
+            min-width: 300px; /* Minimum width before wrapping */
+        }
+
+        .map-column {
+            flex: 1;
+            min-width: 300px; /* Minimum width before wrapping */
+        }
+
+        #user-map {
+            height: 400px;
+            border-radius: 8px;
+            border: 1px solid #000000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-placeholder {
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #000000;
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
         }
 
         .profile-picture {
@@ -212,7 +266,7 @@ if (isset($_POST['update_profile'])) {
         .abonnement-section {
             max-width: 1200px;
             margin: 2rem auto;
-            padding: 0 2rem;
+            padding: 0 20px; /* Match page-content padding */
         }
         
         .abonnement-card {
@@ -278,111 +332,148 @@ if (isset($_POST['update_profile'])) {
         .btn a {
             text-decoration: none !important;
         }
+
+        @media (max-width: 768px) {
+            .content-columns {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .profile-form-column, .map-column {
+                min-width: unset;
+            }
+        }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
 <?php include '../../includes/layout/navbar.php'; ?>
 
-    <div class="container">
-        <div class="profile-header">
-            <h1>Mon Profil</h1>
-            <?php if (!empty($user['photo_profil'])): ?>
-                <img src="../../assets/uploads/profiles/<?php echo $user['photo_profil']; ?>" alt="Photo de profil" class="profile-picture">
+<div class="page-content">
+    <div class="profile-header-section">
+        <h1>Mon Profil</h1>
+        <?php if (!empty($user['photo_profil'])): ?>
+            <img src="../../assets/uploads/profiles/<?php echo $user['photo_profil']; ?>" alt="Photo de profil" class="profile-picture">
+        <?php else: ?>
+            <div class="profile-picture" style="background-color: #e0e0e0; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 50px;">👤</span>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <?php if (isset($error)): ?>
+        <div class="message error"><?php echo $error; ?></div>
+    <?php endif; ?>
+
+    <?php if (isset($success)): ?>
+        <div class="message success"><?php echo $success; ?></div>
+    <?php endif; ?>
+
+    <div class="content-columns">
+        <div class="profile-form-column">
+            <form class="profile-form" method="POST" enctype="multipart/form-data" action="profile.php" >
+                <div class="form-group">
+                    <label for="profile_picture">Photo de profil</label>
+                    <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="fullname">Nom complet</label>
+                    <input type="text" id="fullname" name="fullname" class="input-field" value="<?php echo htmlspecialchars($user['fullname']); ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="input-field" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Votre age</label>
+                    <select id="age" name="age" class="input-field" required>
+                        <option value="">Sélectionnez votre âge</option>
+                        <?php for ($i = 15; $i <= 25; $i++): ?>
+                            <option value="<?php echo $i; ?>" <?php echo $user['age'] == $i ? 'selected' : ''; ?>>
+                                <?php echo $i; ?> ans
+                            </option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ville">Ville</label>
+                    <input type="text" id="ville" name="ville" class="input-field" autocomplete="off" list="ville-list" value="<?php echo htmlspecialchars($user['ville'] ?? ''); ?>">
+                    <datalist id="ville-list"></datalist>
+                </div>
+
+                <div class="interests-section">
+                    <h3>Mes centres d'intérêt</h3>
+                    <p>Sélectionnez vos centres d'intérêt :</p>
+                    <div class="interests-container">
+                        <?php foreach ($all_interests as $id => $nom): ?>
+                            <div class="interest-item">
+                                <input type="checkbox" id="interest-<?php echo $id; ?>" name="interests[]" value="<?php echo $id; ?>"
+                                    <?php echo isset($user_interests[$id]) ? 'checked' : ''; ?>>
+                                <label for="interest-<?php echo $id; ?>"><?php echo htmlspecialchars($nom); ?></label>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <button type="submit" name="update_profile" class="btn">Mettre à jour</button>
+            </form>
+        </div>
+
+        <div class="map-column">
+            <h2>Ma position</h2>
+            <?php if (!empty($user['latitude']) && !empty($user['longitude'])): ?>
+                <div id="user-map"></div>
             <?php else: ?>
-                <div class="profile-picture" style="background-color: #e0e0e0; display: flex; align-items: center; justify-content: center;">
-                    <span style="font-size: 50px;">👤</span>
+                <div class="map-placeholder">
+                    Aucune position enregistrée. Mettez à jour votre ville pour voir votre position sur la carte.
                 </div>
             <?php endif; ?>
         </div>
-
-        <?php if (isset($error)): ?>
-            <div class="message error"><?php echo $error; ?></div>
-        <?php endif; ?>
-
-        <?php if (isset($success)): ?>
-            <div class="message success"><?php echo $success; ?></div>
-        <?php endif; ?>
-
-        <form class="profile-form" method="POST" enctype="multipart/form-data" action="profile.php" >
-            <div class="form-group">
-                <label for="profile_picture">Photo de profil</label>
-                <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
-            </div>
-
-            <div class="form-group">
-                <label for="fullname">Nom complet</label>
-                <input type="text" id="fullname" name="fullname" class="input-field" value="<?php echo htmlspecialchars($user['fullname']); ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="input-field" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label for="ville">Ville</label>
-                <input type="text" id="ville" name="ville" class="input-field" autocomplete="off" list="ville-list" value="<?php echo htmlspecialchars($user['ville'] ?? ''); ?>">
-                <datalist id="ville-list"></datalist>
-            </div>
-
-            <div class="interests-section">
-                <h3>Mes centres d'intérêt</h3>
-                <p>Sélectionnez vos centres d'intérêt :</p>
-                <div class="interests-container">
-                    <?php foreach ($all_interests as $id => $nom): ?>
-                        <div class="interest-item">
-                            <input type="checkbox" id="interest-<?php echo $id; ?>" name="interests[]" value="<?php echo $id; ?>"
-                                <?php echo isset($user_interests[$id]) ? 'checked' : ''; ?>>
-                            <label for="interest-<?php echo $id; ?>"><?php echo htmlspecialchars($nom); ?></label>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-
-            <button type="submit" name="update_profile" class="btn">Mettre à jour</button>
-        </form>
-
     </div>
+</div>
 
-    <div class="abonnement-section">
-        <div class="abonnement-card">
-            <h2>Mon abonnement actuel</h2>
-            <?php if ($user['abonnement_id'] == 1): ?>
-                <div class="prix">Gratuit</div>
-                <img src="../../assets/icons/black-star.svg" width="108" height="108" style="display: block; margin-left: auto;">
-                <ul class="avantages">
-                    <li>Accès aux contenus de base</li>
-                    <li>1 activité réservable par mois</li>
-                </ul>
-            <?php elseif ($user['abonnement_id'] == 2): ?>
-                <div class="prix" style="color: gold">Gold</div>
-                <ul class="avantages">
-                    <li>Accès à tous les contenus premium</li>
-                    <li>5 activités réservables par mois</li>
-                    <li>Podcasts exclusifs</li>
-                    <li>Codes promo mensuels</li>
-                </ul>
-                <img src="../../assets/icons/gold-star.svg" width="108" height="108" style="display: block; margin-left: auto;">
-            <?php elseif ($user['abonnement_id'] == 3): ?>
-                <div class="prix" style="color: #6E7B8B">Platine</div>
-                <ul class="avantages">
-                    <li>Accès à tous les contenus premium</li>
-                    <li>10 activités réservables par mois</li>
-                    <li>Podcasts exclusifs</li>
-                    <li>Codes promo mensuels</li>
-                    <li>Accès prioritaire aux événements</li>
-                    <li>Invitations VIP</li>
-                </ul>
-                <img src="../../assets/icons/plat-star.png" width="108" height="108" style="display: block; margin-left: auto;">
-            <?php endif; ?>
-            <a href="../abonnement/index.php?user_id=<?php echo $user_id; ?>" class="btn" name="update_abonnement">Je change d'abonnement</a>
-        </div>
+<div class="abonnement-section">
+    <div class="abonnement-card">
+        <h2>Mon abonnement actuel</h2>
+        <?php if ($user['abonnement_id'] == 1): ?>
+            <div class="prix">Gratuit</div>
+            <img src="../../assets/icons/black-star.svg" width="108" height="108" style="display: block; margin-left: auto;">
+            <ul class="avantages">
+                <li>Accès aux contenus de base</li>
+                <li>1 activité réservable par mois</li>
+            </ul>
+        <?php elseif ($user['abonnement_id'] == 2): ?>
+            <div class="prix" style="color: gold">Gold</div>
+            <ul class="avantages">
+                <li>Accès à tous les contenus premium</li>
+                <li>5 activités réservables par mois</li>
+                <li>Podcasts exclusifs</li>
+                <li>Codes promo mensuels</li>
+            </ul>
+            <img src="../../assets/icons/gold-star.svg" width="108" height="108" style="display: block; margin-left: auto;">
+        <?php elseif ($user['abonnement_id'] == 3): ?>
+            <div class="prix" style="color: #6E7B8B">Platine</div>
+            <ul class="avantages">
+                <li>Accès à tous les contenus premium</li>
+                <li>10 activités réservables par mois</li>
+                <li>Podcasts exclusifs</li>
+                <li>Codes promo mensuels</li>
+                <li>Accès prioritaire aux événements</li>
+                <li>Invitations VIP</li>
+            </ul>
+            <img src="../../assets/icons/plat-star.png" width="108" height="108" style="display: block; margin-left: auto;">
+        <?php endif; ?>
+        <a href="../abonnement/index.php?user_id=<?php echo $user_id; ?>" class="btn" name="update_abonnement">Je change d'abonnement</a>
     </div>
-
+</div>
 
     <?php include '../../includes/layout/footer.php'; ?>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         document.getElementById('ville').addEventListener('input', function() {
             let query = this.value;
@@ -400,6 +491,22 @@ if (isset($_POST['update_profile'])) {
                     });
                 });
         });
+
+
+        <?php if (!empty($user['latitude']) && !empty($user['longitude'])): ?>
+        document.addEventListener('DOMContentLoaded', function() {
+            const map = L.map('user-map').setView([<?php echo $user['latitude']; ?>, <?php echo $user['longitude']; ?>], 13);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            L.marker([<?php echo $user['latitude']; ?>, <?php echo $user['longitude']; ?>])
+                .addTo(map)
+                .bindPopup('<?php echo htmlspecialchars($user['ville']); ?>')
+                .openPopup();
+        });
+        <?php endif; ?>
     </script>
 </body>
 </html>
