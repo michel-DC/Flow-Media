@@ -13,7 +13,6 @@ $query = "SELECT * FROM users WHERE id='$user_id'";
 $result = mysqli_query($link, $query);
 $user = mysqli_fetch_assoc($result);
 
-// Get user interests
 $interests_query = "SELECT i.id, i.nom FROM interets i 
                    JOIN user_interet ui ON i.id = ui.interet_id 
                    WHERE ui.user_id = '$user_id'";
@@ -23,7 +22,6 @@ while ($row = mysqli_fetch_assoc($interests_result)) {
     $user_interests[$row['id']] = $row['nom'];
 }
 
-// Get all available interests
 $all_interests_query = "SELECT id, nom FROM interets";
 $all_interests_result = mysqli_query($link, $all_interests_query);
 $all_interests = [];
@@ -36,8 +34,6 @@ if (isset($_POST['update_profile'])) {
     $email = mysqli_real_escape_string($link, $_POST['email']);
     $ville = mysqli_real_escape_string($link, $_POST['ville']);
 
-    // Handle interests update
-    // Delete all existing interests for this user first
     $delete_query = "DELETE FROM user_interet WHERE user_id = '$user_id'";
     mysqli_query($link, $delete_query);
     
@@ -51,7 +47,6 @@ if (isset($_POST['update_profile'])) {
             mysqli_query($link, $insert_query);
         }
     }
-    // If no interests are selected, the DELETE query above already removed all interests
 
     $photo_profil = $user['photo_profil']; 
 
@@ -234,7 +229,7 @@ if (isset($_POST['update_profile'])) {
             <div class="message success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-        <form class="profile-form" method="POST" enctype="multipart/form-data">
+        <form class="profile-form" method="POST" enctype="multipart/form-data" action="profile.php" >
             <div class="form-group">
                 <label for="profile_picture">Photo de profil</label>
                 <input type="file" id="profile_picture" name="profile_picture" accept="image/*">
@@ -272,6 +267,7 @@ if (isset($_POST['update_profile'])) {
 
             <button type="submit" name="update_profile" class="btn">Mettre à jour</button>
         </form>
+
     </div>
 
     <?php include '../../includes/layout/footer.php'; ?>
