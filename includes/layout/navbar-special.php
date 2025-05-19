@@ -40,7 +40,7 @@ $photo_profil = mysqli_fetch_assoc($result);
             
             <?php if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] == 'user'): ?>
             <div class="nav-dropdown">
-                <button class="nav-dropbtn"><img src="../../assets/uploads/profiles/<?php echo $user['photo_profil']; ?>" alt="Photo de profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;"> <i class="fa fa-caret-down"></i></button>
+                <button class="nav-dropbtn"><img src="./assets/uploads/profiles/<?php echo $photo_profil['photo_profil']; ?>" alt="Photo de profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;"> <i class="fa fa-caret-down"></i></button>
                 <div class="nav-dropdown-content">
                     <a href="../../pages/user/profile.php">Mon profil</a>
                     <a href="../../pages/reservations">Mes réservations</a>

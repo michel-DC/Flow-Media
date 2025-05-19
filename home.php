@@ -384,7 +384,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
 </head>
 <body>
 
-    <?php include './includes/layout/navbar.php'; ?>
+    <?php include './includes/layout/navbar-special.php'; ?>
 
     <header class="hero" id="accueil">
         <div class="hero-content container">
