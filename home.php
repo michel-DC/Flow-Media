@@ -47,8 +47,8 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
             position: relative;
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: flex-start;
+            padding-top: 10vh; /* margin top */
         }
         
         .hero::before {
@@ -273,7 +273,6 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
             }
         }
         
-        /* Small Mobile (up to 480px) */
         @media (max-width: 480px) {
             .cursive-text {
                 font-size: 4rem;
@@ -291,6 +290,96 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                 font-size: 1.8rem;
             }
         }
+
+        .scroll-down-arrow {
+            position: absolute;
+            bottom: 220px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-down-arrow:hover {
+            opacity: 1;
+        }
+
+        .scroll-down-arrow svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--white);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-down-arrow {
+            animation: bounce 2s infinite;
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin: 0 80px 1.5rem 0;
+            display: block;
+        }
+
+        .partners-carousel-container {
+            overflow: hidden;
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        .partners-carousel-track {
+            display: flex;
+            width: fit-content; 
+            animation: scroll 20s linear infinite;
+        }
+
+        .partner-logo-slide {
+            flex-shrink: 0;
+            width: 200px; /* Adjust width as needed */
+            height: 100px; /* Adjust height as needed */
+            margin: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: #555;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Pause animation on hover (optional) */
+        .partners-carousel-container:hover .partners-carousel-track {
+            animation-play-state: paused;
+        }
+
+        @media (max-width: 768px) {
+            .partner-logo-slide {
+                width: 150px;
+                height: 80px;
+                margin: 0 10px;
+                font-size: 0.9rem;
+            }
+            @keyframes scroll {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+        }
     </style>
 </head>
 <body>
@@ -305,7 +394,18 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
             <a href="/connexion/register.php" class="btn btn-large">Créer un compte gratuitement</a>
             <a href="#activities" class="btn btn-large btn-white">Découvrir les activités</a>
         </div>
+        
+        <!-- Scroll Down Arrow -->
+        <div class="scroll-down-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
     </header>
+
+    <section id="invisible-section" class="container" style="margin-top: 10px;">
+        <div>
+            <h1></h1>
+        </div>
+    </section>
 
     <section class="container" id="about">
         <h2>Qui sommes-nous ?</h2>
@@ -440,13 +540,25 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
 
     <section class="container" id="partners">
         <h2>Nos partenaires</h2>
-        <div class="partners">
-            <div class="partner-logo">Association des Maires de France</div>
-            <div class="partner-logo">Ministère de la Culture</div>
-            <div class="partner-logo">Musée d'Art Moderne</div>
-            <div class="partner-logo">Office du Tourisme</div>
-            <div class="partner-logo">Centre des Monuments Nationaux</div>
+        <div class="partners-carousel-container">
+            <div class="partners-carousel-track">
+                <!-- de base -->
+                <img src="https://www.amf.asso.fr/img/logo-amf-bas.png" alt="AMF Logo" class="partner-logo">
+                <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture" class="partner-logo">
+                <img src="https://www.clique.tv/wp-content/uploads/2024/03/0000_ARTICLE-4-1.jpg" alt="Nota Bene" class="partner-logo">
+                <img src="https://www.radiofrance.fr/s3/cruiser-production/2021/11/eac4208f-148f-44fe-8cd0-86a7a393703b/1200x680_dirtybiology.jpg" alt="DirtyBiology" class="partner-logo">
+                <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Arte" class="partner-logo">
+                <img src="https://yt3.googleusercontent.com/8hjEXqyKPEgZnqf9uuBMw9djY0DvmCAkRzfuywP8HbPAxQM-yxIxEPZw6iAInButgnGkw6kwjw=s160-c-k-c0x00ffffff-no-rj" alt="EGO" class="partner-logo">
+                <!-- Duplication -->
+                <img src="https://www.amf.asso.fr/img/logo-amf-bas.png" alt="AMF Logo" class="partner-logo">
+                <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture" class="partner-logo">
+                <img src="https://www.clique.tv/wp-content/uploads/2024/03/0000_ARTICLE-4-1.jpg" alt="Nota Bene" class="partner-logo">
+                <img src="https://www.radiofrance.fr/s3/cruiser-production/2021/11/eac4208f-148f-44fe-8cd0-86a7a393703b/1200x680_dirtybiology.jpg" alt="DirtyBiology" class="partner-logo">
+                <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Arte" class="partner-logo">
+                <img src="https://yt3.googleusercontent.com/8hjEXqyKPEgZnqf9uuBMw9djY0DvmCAkRzfuywP8HbPAxQM-yxIxEPZw6iAInButgnGkw6kwjw=s160-c-k-c0x00ffffff-no-rj" alt="EGO" class="partner-logo">
+            </div>
         </div>
+        <a href="../pages/partenaires" class="btn" style="align-items: center; " >Découvrir tous nos partenaires</a>
     </section>
 
     <?php include './includes/layout/footer.php'; ?>
@@ -461,6 +573,19 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                 });
             });
         });
+
+        // Scroll down arrow functionality
+        const scrollArrow = document.querySelector('.scroll-down-arrow');
+        if (scrollArrow) {
+            scrollArrow.addEventListener('click', function() {
+                const aboutSection = document.getElementById('invisible-section');
+                if (aboutSection) {
+                    aboutSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>

@@ -8,7 +8,7 @@ function geocodeCity($city) {
     
     $options = [
         "http" => [
-            "header" => "User-Agent: Flow-Media-App\r\n"
+            "header" => "User-Agent: SAE-MMI-App"
         ]
     ];
     

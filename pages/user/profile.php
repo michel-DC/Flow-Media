@@ -123,31 +123,39 @@ if (isset($_POST['update_profile'])) {
         }
 
         .page-content {
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 0 20px;
+            max-width: 100%;
+            margin: 40px;
+            padding: 0;
         }
 
         .profile-header-section {
             text-align: center;
             margin-bottom: 30px;
+            padding: 40px 20px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #000000;
         }
 
         .content-columns {
             display: flex;
             gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap; /* Allow columns to wrap on smaller screens */
+            margin: 2rem auto;
+            flex-wrap: wrap;
+            max-width: 100%; /* Allow content columns to take up more width */
+            padding: 0 40px; /* Increased padding for breathing room */
+            box-sizing: border-box; /* Include padding in the element's total width */
         }
 
         .profile-form-column {
             flex: 1;
-            min-width: 300px; /* Minimum width before wrapping */
+            min-width: 300px;
+            /* Removed max-width to allow flexibility */
         }
 
         .map-column {
             flex: 1;
-            min-width: 300px; /* Minimum width before wrapping */
+            min-width: 300px;
+            /* Removed max-width to allow flexibility */
         }
 
         #user-map {
@@ -155,6 +163,7 @@ if (isset($_POST['update_profile'])) {
             border-radius: 8px;
             border: 1px solid #000000;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Ensure map takes full width of its column */
         }
 
         .map-placeholder {
@@ -169,6 +178,8 @@ if (isset($_POST['update_profile'])) {
             font-style: italic;
             text-align: center;
             padding: 20px;
+            width: 100%; /* Ensure placeholder takes full width of its column */
+            box-sizing: border-box; /* Include padding in the element's total width */
         }
 
         .profile-picture {
@@ -264,17 +275,28 @@ if (isset($_POST['update_profile'])) {
         }
 
         .abonnement-section {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 20px; /* Match page-content padding */
+            width: 100%;
+            background-color: #f8f8f8;
+            padding: 40px 0;
+            margin-top: 2rem;
+            border-top: 1px solid #000000;
         }
-        
+
+        .abonnement-container {
+            max-width: 100%; /* Allow subscription container to take up more width */
+            margin: 0 auto;
+            padding: 0 40px; /* Increased padding for breathing room */
+            box-sizing: border-box; /* Include padding in the element's total width */
+        }
+
         .abonnement-card {
-            background: var(--white);
+            background: #FFFFFF;
             border-radius: 8px;
             padding: 2rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid var(--soft-black);
+            border: 1px solid #000000;
+            max-width: 800px; /* Keep card max-width for readability */
+            margin: 0 auto; /* Center the card within the container */
         }
         
         .abonnement-card h2 {
@@ -337,9 +359,14 @@ if (isset($_POST['update_profile'])) {
             .content-columns {
                 flex-direction: column;
                 gap: 1rem;
+                padding: 0 20px; /* Adjust padding for smaller screens */
             }
             .profile-form-column, .map-column {
                 min-width: unset;
+            }
+
+            .abonnement-container {
+                padding: 0 20px; /* Adjust padding for smaller screens */
             }
         }
     </style>

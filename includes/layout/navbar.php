@@ -11,6 +11,7 @@
                 <button class="nav-dropbtn">Découvrir <i class="fa fa-caret-down"></i></button>
                 <div class="nav-dropdown-content">
                     <a href="/pages/about"><i class="fas fa-question-circle"></i> Qui sommes-nous</a>
+                    <a href="/pages/notre-philosophie"><i class="fas fa-brain"></i> Notre philosohpie</a>
                     <a href="/pages/domaines-culturels"><i class="fas fa-landmark"></i> Domaines culturels</a>
                     <a href="/pages/partenaires"><i class="fas fa-handshake"></i> Partenaires</a>
                     <a href="/pages/contact"><i class="fas fa-envelope"></i> Nous contacter</a>
