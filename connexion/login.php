@@ -251,7 +251,7 @@ if (isset($_POST['login_user'])) {
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
         </a>
-            <h1>Vous reoilà !</h1>
+            <h1>Vous revoilà !</h1>
             <div class="flex-column">
                 <label>Votre email </label>
             </div>
