@@ -19,10 +19,10 @@ if (isset($_SESSION['user_id'])) {
         </svg>
     </div>
     <div class="nav-links">
-        <a href="../../index.php" style="display: flex; align-items: center;"><i class="fas fa-home"></i></a>
+        <a href="../../index.php" class="btn-outline"><i class="fas fa-home"></i></a>
 
         <div class="nav-dropdown">
-            <button class="nav-dropbtn">Découvrir <i class="fa fa-caret-down"></i></button>
+            <button class="nav-dropbtn btn-outline">Découvrir <i class="fa fa-caret-down"></i></button>
             <div class="nav-dropdown-content">
                 <a href="/pages/about"><i class="fas fa-question-circle"></i> Qui sommes-nous</a>
                 <a href="/pages/notre-philosophie"><i class="fas fa-brain"></i> Notre philosohpie</a>
@@ -33,7 +33,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
 
         <div class="nav-dropdown">
-            <button class="nav-dropbtn">Expériences <i class="fa fa-caret-down"></i></button>
+            <button class="nav-dropbtn btn-outline">Expériences <i class="fa fa-caret-down"></i></button>
             <div class="nav-dropdown-content">
                 <a href="/pages/agenda"><i class="fas fa-calendar-alt"></i> Agenda</a>
                 <a href="/pages/activites"><i class="fas fa-landmark"></i> Activités</a>
@@ -44,7 +44,7 @@ if (isset($_SESSION['user_id'])) {
 
         <?php if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] == 'user'): ?>
             <div class="nav-dropdown">
-                <button class="nav-dropbtn"><img src="./assets/uploads/profiles/<?php echo $photo_profil['photo_profil']; ?>" alt="Photo de profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;"> <i class="fa fa-caret-down"></i></button>
+                <button class="nav-dropbtn btn-outline"><img src="./assets/uploads/profiles/<?php echo $photo_profil['photo_profil']; ?>" alt="Photo de profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;"> <i class="fa fa-caret-down"></i></button>
                 <div class="nav-dropdown-content">
                     <a href="../../pages/user/profile.php">Mon profil</a>
                     <a href="../../pages/reservations">Mes réservations</a>
@@ -55,7 +55,7 @@ if (isset($_SESSION['user_id'])) {
 
         <?php if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true): ?>
             <div class="nav-dropdown">
-                <button class="nav-dropbtn"><i class="fas fa-user-alt"></i> <i class="fa fa-caret-down"></i></button>
+                <button class="nav-dropbtn btn-outline"><i class="fas fa-user-alt"></i> <i class="fa fa-caret-down"></i></button>
                 <div class="nav-dropdown-content">
                     <a href="/connexion/login.php">Me connecter</a>
                     <a href="/connexion/register.php">M'inscrire</a>
@@ -63,58 +63,6 @@ if (isset($_SESSION['user_id'])) {
             </div>
         <?php endif; ?>
     </div>
-
-    <style>
-        .nav-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .nav-dropbtn {
-            background-color: transparent;
-            color: var(--soft-black);
-            padding: 12px 16px;
-            font-size: inherit;
-            font-family: inherit;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .nav-dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: var(--white);
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 4px;
-            right: 0;
-        }
-
-        .nav-dropdown-content a {
-            color: var(--soft-black);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .nav-dropdown:hover .nav-dropdown-content {
-            display: block;
-        }
-
-        .nav-dropdown:hover .nav-dropbtn {
-            opacity: 0.8;
-        }
-    </style>
 </nav>
 
 <style>
@@ -122,7 +70,7 @@ if (isset($_SESSION['user_id'])) {
         position: sticky;
         top: 0;
         background: var(--white);
-        padding: 0.50rem 1.5rem;
+        padding: 1rem 2rem;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         z-index: 1000;
         display: flex;
@@ -132,18 +80,52 @@ if (isset($_SESSION['user_id'])) {
 
     .nav-links {
         display: flex;
-        gap: 1.5rem;
+        gap: 1rem;
+        align-items: center;
     }
 
-    .nav-links a {
+    .nav-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .nav-dropbtn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+    .nav-dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: var(--white);
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 4px;
+        right: 0;
+    }
+
+    .nav-dropdown-content a {
         color: var(--soft-black);
+        padding: 12px 16px;
         text-decoration: none;
-        font-weight: 500;
+        display: block;
+        text-align: left;
         transition: all 0.3s ease;
     }
 
-    .nav-links a:hover {
-        opacity: 0.8;
+    .nav-dropdown-content a:hover {
+        background-color: var(--accent);
+        color: var(--white);
+    }
+
+    .nav-dropdown:hover .nav-dropdown-content {
+        display: block;
     }
 
     @media (max-width: 768px) {
