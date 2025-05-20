@@ -1,8 +1,6 @@
 <?php
 require_once 'includes/auth.php'; 
-
 $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist", "micheldjoumessi_pair-prog");
-
 ?>
 
 <!DOCTYPE html>
@@ -10,582 +8,1073 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Media | Connecter les jeunes à la culture</title>
+    <title>Flow Media | Explorez le patrimoine français</title>
     <link rel="icon" href="/assets/icons/icon-test.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cookie&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         
         :root {
-            --soft-black: #1a1a1a;
-            --white: #f9f9f9;
+            --primary: #1a1a1a;
+            --secondary: #f9f9f9;
+            --accent: #e63946;
+            --white: #ffffff;
+            --light-gray: #f0f0f0;
+            --beige: #f8f4e3;
+            --gold: #daa520;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
         
         body {
             font-family: "Poppins", sans-serif;
-            margin: 0;
-            padding: 0;
-            color: var(--soft-black);
-            background: var(--white);
+            color: var(--primary);
+            background: var(--secondary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
-        }
-        
-        .hero {
-            text-align: center;
-            padding: 0; 
-            background-image: url('https://musees-nationaux-alpesmaritimes.fr/chagall/sites/chagall/files/styles/w1920_extra_wide/public/2023-09/Atelier_duBeau_texture_%C3%A9tudiants_1920x960px.jpg?itok=ViyGvrM4');
-            background-size: cover;
-            background-position: center;
-            color: var(--white);
             position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: flex-start;
-            padding-top: 10vh; /* margin top */
         }
         
-        .hero::before {
-            content: "";
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .hero-video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            object-fit: cover;
+            opacity: 0.7;
         }
         
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 800px;
-            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            padding: 0 20px;
+            color: var(--white);
         }
         
-        .cursive-text {
-            font-family: "Cookie", cursive;
-            font-weight: 400;
-            font-style: normal;
-            font-size: 10rem;
+        .hero-title {
+            font-family: "Playfair Display", serif;
+            font-size: 4.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
         }
         
-        .hero-content p {
+        .hero-subtitle {
             font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.8s;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 1.1s;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--white);
+            border: 2px solid var(--accent);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--white);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(230, 57, 70, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            width: 100%;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-family: "Playfair Display", serif;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .section-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Architecture Section */
+        .architecture {
+            background-color: var(--white);
+            position: relative;
+        }
+        
+        .parallax-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: 0;
+            opacity: 0.15;
+        }
+        
+        .architecture-bg {
+            background-image: url('https://www.district-immo.com/wp-content/uploads/2023/04/Immeuble-haussmannien-shutterstock.png');
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .content-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .content-img {
+            flex: 1;
+            min-width: 300px;
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .content-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .content-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        .content-title {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .content-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .content-description {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .feature-list {
+            list-style-type: none;
             margin-bottom: 2rem;
         }
         
-        .hero-cta-text {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 2.5rem 0;
+        .feature-list li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
         }
         
-        .btn {
-            display: inline-block;
-            padding: 12px 28px;
-            background: var(--soft-black);
+        .feature-list li i {
+            color: var(--accent);
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        /* Heritage Section */
+        .heritage {
+            background-color: var(--beige);
+            position: relative;
+        }
+        
+        .heritage-bg {
+            background-image: url('https://media.lesechos.com/api/v1/images/view/65095a3f3880a20fca650e2f/contenu_article/image.jpg');
+        }
+        
+        /* Gardens Section */
+        .gardens {
+            background-color: var(--white);
+            position: relative;
+        }
+        
+        .gardens-bg {
+            background-image: url('https://www.stiga.com/media/contentmanager/content/symetrie_jardin.jpg');
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--primary);
             color: var(--white);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 500;
-            margin: 1rem 0.5rem;
-            transition: all 0.3s ease;
-            border: 2px solid var(--soft-black);
+            text-align: center;
         }
         
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .testimonial-slider {
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
         }
         
-        .btn-large {
-            padding: 15px 32px;
+        .testimonial-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .testimonial-slide {
+            flex: 0 0 100%;
+            padding: 2rem;
+        }
+        
+        .testimonial-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .testimonial-location {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 10px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .dot.active {
+            background-color: var(--accent);
+        }
+        
+        /* Activities Section */
+        .activities {
+            background-color: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .activity-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .activity-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .activity-img {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .activity-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .activity-card:hover .activity-img img {
+            transform: scale(1.1);
+        }
+        
+        .activity-content {
+            padding: 1.5rem;
+        }
+        
+        .activity-title {
+            font-family: "Playfair Display", serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .activity-date {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .activity-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background-color: var(--accent);
+            color: var(--white);
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .cta-title {
+            font-family: "Playfair Display", serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-description {
+            max-width: 700px;
+            margin: 0 auto 2rem;
             font-size: 1.1rem;
         }
         
         .btn-white {
-            background: var(--white);
-            color: var(--soft-black);
+            background-color: var(--white);
+            color: var(--accent);
+            border: 2px solid var(--white);
         }
         
         .btn-white:hover {
-            background: var(--soft-black);
+            background-color: transparent;
             color: var(--white);
         }
         
-        section {
-            padding: 5rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-        }
-        
-        section h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-            font-size: 2.5rem;
-        }
-
-        #domains .image-placeholder {
-            height: 200px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f0f0f0;
-            margin-bottom: 15px;
-        }
-
-        #domains .image-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            transition: transform 0.3s ease;
-        }
-
-        #domains .card:hover img {
-            transform: scale(1.05);
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .card {
-            border: 1px solid rgba(0,0,0,0.1);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
-            background: var(--white);
-            border-radius: 8px;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        .image-placeholder {
-            background: #f0f0f0;
-            height: 200px;
-            margin-bottom: 15px;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #666;
-            text-align: center;
-        }
-
-        .img-placeholder img {
-            width: 100px;
-            height: 100px;
+            color: var(--white);
+            z-index: 3;
+            cursor: pointer;
+            animation: bounce 2s infinite;
         }
         
-        /* Laptop/Tablet (768px - 1024px) */
+        .scroll-indicator span {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .scroll-icon {
+            font-size: 1.5rem;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+        
+        /* Responsive Styles */
         @media (max-width: 1024px) {
-            .cursive-text {
-                font-size: 8rem;
+            .hero-title {
+                font-size: 3.5rem;
             }
             
-            .hero-content p {
-                font-size: 1.3rem;
+            .section-title {
+                font-size: 2.5rem;
             }
             
-            .hero-cta-text {
+            .content-title {
                 font-size: 2rem;
             }
             
-            section {
-                padding: 4rem 0;
-            }
-            
-            section h2 {
-                font-size: 2.2rem;
+            .content-img {
+                height: 400px;
             }
         }
         
-        /* Mobile (up to 768px) */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 15px;
+            .hero-title {
+                font-size: 2.8rem;
             }
             
-            .hero {
-                min-height: 90vh;
-            }
-            
-            .hero-content {
-                padding: 1.5rem;
-            }
-            
-            .cursive-text {
-                font-size: 5rem;
-                margin-bottom: 0.5rem;
-            }
-            
-            .hero-content p {
+            .hero-subtitle {
                 font-size: 1.2rem;
-                margin-bottom: 1.5rem;
             }
             
-            .hero-cta-text {
-                font-size: 1.8rem;
-                margin: 1.5rem 0;
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .content-wrapper {
+                flex-direction: column-reverse;
+            }
+            
+            .content-text {
+                text-align: center;
+            }
+            
+            .content-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .content-img {
+                width: 100%;
+                height: 350px;
+            }
+            
+            .feature-list li {
+                justify-content: center;
+            }
+            
+            section {
+                padding: 70px 0;
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                width: 100%;
             }
             
             .btn {
-                display: block;
-                margin: 0.5rem auto;
-                width: 80%;
-                max-width: 300px;
-            }
-            
-            section {
-                padding: 3rem 0;
-            }
-            
-            section h2 {
-                font-size: 2rem;
-                margin-bottom: 2rem;
-            }
-            
-            .grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .card {
-                padding: 1rem;
-            }
-            
-            .image-placeholder {
-                height: 180px;
+                width: 100%;
             }
         }
         
         @media (max-width: 480px) {
-            .cursive-text {
-                font-size: 4rem;
+            .hero-title {
+                font-size: 2.2rem;
             }
             
-            .hero-content p {
-                font-size: 1.1rem;
+            .hero-subtitle {
+                font-size: 1rem;
             }
             
-            .hero-cta-text {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .content-title {
                 font-size: 1.5rem;
             }
             
-            section h2 {
-                font-size: 1.8rem;
+            .testimonial-quote {
+                font-size: 1rem;
             }
         }
-
-        .scroll-down-arrow {
-            position: absolute;
-            bottom: 220px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            cursor: pointer;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
+        
+        /* Partners Section */
+        .partners {
+            background-color: var(--white);
+            text-align: center;
         }
-
-        .scroll-down-arrow:hover {
+        
+        .partners-slider {
+            display: flex;
+            gap: 4rem;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+        
+        .partners-track {
+            display: flex;
+            gap: 4rem;
+            animation: partnersScroll 30s linear infinite;
+        }
+        
+        .partner-logo {
+            height: 80px;
+            filter: grayscale(1);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .partner-logo:hover {
+            filter: grayscale(0);
             opacity: 1;
         }
-
-        .scroll-down-arrow svg {
-            width: 40px;
-            height: 40px;
-            stroke: var(--white);
+        
+        @keyframes partnersScroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-100% - 4rem));
+            }
         }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
+        
+        /* Diagonal Sections */
+        .diagonal-box {
+            position: relative;
+            padding: 15vh 0;
+            margin-top: -10vh;
+            margin-bottom: -10vh;
+            transform: skewY(-5deg);
+            background-color: var(--white);
         }
-
-        .scroll-down-arrow {
-            animation: bounce 2s infinite;
+        
+        .diagonal-content {
+            transform: skewY(5deg);
         }
-
-        .partner-logo {
-            width: 120px;
-            height: 120px;
-            object-fit: contain;
-            margin: 0 80px 1.5rem 0;
-            display: block;
-        }
-
-        .partners-carousel-container {
-            overflow: hidden;
+        
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
             width: 100%;
-            margin: 20px auto;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background-color: var(--accent);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+        
+        .element-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -100px;
+        }
+        
+        .element-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            right: -50px;
+        }
+        
+        .element-3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            right: 10%;
         }
 
-        .partners-carousel-track {
-            display: flex;
-            width: fit-content; 
-            animation: scroll 20s linear infinite;
+        .newsletter {
+            background: linear-gradient(135deg, var(--light-green) 0%, rgba(44, 85, 48, 0.1) 100%);
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .partner-logo-slide {
-            flex-shrink: 0;
-            width: 200px; /* Adjust width as needed */
-            height: 100px; /* Adjust height as needed */
-            margin: 0 20px;
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80') center/cover;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .newsletter-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .newsletter .section-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: clamp(2rem, 5vw, 3rem);
+        }
+
+        .newsletter .section-description {
+            color: var(--dark-green);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .newsletter-form {
+            margin-top: 2rem;
+        }
+
+        .form-group {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .form-group input {
+            flex: 1;
+            padding: 18px 25px;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
             font-size: 1rem;
-            color: #555;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            outline: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary);
         }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        .form-group input::placeholder {
+            color: var(--primary);
+            opacity: 0.6;
         }
 
-        /* Pause animation on hover (optional) */
-        .partners-carousel-container:hover .partners-carousel-track {
-            animation-play-state: paused;
+        .form-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(44, 85, 48, 0.1);
+            background: var(--secondary);
+        }
+
+        .form-group .btn {
+            padding: 18px 35px;
+            border-radius: 50px;
+            white-space: nowrap;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            background: var(--primary);
+            color: var(--secondary);
+            border: none;
+        }
+
+        .form-group .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(44, 85, 48, 0.2);
+            background: var(--dark-green);
+        }
+
+        .form-group .btn:active {
+            transform: translateY(0);
         }
 
         @media (max-width: 768px) {
-            .partner-logo-slide {
-                width: 150px;
-                height: 80px;
-                margin: 0 10px;
-                font-size: 0.9rem;
+            .newsletter {
+                padding: 60px 0;
             }
-            @keyframes scroll {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-50%); }
+
+            .form-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .form-group input,
+            .form-group .btn {
+                width: 100%;
+                padding: 15px 20px;
+            }
+
+            .newsletter .section-title {
+                font-size: 2rem;
+            }
+
+            .newsletter .section-description {
+                font-size: 1rem;
+            }
+        }
+
+        /* Animation pour le formulaire */
+        .newsletter-form {
+            animation: slideUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
 </head>
+<?php require_once 'loader/loader.php'; ?>
 <body>
+    <div id="body">
+        <?php include './includes/layout/navbar-special.php'; ?>
 
-    <?php include './includes/layout/navbar-special.php'; ?>
+        <!-- Hero Section -->
+        <header class="hero">
+            <video class="hero-video" autoplay muted loop>
+                <source src="https://videos.pexels.com/video-files/1777892/1777892-sd_640_360_25fps.mp4" type="video/mp4">
+                Votre navigateur ne prend pas en charge la vidéo.
+            </video>
+            <div class="hero-content">
+                <h1 class="hero-title">Explorez l'héritage français</h1>
+                <p class="hero-subtitle">Découvrez le patrimoine, l'architecture et les jardins historiques de France sous un nouveau regard</p>
+                <div class="hero-cta">
+                    <a href="/connexion/register.php" class="btn btn-primary">Rejoindre l'aventure</a>
+                    <a href="#architecture" class="btn btn-secondary">Explorer</a>
+                </div>
+            </div>
+            <div class="scroll-indicator" id="scroll-down">
+                <span>Découvrir</span>
+                <i class="fas fa-chevron-down scroll-icon"></i>
+            </div>
+        </header>
 
-    <header class="hero" id="accueil">
-        <div class="hero-content container">
-            <h1 class="cursive-text">Flow Media</h1>
-            <p>Cultivez votre curiosité, explorez votre culture</p>
-            <div class="hero-cta-text">Prêt à explorez la culture autrement ?</div>
-            <a href="/connexion/register.php" class="btn btn-large">Créer un compte gratuitement</a>
-            <a href="#activities" class="btn btn-large btn-white">Découvrir les activités</a>
-        </div>
+        <!-- Architecture Section -->
+        <section id="architecture" class="architecture">
+            <div class="parallax-bg architecture-bg"></div>
+            <div class="container">
+                <div class="content-wrapper">
+                    <div class="content-text" data-aos="fade-right" data-aos-duration="1000">
+                        <h2 class="content-title">Architecture</h2>
+                        <p class="content-description">L'architecture française raconte notre histoire à travers ses formes, ses matériaux et ses innovations. Des châteaux médiévaux aux constructions contemporaines, chaque bâtiment est le reflet d'une époque et d'une vision.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Découvrez l'évolution des styles architecturaux à travers les siècles</li>
+                            <li><i class="fas fa-check-circle"></i> Explorez les techniques de construction qui ont façonné nos villes</li>
+                            <li><i class="fas fa-check-circle"></i> Comprenez comment l'architecture influence notre quotidien</li>
+                        </ul>
+                        <a href="/pages/architecture.php" class="btn btn-primary">En savoir plus</a>
+                    </div>
+                    <div class="content-img" data-aos="fade-left" data-aos-duration="1000">
+                        <img src="https://www.district-immo.com/wp-content/uploads/2023/04/Immeuble-haussmannien-shutterstock.png" alt="Architecture française">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Heritage Section -->
+        <section id="heritage" class="heritage">
+            <div class="parallax-bg heritage-bg"></div>
+            <div class="container">
+                <div class="content-wrapper">
+                    <div class="content-img" data-aos="fade-right" data-aos-duration="1000">
+                        <img src="https://media.lesechos.com/api/v1/images/view/65095a3f3880a20fca650e2f/contenu_article/image.jpg" alt="Patrimoine français">
+                    </div>
+                    <div class="content-text" data-aos="fade-left" data-aos-duration="1000">
+                        <h2 class="content-title">Patrimoine</h2>
+                        <p class="content-description">Le patrimoine français constitue un héritage culturel d'une richesse exceptionnelle. Des monuments historiques aux traditions locales, ce sont ces éléments qui créent notre identité collective et forgent notre avenir.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Plongez dans l'histoire vivante à travers des monuments emblématiques</li>
+                            <li><i class="fas fa-check-circle"></i> Découvrez les savoir-faire traditionnels qui perdurent au fil des générations</li>
+                            <li><i class="fas fa-check-circle"></i> Participez à la préservation de notre mémoire collective</li>
+                        </ul>
+                        <a href="/pages/patrimoine.php" class="btn btn-primary">Explorer notre patrimoine</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gardens Section -->
+        <section id="gardens" class="gardens">
+            <div class="parallax-bg gardens-bg"></div>
+            <div class="container">
+                <div class="content-wrapper">
+                    <div class="content-text" data-aos="fade-right" data-aos-duration="1000">
+                        <h2 class="content-title">Jardins & Nature</h2>
+                        <p class="content-description">Les jardins français sont des œuvres d'art vivantes où la nature dialogue avec la culture. Des jardins à la française aux espaces contemporains, découvrez comment ces lieux uniques combinent esthétique, histoire et biodiversité.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Admirez l'art paysager qui a défini l'identité des jardins français</li>
+                            <li><i class="fas fa-check-circle"></i> Découvrez les jardins historiques qui ont inspiré l'Europe entière</li>
+                            <li><i class="fas fa-check-circle"></i> Comprenez le rôle des espaces verts dans nos environnements urbains</li>
+                        </ul>
+                        <a href="/pages/jardins.php" class="btn btn-primary">Découvrir les jardins</a>
+                    </div>
+                    <div class="content-img" data-aos="fade-left" data-aos-duration="1000">
+                        <img src="https://www.stiga.com/media/contentmanager/content/symetrie_jardin.jpg" alt="Jardins français">
+                    </div>
+                </div>
+            </div>
+        </section>
         
-        <!-- Scroll Down Arrow -->
-        <div class="scroll-down-arrow">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </div>
-    </header>
-
-    <section id="invisible-section" class="container" style="margin-top: 10px;">
-        <div>
-            <h1></h1>
-        </div>
-    </section>
-
-    <section class="container" id="about">
-        <h2>Qui sommes-nous ?</h2>
-        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center;">
-            <div>
-                <p>Flow Media est une agence de communication portée par une équipe jeune et créative, au service de la culture et de l'accessibilité. Mandatée par l'Association des Maires de France, notre mission est de valoriser le patrimoine culturel auprès des 15-25 ans.</p>
-                <p>Notre approche ? Rendre la culture attractive, accessible et pertinente pour les jeunes générations. Nous créons des ponts entre les institutions culturelles traditionnelles et les codes de communication d'aujourd'hui.</p>
-            </div>
-            <div class="image-placeholder">
-                [Image d'équipe : jeunes professionnels en réunion créative]
-            </div>
-        </div>
-    </section>
-
-    <section class="container" id="domains">
-        <h2>Nos domaines culturels</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="image-placeholder">
-                    <img class src="https://www.district-immo.com/wp-content/uploads/2023/04/Immeuble-haussmannien-shutterstock.png" alt="">
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Ce qu'ils en disent</h2>
+                <div class="testimonial-slider" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-track">
+                        <div class="testimonial-slide">
+                            <p class="testimonial-quote">"La visite nocturne des monuments illuminés a complètement changé ma vision de l'architecture de ma propre ville. Je ne regarderai plus jamais ces bâtiments de la même façon."</p>
+                            <p class="testimonial-author">Léa, 19 ans</p>
+                            <p class="testimonial-location">Lyon</p>
+                        </div>
+                        <div class="testimonial-slide">
+                            <p class="testimonial-quote">"L'atelier de cyanotype dans le jardin botanique était à la fois un moment de connexion avec la nature et une découverte technique fascinante. Je ne pensais pas que le patrimoine pouvait être aussi vivant et inspirant."</p>
+                            <p class="testimonial-author">Maxime, 22 ans</p>
+                            <p class="testimonial-location">Bordeaux</p>
+                        </div>
+                        <div class="testimonial-slide">
+                            <p class="testimonial-quote">"Grâce aux podcasts de Flow Media, j'ai découvert des aspects de la culture urbaine que je côtoyais tous les jours sans les remarquer. J'ai maintenant un regard beaucoup plus attentif sur mon environnement."</p>
+                            <p class="testimonial-author">Chloé, 17 ans</p>
+                            <p class="testimonial-location">Nantes</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-dots">
+                        <div class="dot active"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
                 </div>
-                <h3>Architecture</h3>
-                <p>Découvrez l'impact culturel et visuel de l'architecture qui façonne nos villes. Des bâtiments emblématiques aux structures innovantes, explorez les espaces qui racontent notre société et son évolution.</p>
             </div>
-            <div class="card">
-                <div class="image-placeholder">
-                    <img src="https://media.lesechos.com/api/v1/images/view/65095a3f3880a20fca650e2f/contenu_article/image.jpg" alt="">
-                </div>
-                <h3>Patrimoine</h3>
-                <p>Plongez dans l'histoire vivante de votre région à travers ses monuments, traditions et savoir-faire. Le patrimoine n'est pas figé dans le passé, il dialogue constamment avec notre présent et inspire notre futur.</p>
-            </div>
-            <div class="card">
-                <div class="image-placeholder">
-                    <img src="https://www.stiga.com/media/contentmanager/content/symetrie_jardin.jpg" alt="">
-                </div>
-                <h3>Jardin & nature</h3>
-                <p>Reconnectez avec l'environnement et le vivant à travers les jardins historiques, parcs urbains et espaces verts. Découvrez comment la nature s'intègre à notre patrimoine culturel et architectural.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="container" id="activities">
-        <h2>Activités à venir</h2>
-        <div class="activities-grid">
-            <div class="activity-card">
-                <div class="image-placeholder">
-                    [Photo exposition d'art urbain]
+        <!-- Activities Section -->
+        <section class="activities" id="activities">
+            <div class="floating-elements">
+                <div class="floating-element element-1"></div>
+                <div class="floating-element element-2"></div>
+                <div class="floating-element element-3"></div>
+            </div>
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Prochaines activités</h2>
+                <p class="section-description" data-aos="fade-up" data-aos-delay="200">Participez à nos événements pour vivre des expériences culturelles uniques et immersives</p>
+                <div class="activity-cards">
+                    <div class="activity-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="activity-img">
+                            <img src="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e" alt="Street Art Tour">
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Street Art Tour - Centre-ville</h3>
+                            <span class="activity-date">28 mai 2025</span>
+                            <p class="activity-description">Parcours guidé à travers les œuvres de street art qui transforment nos murs en galeries à ciel ouvert. Découvrez les artistes locaux et internationaux qui s'expriment dans l'espace urbain.</p>
+                            <a href="/evenements/street-art-tour.php" class="btn btn-primary">S'inscrire</a>
+                        </div>
+                    </div>
+                    <div class="activity-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="activity-img">
+                            <img src="https://images.unsplash.com/photo-1513311068348-19c8fbdc0bb6" alt="Visite architecturale">
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Visite architecturale - Quartier historique</h3>
+                            <span class="activity-date">15 juin 2025</span>
+                            <p class="activity-description">Explorez l'architecture Art Déco et les influences modernistes qui ont façonné notre ville. Une visite guidée par un architecte passionné qui vous révélera les secrets de ces bâtiments emblématiques.</p>
+                            <a href="/evenements/visite-architecturale.php" class="btn btn-primary">S'inscrire</a>
+                        </div>
+                    </div>
+                    <div class="activity-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="activity-img">
+                            <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae" alt="Atelier jardinage">
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Atelier jardinage urbain</h3>
+                            <span class="activity-date">22 juin 2025</span>
+                            <p class="activity-description">Apprenez à créer et entretenir votre jardin urbain. Des techniques de permaculture aux solutions innovantes pour les espaces restreints, découvrez comment cultiver la nature en ville.</p>
+                            <a href="/evenements/atelier-jardinage.php" class="btn btn-primary">S'inscrire</a>
+                        </div>
+                    </div>
                 </div>
-                <h3>Street Art Tour - Centre-ville</h3>
-                <p class="activity-date">28 mai 2025</p>
-                <p>Parcours guidé à travers les œuvres de street art qui transforment nos murs en galeries à ciel ouvert. Découvrez les artistes locaux et internationaux qui s'expriment dans l'espace urbain.</p>
             </div>
-            <div class="activity-card">
-                <div class="image-placeholder">
-                    [Photo lieu architectural]
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter">
+            <div class="container">
+                <div class="newsletter-content" data-aos="fade-up">
+                    <h2 class="section-title">Restez informé</h2>
+                    <p class="section-description">Recevez nos actualités et découvrez les prochains événements en avant-première</p>
+                    <form class="newsletter-form" action="/includes/newsletter.php" method="POST">
+                        <div class="form-group">
+                            <input type="email" name="email" placeholder="Votre adresse email" required>
+                            <button type="submit" class="btn btn-primary">S'abonner</button>
+                        </div>
+                    </form>
                 </div>
-                <h3>Visite nocturne - Architectures lumineuses</h3>
-                <p class="activity-date">5 juin 2025</p>
-                <p>Une exploration des bâtiments emblématiques de la ville, magnifiés par des installations lumineuses. Redécouvrez l'architecture sous un nouveau jour.</p>
             </div>
-            <div class="activity-card">
-                <div class="image-placeholder">
-                    [Photo atelier créatif]
-                </div>
-                <h3>Atelier cyanotype - Jardin des plantes</h3>
-                <p class="activity-date">12 juin 2025</p>
-                <p>Initiez-vous à cette technique photographique ancienne qui utilise la lumière solaire pour créer des impressions bleues à partir d'éléments naturels.</p>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 30px;">
-             <a href="activites.php" class="btn">Voir toutes les activités</a>
-        </div>
-    </section>
+        </section>
 
-    <section class="container" id="podcasts">
-        <h2>Nos podcasts</h2>
-        <div class="podcast-container">
-            <div class="podcast-card">
-                <div class="image-placeholder">
-                    [Cover podcast - Culture & Urbanisme]
-                </div>
-                <h3>Épisode 8 : L'art dans l'espace public</h3>
-                <p>"Le street art n'est pas seulement une forme d'expression visuelle, c'est une révolution culturelle qui démocratise l'art et transforme nos villes en musées à ciel ouvert."</p>
-                <a href="#" class="btn">Écouter sur YouTube</a>
-            </div>
-            <div class="podcast-card">
-                <div class="image-placeholder">
-                    [Cover podcast - Patrimoine vivant]
-                </div>
-                <h3>Épisode 7 : Jardins historiques, espaces d'avenir</h3>
-                <p>"Ces espaces verts centenaires ne sont pas des vestiges figés, mais des laboratoires vivants où s'inventent de nouvelles relations entre l'humain et la nature."</p>
-                <a href="#" class="btn">Écouter sur YouTube</a>
-            </div>
-        </div>
-    </section>
+<?php include 'includes/layout/footer.php' ?>
 
-    <section class="container" id="community">
-        <h2>Rejoignez notre communauté</h2>
-        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center;">
-            <div>
-                <p>Devenez membre de Flow Media et accédez à une expérience culturelle enrichie, personnalisée et avantageuse.</p>
-                <ul>
-                    <li><strong>Contenus exclusifs</strong> - Accédez à des activités premium et des podcasts en avant-première</li>
-                    <li><strong>Avantages culture</strong> - Bénéficiez de codes promo pour les musées, théâtres et événements culturels partenaires</li>
-                    <li><strong>Expérience personnalisée</strong> - Recevez des recommandations adaptées à vos centres d'intérêt culturels</li>
-                    <li><strong>Réseau culturel</strong> - Échangez avec d'autres passionnés et élargissez vos horizons</li>
-                </ul>
-            </div>
-            <div style="text-align: center;">
-                 <a href="inscription.php" class="btn btn-large">Créer un compte gratuitement</a>
-            </div>
-        </div>
-    </section>
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 1000,
+                once: true
+            });
 
-    <section class="container" id="testimonials">
-        <h2>Ils ont participé</h2>
-        <div class="testimonials">
-            <div class="testimonial">
-                <p>"La visite nocturne des monuments illuminés a complètement changé ma vision de l'architecture de ma propre ville. Je ne regarderai plus jamais ces bâtiments de la même façon."</p>
-                <p class="testimonial-author"><b>Léa, 19 ans, Lyon</b></p>
-            </div>
-            <div class="testimonial">
-                <p>"L'atelier de cyanotype dans le jardin botanique était à la fois un moment de connexion avec la nature et une découverte technique fascinante. Je ne pensais pas que le patrimoine pouvait être aussi vivant et inspirant."</p>
-                <p class="testimonial-author"><b>Maxime, 22 ans, Bordeaux</b></p>
-            </div>
-            <div class="testimonial">
-                <p>"Grâce aux podcasts de Flow Media, j'ai découvert des aspects de la culture urbaine que je côtoyais tous les jours sans les remarquer. J'ai maintenant un regard beaucoup plus attentif sur mon environnement."</p>
-                <p class="testimonial-author"><b>Chloé, 17 ans, Nantes</b></p>
-            </div>
-        </div>
-    </section>
+            // Testimonial Slider
+            const testimonialTrack = document.querySelector('.testimonial-track');
+            const dots = document.querySelectorAll('.dot');
+            let currentSlide = 0;
 
-    <section class="container" id="partners">
-        <h2>Nos partenaires</h2>
-        <div class="partners-carousel-container">
-            <div class="partners-carousel-track">
-                <!-- de base -->
-                <img src="https://www.amf.asso.fr/img/logo-amf-bas.png" alt="AMF Logo" class="partner-logo">
-                <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture" class="partner-logo">
-                <img src="https://www.clique.tv/wp-content/uploads/2024/03/0000_ARTICLE-4-1.jpg" alt="Nota Bene" class="partner-logo">
-                <img src="https://www.radiofrance.fr/s3/cruiser-production/2021/11/eac4208f-148f-44fe-8cd0-86a7a393703b/1200x680_dirtybiology.jpg" alt="DirtyBiology" class="partner-logo">
-                <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Arte" class="partner-logo">
-                <img src="https://yt3.googleusercontent.com/8hjEXqyKPEgZnqf9uuBMw9djY0DvmCAkRzfuywP8HbPAxQM-yxIxEPZw6iAInButgnGkw6kwjw=s160-c-k-c0x00ffffff-no-rj" alt="EGO" class="partner-logo">
-                <!-- Duplication -->
-                <img src="https://www.amf.asso.fr/img/logo-amf-bas.png" alt="AMF Logo" class="partner-logo">
-                <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture" class="partner-logo">
-                <img src="https://www.clique.tv/wp-content/uploads/2024/03/0000_ARTICLE-4-1.jpg" alt="Nota Bene" class="partner-logo">
-                <img src="https://www.radiofrance.fr/s3/cruiser-production/2021/11/eac4208f-148f-44fe-8cd0-86a7a393703b/1200x680_dirtybiology.jpg" alt="DirtyBiology" class="partner-logo">
-                <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Arte" class="partner-logo">
-                <img src="https://yt3.googleusercontent.com/8hjEXqyKPEgZnqf9uuBMw9djY0DvmCAkRzfuywP8HbPAxQM-yxIxEPZw6iAInButgnGkw6kwjw=s160-c-k-c0x00ffffff-no-rj" alt="EGO" class="partner-logo">
-            </div>
-        </div>
-        <a href="../pages/partenaires" class="btn" style="align-items: center; " >Découvrir tous nos partenaires</a>
-    </section>
+            function updateSlider() {
+                testimonialTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
 
-    <?php include './includes/layout/footer.php'; ?>
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    updateSlider();
+                });
+            });
 
-    <script>
-        // Simple script for smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % dots.length;
+                updateSlider();
+            }, 5000);
+
+            // Smooth Scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Scroll Indicator
+            document.getElementById('scroll-down').addEventListener('click', () => {
+                document.querySelector('#architecture').scrollIntoView({
                     behavior: 'smooth'
                 });
             });
-        });
-
-        // Scroll down arrow functionality
-        const scrollArrow = document.querySelector('.scroll-down-arrow');
-        if (scrollArrow) {
-            scrollArrow.addEventListener('click', function() {
-                const aboutSection = document.getElementById('invisible-section');
-                if (aboutSection) {
-                    aboutSection.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        }
-    </script>
+        </script>
+    </div>
 </body>
 </html>

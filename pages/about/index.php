@@ -7,7 +7,7 @@ require_once '../../includes/auth.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À propos | Flow Media</title>
+    <title>À propos | AMF</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="icon" href="../../assets/icons/icon-test.svg" type="image/svg+xml">
     <style>
@@ -128,29 +128,29 @@ require_once '../../includes/auth.php';
         <h1>Notre mission</h1>
         <div class="grid" style="align-items: center;">
             <div>
-                <p>Flow Media est une agence de communication innovante créée pour rapprocher les jeunes de 15 à 25 ans de la culture sous toutes ses formes. Mandatée par l'Association des Maires de France, notre objectif est de rendre accessible et attractive la richesse culturelle de notre territoire.</p>
-                <p>Nous croyons que la culture n'est pas réservée à une élite, mais qu'elle doit être vivante, partagée et réinventée par chaque génération. Notre approche combine expertise culturelle et codes de communication contemporains pour créer des ponts entre les institutions et les jeunes publics.</p>
+                <p>L'Association des Maires de France (AMF) est la voix des collectivités locales depuis 1907. Représentant plus de 35 000 maires, elle œuvre quotidiennement pour défendre les intérêts des communes et promouvoir le développement local.</p>
+                <p>À travers Flow Media, notre agence partenaire, nous avons pour mission de rapprocher les jeunes de 15 à 25 ans de la richesse culturelle de nos territoires. Nous croyons que la culture est un vecteur essentiel de cohésion sociale et d'épanouissement personnel pour les jeunes générations.</p>
             </div>
-            <div class="image-placeholder">
-                [Image de l'équipe Flow Media en action]
+            <div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="Logo AMF" style="max-width: 100%; border-radius: 8px;">
             </div>
         </div>
     </section>
 
     <section class="container">
-        <h2>Notre approche</h2>
+        <h2>Notre action</h2>
         <div class="grid">
             <div class="card">
-                <h3>Accessibilité</h3>
-                <p>Nous décomplexons l'accès à la culture en créant des contenus adaptés aux codes des jeunes générations, tout en conservant la profondeur et la qualité des sujets traités.</p>
+                <h3>Défense des communes</h3>
+                <p>Nous représentons et défendons les intérêts des collectivités locales auprès des institutions nationales et européennes.</p>
             </div>
             <div class="card">
-                <h3>Innovation</h3>
-                <p>Nous utilisons les nouvelles technologies et formats de communication (podcasts, réseaux sociaux, réalité augmentée) pour raconter différemment le patrimoine culturel.</p>
+                <h3>Promotion culturelle</h3>
+                <p>Nous soutenons et valorisons le patrimoine culturel local à travers des initiatives innovantes comme Flow Media.</p>
             </div>
             <div class="card">
-                <h3>Engagement</h3>
-                <p>Nous impliquons directement les jeunes dans la création de nos contenus et activités, faisant d'eux des acteurs plutôt que de simples spectateurs.</p>
+                <h3>Engagement jeunesse</h3>
+                <p>Nous développons des programmes pour impliquer les jeunes dans la vie culturelle et citoyenne de leur territoire.</p>
             </div>
         </div>
     </section>
@@ -160,16 +160,16 @@ require_once '../../includes/auth.php';
         <div class="grid" style="grid-template-columns: 1fr 1fr; align-items: start;">
             <div>
                 <ul class="values-list">
-                    <li><strong>Curiosité</strong> - Nous cultivons l'émerveillement et la soif de découverte</li>
-                    <li><strong>Créativité</strong> - Nous repoussons les limites des formats traditionnels</li>
-                    <li><strong>Authenticité</strong> - Nous restons fidèles à l'esprit des œuvres tout en les rendant accessibles</li>
+                    <li><strong>Proximité</strong> - Nous sommes au plus près des réalités locales</li>
+                    <li><strong>Engagement</strong> - Nous défendons avec conviction les intérêts des communes</li>
+                    <li><strong>Innovation</strong> - Nous développons des solutions adaptées aux nouveaux enjeux</li>
                 </ul>
             </div>
             <div>
                 <ul class="values-list">
-                    <li><strong>Inclusion</strong> - Nous croyons que la culture doit être ouverte à tous</li>
-                    <li><strong>Innovation</strong> - Nous expérimentons sans cesse de nouvelles façons de partager la culture</li>
-                    <li><strong>Engagement</strong> - Nous sommes passionnés par notre mission de transmission</li>
+                    <li><strong>Solidarité</strong> - Nous agissons pour la cohésion entre les territoires</li>
+                    <li><strong>Transmission</strong> - Nous œuvrons pour préserver et partager notre héritage culturel</li>
+                    <li><strong>Dialogue</strong> - Nous favorisons les échanges entre les générations</li>
                 </ul>
             </div>
         </div>
@@ -179,32 +179,24 @@ require_once '../../includes/auth.php';
         <h2>Notre équipe</h2>
         <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
             <div class="team-member">
-                <div class="image-placeholder" style="border-radius: 50%;">
-                    [Photo membre équipe]
-                </div>
-                <h3>Michel christ</h3>
-                <p>Développeur web</p>
+                <img src="https://media.lesechos.com/api/v1/images/view/655afa9b607bc30b322e806c/1280x720/0100138871832-web-tete.jpg" alt="David Lisnard">
+                <h3>David Lisnard</h3>
+                <p>Président de l'AMF</p>
             </div>
             <div class="team-member">
-                <div class="image-placeholder" style="border-radius: 50%;">
-                    [Photo membre équipe]
-                </div>
-                <h3>Michel christ</h3>
-                <p>Développeur web</p>
+                <img src="https://observatoirevivreensemble.org/sites/default/files/styles/square_large/public/maire_-_sceaux_-_final_0.png?itok=zYp8r9EJ" alt="Philippe Laurent">
+                <h3>Philippe Laurent</h3>
+                <p>Secrétaire général</p>
             </div>
             <div class="team-member">
-                <div class="image-placeholder" style="border-radius: 50%;">
-                    [Photo membre équipe]
-                </div>
-                <h3>Michel christ</h3>
-                <p>Développeur web</p>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/ALaignel.JPG/1200px-ALaignel.JPG" alt="André Laignel">
+                <h3>André Laignel</h3>
+                <p>Premier vice-président</p>
             </div>
             <div class="team-member">
-                <div class="image-placeholder" style="border-radius: 50%;">
-                    [Photo membre équipe]
-                </div>
-                <h3>Michel christ</h3>
-                <p>Développeur web</p>
+                <img src="https://media.licdn.com/dms/image/v2/C4E03AQG0uKY31gsIIA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1618385662641?e=2147483647&v=beta&t=Zm_JOn8PHXQTWE1hczlTvLLiErhXW7XtXi3pkQqCmLw" alt="Emmanuel Constant">
+                <h3>Emmanuel Constant</h3>
+                <p>Trésorier</p>
             </div>
         </div>
     </section>

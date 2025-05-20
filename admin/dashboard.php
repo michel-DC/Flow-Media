@@ -314,115 +314,60 @@ if (isset($_GET['erreur']) && $_GET['erreur'] === 'acces_interdit_admin') {
 }
 ?>
 
-<script>
+<script> 
 function showSection(sectionId) {
-    // List of all possible section IDs that can be displayed
-    const sections = [
-        'dashboard-container',
-        'add-activity-section',
-        'supp-activity-section',
-        'edit-activity-section',
-        'see-activity-section',
-        'add-podcast-section',
-        'supp-podcast-section',
-        'edit-podcast-section',
-        'see-podcast-section',
-        'see-reserv-section',
-        'see-user-section'
-    ];
-
-    // Hide all sections
-    sections.forEach(id => {
-        const section = document.getElementById(id);
-        if (section) {
-            section.style.display = 'none';
-        }
-    });
-
-    // Show the requested section
-    const targetSection = document.getElementById(sectionId);
-    if (targetSection) {
-        targetSection.style.display = 'block';
-    } else if (sectionId === 'dashboard') { // Handle the dashboard default case
-         const dashboardSection = document.getElementById('dashboard-container');
-         if (dashboardSection) {
-             dashboardSection.style.display = 'block';
-         }
-    }
+    document.querySelectorAll('.dashboard-container, #add-activity-section, #supp-activity-section, #edit-activity-section, #see-activity-section, #add-podcast-section, #supp-podcast-section, #edit-podcast-section, #see-podcast-section, #see-reserv-section, #see-user-section')
+        .forEach(section => section.style.display = 'none');
+    document.getElementById(sectionId).style.display = 'block';
 }
 
-// Navigation depuis sidebar
-// Add event listeners for all relevant sidebar links
+// Navigation depuis sidebar         
 document.getElementById('add-activity-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('add-activity-section');
 });
-
 document.getElementById('supp-activity-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('supp-activity-section');
 });
-
 document.getElementById('edit-activity-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('edit-activity-section');
 });
-
 document.getElementById('see-activity-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('see-activity-section');
 });
-
 document.getElementById('add-podcast-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('add-podcast-section');
 });
-
 document.getElementById('supp-podcast-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('supp-podcast-section');
 });
-
 document.getElementById('edit-podcast-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('edit-podcast-section');
 });
-
 document.getElementById('see-podcast-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('see-podcast-section');
 });
-
 document.getElementById('see-reserv-link').addEventListener('click', function(event) {
     event.preventDefault();
     showSection('see-reserv-section');
 });
-
 document.getElementById('manage-user-link').addEventListener('click', function(event) {
     event.preventDefault();
-    showSection('see-user-section'); // Correct section ID for user management
+    showSection('see-user-section');
 });
-
-// Handle the Dashboard link (assuming it has an ID like 'dashboard-link' in sidebar.php)
-// Note: If the dashboard link navigates to dashboard.php directly, this listener might not be needed
-// but adding it for completeness if it's a single-page application style navigation
-const dashboardLink = document.querySelector('.sidebar-nav a[href="dashboard.php"]'); // Adjust selector if needed
-if (dashboardLink) {
-    dashboardLink.addEventListener('click', function(event) {
-        event.preventDefault();
-        showSection('dashboard-container'); // Show the main dashboard container
-    });
-}
 
 // Gestion de l'ancre dans l'URL
 window.addEventListener('DOMContentLoaded', function() {
     const anchor = window.location.hash;
-    if (anchor) {
-        // Remove the '#' and pass the section ID
+    if (anchor && document.querySelector(anchor)) {
         showSection(anchor.substring(1));
-    } else {
-        // Default to showing the dashboard if no hash is present
-        showSection('dashboard-container');
     }
 });
 

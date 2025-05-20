@@ -479,7 +479,8 @@ mysqli_close($link);
 </head>
 
 <body>
-    <?php include '../../includes/layout/navbar.php'; ?>
+    
+<?php include '../../includes/layout/navbar.php'; ?>
 
     <div class="dashboard">
         <aside class="sidebar">
@@ -514,7 +515,7 @@ mysqli_close($link);
                 <div class="message success"><?php echo $success; ?></div>
             <?php endif; ?>
 
-            <form method="POST" enctype="multipart/form-data" action="profile-V2.php">
+            <form method="POST" enctype="multipart/form-data" action="profile.php">
                 <div class="grid">
                     <div class="card" id="profile">
                         <div class="card-header">
