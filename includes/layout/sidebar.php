@@ -83,54 +83,37 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+    :root {
+        --primary-color: #2ECC71;
+        --secondary-color: #25a25a;
+        --text-color: #333;
+        --light-bg: #f8f9fa;
+        --white: #ffffff;
+        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
     .sidebar {
         font-family: "Poppins", sans-serif;
         width: 250px;
-        background: #FFFFFF;
-        /* White background */
-        color: #000000;
-        /* Black text */
+        background: var(--white);
+        color: var(--text-color);
         height: 100vh;
         position: fixed;
         left: 0;
         top: 0;
         padding: 20px;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-md);
         transition: all 0.3s ease;
         z-index: 1000;
-        backdrop-filter: blur(0);
-        /* Remove blur */
-        border-right: 1px solid #000000;
-        /* Black border */
-    }
-
-    @media (max-width: 768px) {
-        .sidebar {
-            width: 80px;
-            padding: 10px;
-        }
-
-        .sidebar .nav-text,
-        .sidebar .nav-icon {
-            margin-right: 0;
-        }
-
-        .sidebar-footer {
-            left: 10px;
-            right: 10px;
-        }
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .sidebar.collapsed {
         width: 120px;
-        /* Reverted to original collapsed width */
     }
 
     .sidebar.collapsed .nav-text {
-        display: none;
-    }
-
-    .sidebar.collapsed .sidebar-header h3 {
         display: none;
     }
 
@@ -138,6 +121,7 @@
         margin-bottom: 30px;
         padding-bottom: 20px;
         position: relative;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .toggle-btn {
@@ -150,14 +134,12 @@
         cursor: pointer;
         font-size: 1.5rem;
         padding: 5px;
-        color: #000000;
-        /* Black color */
+        color: var(--text-color);
         transition: color 0.2s ease;
     }
 
     .toggle-btn:hover {
-        color: #555555;
-        /* Darker grey on hover */
+        color: var(--primary-color);
     }
 
     .sidebar-nav ul {
@@ -169,36 +151,26 @@
     .nav-link {
         display: flex;
         align-items: center;
-        padding: 12px 25px;
-        color: #000000;
-        /* Black text */
+        padding: 12px 15px;
+        color: var(--text-color);
         text-decoration: none;
         border-radius: 8px;
-        /* Reverted to original border radius */
         margin-bottom: 8px;
         transition: all 0.2s ease-in-out;
-        border: 1.5px solid rgba(0, 0, 0, 0.5);
-        /* Adjusted border */
-        background-color: #FFFFFF;
-        /* White background */
-        width: 100%;
-        /* Increased width to fill container */
+        background-color: var(--white);
+        border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .nav-link:hover {
-        border-color: #000000;
-        /* Black border on hover */
-        background-color: #f0f0f0;
-        /* Subtle grey background on hover */
+        background-color: var(--primary-color);
+        color: var(--white);
         transform: translateX(5px);
-        /* Reverted to original transform */
+        border-color: var(--primary-color);
     }
 
     .nav-icon {
         margin-right: 15px;
         font-size: 1.2rem;
-        color: #000000;
-        /* Black icon color */
         transition: margin 0.3s ease;
     }
 
@@ -210,31 +182,48 @@
 
     .sidebar-footer {
         position: absolute;
-        bottom: 70px;
-        /* Reverted to original bottom position */
+        bottom: 20px;
         left: 20px;
         right: 20px;
         padding-top: 20px;
-        border-top: 1px solid #000000;
-        /* Black border */
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .logout-link {
-        background-color: #FFFFFF;
-        /* White background */
-        border-color: rgba(0, 0, 0, 0.5);
-        /* Adjusted border */
-        color: #000000;
-        /* Black text */
+        background-color: #f8d7da;
+        color: #721c24;
+        border-color: #f5c6cb;
     }
 
     .logout-link:hover {
-        background-color: #f0f0f0;
-        /* Subtle grey background on hover */
-        border-color: #000000;
-        /* Black border on hover */
-        color: #000000;
-        /* Black text */
+        background-color: #721c24;
+        color: var(--white);
+        border-color: #721c24;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 80px;
+            padding: 10px;
+        }
+
+        .sidebar .nav-text {
+            display: none;
+        }
+
+        .sidebar .nav-icon {
+            margin-right: 0;
+        }
+
+        .sidebar-footer {
+            left: 10px;
+            right: 10px;
+        }
+
+        .nav-link {
+            padding: 12px;
+            justify-content: center;
+        }
     }
 </style>
 

@@ -73,6 +73,16 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+        :root {
+            --primary-color: #2ECC71;
+            --secondary-color: #25a25a;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -81,11 +91,11 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
 
         body {
             font-family: "Poppins", sans-serif;
-            background-color: #FFFFFF;
+            background-color: #f0f0f0;
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            color: #000000;
+            color: var(--text-color);
         }
 
         .dashboard-container {
@@ -100,81 +110,82 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             text-align: center;
             margin-bottom: 30px;
             padding: 25px;
-            background: #FFFFFF;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border: 1px solid #000000;
-            /* Black border */
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
         }
 
         .dashboard-header h1 {
             margin: 0;
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
-            color: #000000;
-            font-weight: 600;
+            font-size: 36px;
+            color: var(--text-color);
+            font-weight: 700;
+        }
+
+        .dashboard-header h1 span {
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .dashboard-header h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
         }
 
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            /* Reverted to original grid */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-bottom: 30px;
         }
 
         .stat-card {
-            background: #FFFFFF;
+            background: var(--white);
             padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border: 1px solid #000000;
-            /* Black border */
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
             text-align: center;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: center;
             min-height: 200px;
-            /* Reverted to original min-height */
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-md);
         }
 
         .stat-number {
-            font-size: clamp(2rem, 5vw, 3rem);
-            /* Reverted to original font size */
-            color: #000000;
-            /* Black color */
+            font-size: 2.5rem;
+            color: var(--primary-color);
             font-weight: 700;
             margin-bottom: 15px;
-            /* Reverted to original margin */
             line-height: 1.2;
         }
 
         .stat-label {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            /* Reverted to original font size */
-            color: #4a5568;
-            /* Keep a slightly muted color for label */
+            font-size: 1.1rem;
+            color: var(--text-color);
             font-weight: 500;
         }
 
         .chart-card {
             position: relative;
             padding-top: 30px;
-            /* Reverted to original padding */
             min-height: 350px;
-            /* Reverted to original min-height */
         }
 
         .message {
             padding: 12px;
-            /* Adjusted padding */
             border-radius: 4px;
-            /* Minimal border radius */
             margin: 10px auto;
             text-align: center;
             width: 90%;
@@ -185,9 +196,19 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             transform: translateX(-50%);
             animation: fadeOut 5s forwards;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border: 1px solid #000000;
-            /* Black border */
+            box-shadow: var(--shadow-sm);
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
 
         @keyframes fadeOut {
@@ -195,32 +216,14 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
                 opacity: 1;
             }
 
-            80% {
+            90% {
                 opacity: 1;
             }
 
             100% {
                 opacity: 0;
-                visibility: hidden;
+                display: none;
             }
-        }
-
-        .error {
-            background-color: #FFFFFF;
-            /* White background */
-            color: #000000;
-            /* Black text */
-            border-left: none;
-            /* Removed border-left */
-        }
-
-        .success {
-            background-color: #FFFFFF;
-            /* White background */
-            color: #000000;
-            /* Black text */
-            border-left: none;
-            /* Removed border-left */
         }
 
         canvas {
@@ -229,29 +232,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             max-height: 300px;
         }
 
-        /* Reverted media queries to original structure */
-        @media screen and (min-width: 1024px) and (max-width: 1366px) {
-            .dashboard-container {
-                width: 90%;
-                padding: 15px;
-            }
-
-            .stats-container {
-                gap: 20px;
-            }
-
-            .stat-card {
-                padding: 20px;
-                min-height: 180px;
-            }
-
-            .chart-card {
-                min-height: 320px;
-            }
-        }
-
-        /* Reverted media queries to original structure */
-        @media screen and (max-width: 767px) {
+        @media (max-width: 768px) {
             .dashboard-container {
                 width: 98%;
                 padding: 10px;
@@ -263,6 +244,10 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
                 margin-bottom: 20px;
             }
 
+            .dashboard-header h1 {
+                font-size: 28px;
+            }
+
             .stats-container {
                 grid-template-columns: 1fr;
                 gap: 15px;
@@ -271,6 +256,14 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             .stat-card {
                 padding: 15px;
                 min-height: 140px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-label {
+                font-size: 1rem;
             }
 
             .chart-card {
@@ -296,7 +289,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
 
     <div class="dashboard-container">
         <div class="dashboard-header">
-            <h1>Tableau de Bord Administrateur</h1>
+            <h1>Tableau de Bord <span>Administrateur</span></h1>
         </div>
 
         <div class="stats-container">

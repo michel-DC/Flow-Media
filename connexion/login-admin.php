@@ -1,7 +1,7 @@
 <?php session_start();
 
 if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] === 'admin') {
-    header('Location: ../pages/admin/dashboard.php');
+    header('Location: ../admin/dashboard.php');
     exit();
 }
 
