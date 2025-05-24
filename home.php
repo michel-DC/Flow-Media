@@ -131,33 +131,33 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                         <button class="carousel-arrow left"><span>&#10094;</span></button>
                         <div class="carousel-track">
                             <div class="carousel-card">
-                                <img src="/assets/images/1.png" alt="Lieu 1" class="carousel-img-none">
-                            </div>
-                            <div class="carousel-card carousel-card-info-none" style="display: none;">
-                                <div class="carousel-info-content">
-                                    <h3 class="carousel-info-title">TRÉSORS ARCHITECTURAUX<br>À DÉCOUVRIR</h3>
-                                    <p class="carousel-info-desc">Explorez les joyaux architecturaux qui ont façonné notre histoire et notre culture !</p>
-                                    <button class="carousel-info-btn">Voir plus</button>
+                                <img src="/assets/images/1.png" alt="Lieu 1" class="carousel-img">
+                                <div class="carousel-info-overlay">
+                                    <div class="carousel-info-content">
+                                        <h3 class="carousel-info-title">TRÉSORS ARCHITECTURAUX<br>À DÉCOUVRIR</h3>
+                                        <p class="carousel-info-desc">Explorez les joyaux architecturaux qui ont façonné notre histoire et notre culture !</p>
+                                        <button class="carousel-info-btn">Voir plus</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="carousel-card">
-                                <img src="/assets/images/2.png" alt="Lieu 2" class="carousel-img-none">
-                            </div>
-                            <div class="carousel-card carousel-card-info-none" style="display: none;">
-                                <div class="carousel-info-content">
-                                    <h3 class="carousel-info-title">UN PATRIMOINE<br>CHARGÉ D'HISTOIRE</h3>
-                                    <p class="carousel-info-desc">Partez à la chasse aux histoires insolites qui se cachent juste au coin de votre rue !</p>
-                                    <button class="carousel-info-btn">Voir plus</button>
+                                <img src="/assets/images/2.png" alt="Lieu 2" class="carousel-img">
+                                <div class="carousel-info-overlay">
+                                    <div class="carousel-info-content">
+                                        <h3 class="carousel-info-title">UN PATRIMOINE<br>CHARGÉ D'HISTOIRE</h3>
+                                        <p class="carousel-info-desc">Partez à la chasse aux histoires insolites qui se cachent juste au coin de votre rue !</p>
+                                        <button class="carousel-info-btn">Voir plus</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="carousel-card">
-                                <img src="/assets/images/3.png" alt="Lieu 3" class="carousel-img-none">
-                            </div>
-                            <div class="carousel-card carousel-card-info-none" style="display: none;">
-                                <div class="carousel-info-content">
-                                    <h3 class="carousel-info-title">DES JARDINS<br>REMARQUABLES</h3>
-                                    <p class="carousel-info-desc">Explorez les plus beaux jardins français classés et découvrez leurs secrets botaniques !</p>
-                                    <button class="carousel-info-btn">Voir plus</button>
+                                <img src="/assets/images/3.png" alt="Lieu 3" class="carousel-img">
+                                <div class="carousel-info-overlay">
+                                    <div class="carousel-info-content">
+                                        <h3 class="carousel-info-title">DES JARDINS<br>REMARQUABLES</h3>
+                                        <p class="carousel-info-desc">Explorez les plus beaux jardins français classés et découvrez leurs secrets botaniques !</p>
+                                        <button class="carousel-info-btn">Voir plus</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -321,44 +321,85 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                 </div>
             </section>
 
-            <section class="testimonials-section">ç
+            <!-- Testimonials Section -->
+            <section class="testimonials-section">
                 <h2 class="testimonials-title">CE QU'ILS EN PENSENT</h2>
-                <div class="testimonials-container">
-                    <div class="testimonial-card">
-                        <div class="testimonial-avatar">
-                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
-                        </div>
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"Une expérience incroyable ! J'ai découvert des lieux magnifiques que je ne connaissais pas dans ma propre ville."</p>
-                            <div class="testimonial-author">
-                                <h4>Marie L.</h4>
-                                <p>Paris</p>
+                <div class="testimonials-carousel-container">
+                    <div class="testimonials-carousel-track">
+                        <!-- Testimonial Card 1 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"Une expérience incroyable ! J'ai découvert des lieux magnifiques que je ne connaissais pas dans ma propre ville."</p>
+                                <div class="testimonial-author">
+                                    <h4>Marie L.</h4>
+                                    <p>Paris</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-avatar">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
-                        </div>
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"Les défis sont vraiment amusants et m'ont permis d'en apprendre beaucoup sur l'architecture de ma ville."</p>
-                            <div class="testimonial-author">
-                                <h4>Thomas D.</h4>
-                                <p>Lyon</p>
+                        <!-- Testimonial Card 2 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"Les défis sont vraiment amusants et m'ont permis d'en apprendre beaucoup sur l'architecture de ma ville."</p>
+                                <div class="testimonial-author">
+                                    <h4>Thomas D.</h4>
+                                    <p>Lyon</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-avatar">
-                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                        <!-- Testimonial Card 3 -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"Une application qui rend la découverte culturelle accessible et ludique. Je recommande !"</p>
+                                <div class="testimonial-author">
+                                    <h4>Sophie M.</h4>
+                                    <p>Bordeaux</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="testimonial-content">
-                            <p class="testimonial-text">"Une application qui rend la découverte culturelle accessible et ludique. Je recommande !"</p>
-                            <div class="testimonial-author">
-                                <h4>Sophie M.</h4>
-                                <p>Bordeaux</p>
+                        <!-- Duplicate cards for infinite effect -->
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"Une expérience incroyable ! J'ai découvert des lieux magnifiques que je ne connaissais pas dans ma propre ville."</p>
+                                <div class="testimonial-author">
+                                    <h4>Marie L.</h4>
+                                    <p>Paris</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"Les défis sont vraiment amusants et m'ont permis d'en apprendre beaucoup sur l'architecture de ma ville."</p>
+                                <div class="testimonial-author">
+                                    <h4>Thomas D.</h4>
+                                    <p>Lyon</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card">
+                            <div class="testimonial-avatar">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                            </div>
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">"Une application qui rend la découverte culturelle accessible et ludique. Je recommande !"</p>
+                                <div class="testimonial-author">
+                                    <h4>Sophie M.</h4>
+                                    <p>Bordeaux</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -366,48 +407,86 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
             </section>
 
             <section class="partners-section">
-                <h2 class="partners-title">ILS NOUS ONT FAIT CONFIANCE</h2>
-                <div class="partners-carousel">
-                    <button class="partners-arrow left"><span>&#10094;</span></button>
-                    <div class="partners-track">
-                        <div class="partner-logo">
-                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
+                <h1 class="testimonials-title">ILS NOUS ONT FAIT CONFIANCE</h1>
+
+                <div class="partners-carousel-container">
+                    <div class="partners-carousel-track">
+                        <!-- Logos originaux -->
+                        <div class="partners-carousel-slide">
+                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture" class="partners-logo">
                         </div>
-                        <div class="partner-logo">
-                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
+                        <div class="partners-carousel-slide">
+                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture" class="partners-logo">
                         </div>
-                        <div class="partner-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
+                        <div class="partners-carousel-slide">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF" class="partners-logo">
                         </div>
-                        <div class="partner-logo">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
+                        <div class="partners-carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France" class="partners-logo">
                         </div>
-                        <div class="partner-logo">
-                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris">
-                        </div>
-                        <div class="partern-logo">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris">
+                        <div class="partners-carousel-slide">
+                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris" class="partners-logo">
                         </div>
                         <div class="partern-logo">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine" class="partners-logo">
+                        </div>
+
+                        <!-- Logos dupliqués pour l'effet infini -->
+                        <div class="partners-carousel-slide">
+                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris" class="partners-logo">
+                        </div>
+                        <div class="partners-carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine" class="partners-logo">
                         </div>
                     </div>
-                    <button class="partners-arrow right"><span>&#10095;</span></button>
                 </div>
             </section>
 
@@ -428,140 +507,144 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
 
         </div>
 
-        </div>
+    </div>
 
-        <?php include 'includes/layout/footer.php'; ?>
+    <?php include 'includes/layout/footer.php'; ?>
 
-        <script>
-            document.querySelectorAll('.carousel-img-none').forEach(function(link) {
-                const card = link.parentElement;
-                const infoCard = card.nextElementSibling;
-
-                if (infoCard && infoCard.classList.contains('carousel-card-info-none')) {
-                    card.addEventListener('mouseenter', function() {
-                        infoCard.style.display = 'flex';
-                    });
-
-                    card.addEventListener('mouseleave', function() {
-                        infoCard.style.display = 'none';
-                    });
-
-                    infoCard.addEventListener('mouseenter', function() {
-                        infoCard.style.display = 'flex';
-                    });
-
-                    infoCard.addEventListener('mouseleave', function() {
-                        infoCard.style.display = 'none';
-                    });
-                }
+    <script>
+        document.querySelectorAll('.carousel-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('hovered');
             });
-
-            document.querySelectorAll('.nearby-card-right').forEach(function(card) {
-                const infoCard = card.querySelector('.nearby-class-info-none');
-                if (infoCard) {
-                    card.addEventListener('mouseenter', function() {
-                        infoCard.style.display = 'flex';
-                    });
-                    card.addEventListener('mouseleave', function() {
-                        infoCard.style.display = 'none';
-                    });
-                    infoCard.addEventListener('mouseenter', function() {
-                        infoCard.style.display = 'flex';
-                    });
-                    infoCard.addEventListener('mouseleave', function() {
-                        infoCard.style.display = 'none';
-                    });
-                }
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('hovered');
             });
+        });
 
-            document.querySelectorAll('.nearby-card-left').forEach(function(card) {
-                const infoCard = card.querySelector('.nearby-card-info-none');
-                if (infoCard) {
-                    card.addEventListener('mouseenter', function() {
-                        infoCard.style.display = 'flex';
-                    });
-                    card.addEventListener('mouseleave', function() {
-                        infoCard.style.display = 'none';
-                    });
-                    infoCard.addEventListener('mouseenter', function() {
-                        infoCard.style.display = 'flex';
-                    });
-                    infoCard.addEventListener('mouseleave', function() {
-                        infoCard.style.display = 'none';
-                    });
-                }
-            });
-
-            // Script simplifié pour le carousel des partenaires
-            const partnersTrack = document.querySelector('.partners-track');
-            let scrollAmount = 0;
-
-            function scrollPartners() {
-                scrollAmount += 0.5;
-                partnersTrack.style.transform = `translateX(-${scrollAmount}px)`;
-
-                // Réinitialiser la position quand on atteint la fin
-                if (scrollAmount >= partnersTrack.scrollWidth / 2) {
-                    scrollAmount = 0;
-                }
-
-                requestAnimationFrame(scrollPartners);
+        document.querySelectorAll('.nearby-card-right').forEach(function(card) {
+            const infoCard = card.querySelector('.nearby-class-info-none');
+            if (infoCard) {
+                card.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+                card.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+                infoCard.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+                infoCard.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
             }
+        });
 
-            // Démarrer le défilement
-            scrollPartners();
+        document.querySelectorAll('.nearby-card-left').forEach(function(card) {
+            const infoCard = card.querySelector('.nearby-card-info-none');
+            if (infoCard) {
+                card.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+                card.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+                infoCard.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+                infoCard.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+            }
+        });
 
-            // fact card
-            document.addEventListener('DOMContentLoaded', function() {
-                const factCards = document.querySelectorAll('.fact-card');
-                const hoverCards = document.querySelectorAll('.fact-hover');
+        //carousel
 
-                factCards.forEach((card, index) => {
-                    const hoverCard = document.getElementById(`hover-${index}`);
+        // Carousel partenaires - pause au hover
+        const partnersCarouselContainer = document.querySelector('.partners-carousel-container');
+        const partnersCarouselTrack = document.querySelector('.partners-carousel-track');
 
-                    card.addEventListener('mouseenter', function() {
-                        // Hide all hover cards first
-                        hoverCards.forEach(h => h.classList.remove('active'));
+        if (partnersCarouselContainer && partnersCarouselTrack) {
+            partnersCarouselContainer.addEventListener('mouseenter', () => {
+                partnersCarouselTrack.style.animationPlayState = 'paused';
+            });
 
-                        // Show the corresponding hover card
-                        if (hoverCard) {
-                            // Position the hover card above the current card
-                            const cardRect = card.getBoundingClientRect();
-                            const containerRect = card.parentElement.getBoundingClientRect();
+            partnersCarouselContainer.addEventListener('mouseleave', () => {
+                partnersCarouselTrack.style.animationPlayState = 'running';
+            });
+        }
 
-                            // Calculate position relative to the container
-                            const leftOffset = cardRect.left - containerRect.left;
+        // fact card
+        document.addEventListener('DOMContentLoaded', function() {
+            const factCards = document.querySelectorAll('.fact-card');
+            const hoverCards = document.querySelectorAll('.fact-hover');
 
-                            hoverCard.style.left = leftOffset + 'px';
-                            hoverCard.style.bottom = '100%';
-                            hoverCard.style.marginBottom = '20px';
+            factCards.forEach((card, index) => {
+                const hoverCard = document.getElementById(`hover-${index}`);
 
-                            hoverCard.classList.add('active');
-                        }
-                    });
+                card.addEventListener('mouseenter', function() {
+                    // Hide all hover cards first
+                    hoverCards.forEach(h => h.classList.remove('active'));
 
-                    card.addEventListener('mouseleave', function() {
-                        // Add a small delay before hiding to allow moving to hover card
-                        setTimeout(() => {
-                            if (!hoverCard.matches(':hover') && !card.matches(':hover')) {
-                                hoverCard.classList.remove('active');
-                            }
-                        }, 100);
-                    });
-
-                    // Keep hover card visible when hovering over it
+                    // Show the corresponding hover card
                     if (hoverCard) {
-                        hoverCard.addEventListener('mouseenter', function() {
-                            hoverCard.classList.add('active');
-                        });
+                        // Position the hover card above the current card
+                        const cardRect = card.getBoundingClientRect();
+                        const containerRect = card.parentElement.getBoundingClientRect();
 
-                        hoverCard.addEventListener('mouseleave', function() {
-                            hoverCard.classList.remove('active');
-                        });
+                        // Calculate position relative to the container
+                        const leftOffset = cardRect.left - containerRect.left;
+
+                        hoverCard.style.left = leftOffset + 'px';
+                        hoverCard.style.bottom = '100%';
+                        hoverCard.style.marginBottom = '20px';
+
+                        hoverCard.classList.add('active');
                     }
                 });
+
+                card.addEventListener('mouseleave', function() {
+                    // Add a small delay before hiding to allow moving to hover card
+                    setTimeout(() => {
+                        if (!hoverCard.matches(':hover') && !card.matches(':hover')) {
+                            hoverCard.classList.remove('active');
+                        }
+                    }, 100);
+                });
+
+                // Keep hover card visible when hovering over it
+                if (hoverCard) {
+                    hoverCard.addEventListener('mouseenter', function() {
+                        hoverCard.classList.add('active');
+                    });
+
+                    hoverCard.addEventListener('mouseleave', function() {
+                        hoverCard.classList.remove('active');
+                    });
+                }
             });
-        </script>
-    </body>
+        });
+
+        // Manual carousel navigation (example - you might need to implement full carousel logic)
+        const carouselTrackElement = document.querySelector('.best-places-carousel .carousel-track');
+        const carouselCards = document.querySelectorAll('.best-places-carousel .carousel-card');
+        const prevArrow = document.querySelector('.best-places-carousel .carousel-arrow.left');
+        const nextArrow = document.querySelector('.best-places-carousel .carousel-arrow.right');
+        let currentIndex = 0;
+
+        if (prevArrow && nextArrow && carouselTrackElement && carouselCards.length > 0) {
+            const cardWidth = carouselCards[0].offsetWidth + parseInt(getComputedStyle(carouselTrackElement).gap);
+
+            nextArrow.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % carouselCards.length;
+                carouselTrackElement.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
+            });
+
+            prevArrow.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + carouselCards.length) % carouselCards.length;
+                carouselTrackElement.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
+            });
+        }
+    </script>
+</body>
 
 </html>

@@ -16,50 +16,61 @@ if (isset($_SESSION['user_id'])) {
 
 <header class="header">
     <nav class="navigation">
-        <div class="nav-item home-nav">
-            <a href="../../home.php">
-                <svg class="home-icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-                </svg>
-            </a>
+        <div class="nav-brand">
+            <div class="nav-item home-nav">
+                <a href="../../home.php">
+                    <svg class="home-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                    </svg>
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
         </div>
 
-        <div class="nav-dropdown">
-            <div class="nav-item">
-                <a class="nav-dropbtn">A propos <i class="fa fa-caret-down"></i></a>
-            </div>
-            <div class="nav-dropdown-content">
-                <a href="/pages/about"><i class="fas fa-info-circle"></i> FlowMedia</a>
-                <a href="/pages/partenaires"><i class="fas fa-handshake"></i> Nos partenaires</a>
-                <a href="/pages/contact"><i class="fas fa-envelope"></i> Nous contacter</a>
-            </div>
-        </div>
-
-        <div class="nav-dropdown">
-            <div class="nav-item">
-                <a class="nav-dropbtn">Découvrir <i class="fa fa-caret-down"></i></a>
-            </div>
-            <div class="nav-dropdown-content">
-                <a href="/pages/activites"><i class="fas fa-running"></i> Activités</a>
-                <a href="/pages/defis"><i class="fas fa-trophy"></i> Défis</a>
-            </div>
-        </div>
-
-        <div class="nav-item"><a href="pages/maps" style="text-decoration: none; color: #333;">Maps</a></div>
-        <?php if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true): ?>
-            <div class="nav-item"><a href="../../connexion/login.php" style="text-decoration: none; color: #333;">Connexion</a></div>
-        <?php endif; ?>
-
-        <?php if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] == 'user'): ?>
+        <div class="nav-menu">
             <div class="nav-dropdown">
-                <button class="nav-dropbtn"><img src="../../assets/uploads/profiles/<?php echo $photo_profil['photo_profil']; ?>" alt="Photo de profil" style="width: 30px; height: 30px; border-radius: 50%; object-fit: cover;"> <i class="fa fa-caret-down"></i></button>
+                <div class="nav-item">
+                    <a class="nav-dropbtn">A propos <i class="fa fa-caret-down"></i></a>
+                </div>
                 <div class="nav-dropdown-content">
-                    <a href="../../pages/user/profile.php">Mon profil</a>
-                    <a href="../../pages/reservations">Mes réservations</a>
-                    <a href="../../connexion/logout-user.php"><i class="fas fa-sign-out-alt"></i> Me deconnecter</a>
+                    <a href="/pages/about"><i class="fas fa-info-circle"></i> FlowMedia</a>
+                    <a href="/pages/partenaires"><i class="fas fa-handshake"></i> Nos partenaires</a>
+                    <a href="/pages/contact"><i class="fas fa-envelope"></i> Nous contacter</a>
                 </div>
             </div>
-        <?php endif; ?>
+
+            <div class="nav-dropdown">
+                <div class="nav-item">
+                    <a class="nav-dropbtn">Découvrir <i class="fa fa-caret-down"></i></a>
+                </div>
+                <div class="nav-dropdown-content">
+                    <a href="/pages/activites"><i class="fas fa-running"></i> Activités</a>
+                    <a href="/pages/defis"><i class="fas fa-trophy"></i> Défis</a>
+                </div>
+            </div>
+
+            <div class="nav-item"><a href="pages/maps">Maps</a></div>
+
+            <?php if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true): ?>
+                <div class="nav-item"><a href="../../connexion/login.php">Connexion</a></div>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] == 'user'): ?>
+                <div class="nav-dropdown">
+                    <button class="nav-dropbtn">
+                        <img src="../../assets/uploads/profiles/<?php echo $photo_profil['photo_profil']; ?>" alt="Photo de profil">
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="nav-dropdown-content">
+                        <a href="../../pages/user/profile.php">Mon profil</a>
+                        <a href="../../pages/reservations">Mes réservations</a>
+                        <a href="../../connexion/logout-user.php"><i class="fas fa-sign-out-alt"></i> Me deconnecter</a>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </div>
     </nav>
 </header>
 
@@ -70,14 +81,90 @@ if (isset($_SESSION['user_id'])) {
         left: 0;
         right: 0;
         z-index: 100;
-        padding: 20px 80px;
+        padding: 20px;
         background-color: rgba(255, 255, 255, 0.9);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
+    .navigation {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .nav-toggle {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+
+    .hamburger {
+        display: block;
+        position: relative;
+        width: 24px;
+        height: 2px;
+        background: #333;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 2px;
+        background: #333;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .hamburger::before {
+        transform: translateY(-8px);
+    }
+
+    .hamburger::after {
+        transform: translateY(8px);
+    }
+
+    .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .nav-item {
+        color: #333;
+        font-size: 20px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 8px 16px;
+        border-radius: 8px;
+    }
+
+    .nav-item a {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .nav-item:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: translateY(-2px);
+    }
+
     .nav-dropdown {
         position: relative;
-        display: inline-block;
     }
 
     .nav-dropdown-content {
@@ -104,6 +191,13 @@ if (isset($_SESSION['user_id'])) {
         gap: 5px;
     }
 
+    .nav-dropbtn img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
     .nav-dropdown-content a {
         color: #000000;
         padding: 12px 16px;
@@ -121,54 +215,86 @@ if (isset($_SESSION['user_id'])) {
         display: block;
     }
 
-    .nav-dropdown:hover .nav-dropbtn {
-        opacity: 0.8;
-    }
+    @media (max-width: 768px) {
+        .header {
+            padding: 15px;
+        }
 
-    .navigation {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        max-width: 1400px;
-        margin: 0 auto;
-        width: 100%;
-    }
+        .nav-toggle {
+            display: block;
+        }
 
-    .nav-item {
-        color: #333;
-        font-size: 20px;
-        font-weight: 500;
-        text-decoration: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        padding: 8px 16px;
-        border-radius: 8px;
-    }
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    .nav-item:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-        transform: translateY(-2px);
-    }
+        .nav-menu.active {
+            display: flex;
+        }
 
-    .home-nav {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
-    }
+        .nav-dropdown-content {
+            position: static;
+            background-color: transparent;
+            box-shadow: none;
+            width: 100%;
+        }
 
-    .home-icon {
-        width: 32px;
-        height: 32px;
-        color: #333;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+        .nav-dropdown-content a {
+            color: #333;
+            padding: 8px 16px;
+        }
 
-    .home-icon:hover {
-        transform: scale(1.1);
+        .nav-dropdown-content a:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-item {
+            width: 100%;
+        }
+
+        .nav-dropbtn {
+            width: 100%;
+            justify-content: space-between;
+        }
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        navToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!navToggle.contains(event.target) && !navMenu.contains(event.target)) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    });
+</script>
+
 <?php
 // Ensure proper PHP block closure
 ?>
