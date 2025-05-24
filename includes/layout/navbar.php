@@ -18,8 +18,8 @@ if (isset($_SESSION['user_id'])) {
     <nav class="navigation">
         <div class="nav-brand">
             <div class="nav-item home-nav">
-                <a href="../../home.php">
-                    <svg class="home-icon" viewBox="0 0 24 24" fill="currentColor">
+                <a href="../../index.php">
+                    <svg class="home-icon" viewBox="0 0 24 24" fill="#000000">
                         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                     </svg>
                 </a>
@@ -114,7 +114,7 @@ if (isset($_SESSION['user_id'])) {
         position: relative;
         width: 24px;
         height: 2px;
-        background: #333;
+        background: #000000;
         transition: all 0.3s ease-in-out;
     }
 
@@ -124,7 +124,7 @@ if (isset($_SESSION['user_id'])) {
         position: absolute;
         width: 24px;
         height: 2px;
-        background: #333;
+        background: #000000;
         transition: all 0.3s ease-in-out;
     }
 
@@ -140,6 +140,23 @@ if (isset($_SESSION['user_id'])) {
         display: flex;
         align-items: center;
         gap: 1rem;
+    }
+
+    .home-nav {
+        display: flex;
+        align-items: center;
+    }
+
+    .home-nav svg {
+        width: 24px;
+        height: 24px;
+        fill: #000000;
+    }
+
+    .home-nav a {
+        display: flex;
+        align-items: center;
+        padding: 8px;
     }
 
     .nav-item {

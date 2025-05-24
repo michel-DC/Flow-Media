@@ -14,7 +14,7 @@ if (isset($_SESSION['user_id'])) {
     <nav class="navigation">
         <div class="nav-brand">
             <div class="nav-item home-nav">
-                <a href="../../home.php">
+                <a href="../../index.php">
                     <svg class="home-icon" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                     </svg>

@@ -3,7 +3,7 @@
     <div class="footer-main">
       <div class="footer-title">Flow Media</div>
       <div class="footer-nav">
-        <a href="../../home.php">Accueil</a>
+        <a href="../../index.php">Accueil</a>
         <a href="../../pages/about">À propos</a>
         <a href="../../pages/activites">Découvrir</a>
         <a href="../../pages/maps">Maps</a>
@@ -13,8 +13,8 @@
 
     <div class="footer-secondary">
       <div class="footer-legal">
-        <a href="#">Politique de confidentialité</a>
-        <a href="#">Cookies</a>
+        <a href="/legal/politique-confidentialite.php">Politique de confidentialité</a>
+        <a href="/legal/cookies.php">Cookies</a>
       </div>
       <div class="footer-socials-new">
         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>

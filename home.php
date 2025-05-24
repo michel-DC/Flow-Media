@@ -51,7 +51,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                 const petalInterval = setInterval(createPetal, 100);
                 setTimeout(() => {
                     clearInterval(petalInterval);
-                }, 40000);
+                }, 60000);
             }, 1000);
         </script>
 
@@ -577,21 +577,29 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
         document.addEventListener('DOMContentLoaded', function() {
             const factCards = document.querySelectorAll('.fact-card');
             const hoverCards = document.querySelectorAll('.fact-hover');
+            const firstCard = document.querySelector('.fact-card[data-fact="1"]');
+            const firstHover = document.getElementById('hover-1');
+
+            // Positionner la première carte au chargement
+            if (firstCard && firstHover) {
+                const cardRect = firstCard.getBoundingClientRect();
+                const containerRect = firstCard.parentElement.getBoundingClientRect();
+                const leftOffset = cardRect.left - containerRect.left;
+
+                firstHover.style.left = leftOffset + 'px';
+            }
 
             factCards.forEach((card, index) => {
                 const hoverCard = document.getElementById(`hover-${index}`);
 
                 card.addEventListener('mouseenter', function() {
-                    // Hide all hover cards first
-                    hoverCards.forEach(h => h.classList.remove('active'));
+                    if (index !== 1) {
+                        hoverCards.forEach(h => h.classList.remove('active'));
+                    }
 
-                    // Show the corresponding hover card
-                    if (hoverCard) {
-                        // Position the hover card above the current card
+                    if (hoverCard && index !== 1) {
                         const cardRect = card.getBoundingClientRect();
                         const containerRect = card.parentElement.getBoundingClientRect();
-
-                        // Calculate position relative to the container
                         const leftOffset = cardRect.left - containerRect.left;
 
                         hoverCard.style.left = leftOffset + 'px';
@@ -603,16 +611,16 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                 });
 
                 card.addEventListener('mouseleave', function() {
-                    // Add a small delay before hiding to allow moving to hover card
-                    setTimeout(() => {
-                        if (!hoverCard.matches(':hover') && !card.matches(':hover')) {
-                            hoverCard.classList.remove('active');
-                        }
-                    }, 100);
+                    if (index !== 0) {
+                        setTimeout(() => {
+                            if (!hoverCard.matches(':hover') && !card.matches(':hover')) {
+                                hoverCard.classList.remove('active');
+                            }
+                        }, 100);
+                    }
                 });
 
-                // Keep hover card visible when hovering over it
-                if (hoverCard) {
+                if (hoverCard && index !== 0) {
                     hoverCard.addEventListener('mouseenter', function() {
                         hoverCard.classList.add('active');
                     });
