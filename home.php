@@ -12,214 +12,542 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
     <title>Flow Media | Explorez la culture autrement</title>
     <link rel="icon" href="/assets/icons/icon-test.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="stylesheet" href="/assets/style/home.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="/assets/style/index.css">
 </head>
 
 <?php require_once 'loader/loader.php'; ?>
 
 <body>
     <div id="body">
-        <?php include './includes/layout/navbar-special.php'; ?>
+        <script>
+            // Animation des pétales
+            function createPetal() {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
 
-        <nav id="section-nav">
-            <ul>
-                <li><a href="#hero" data-section="0"><span>Accueil</span></a></li>
-                <li><a href="#architecture" data-section="1"><span>Architecture</span></a></li>
-                <li><a href="#patrimoine" data-section="2"><span>Patrimoine</span></a></li>
-                <li><a href="#jardins" data-section="3"><span>Jardins</span></a></li>
-                <li><a href="#events" data-section="4"><span>Événements</span></a></li>
-                <li><a href="#testimonials" data-section="5"><span>Témoignages</span></a></li>
-                <li><a href="#newsletter" data-section="6"><span>Newsletter</span></a></li>
-            </ul>
-        </nav>
+                const size = Math.random() * 10 + 5;
+                const startPosition = Math.random() * window.innerWidth;
+                const fallDistance = Math.random() * 100 - 50;
+                const duration = Math.random() * 4 + 4;
 
-        <div id="fullpage">
-            <div class="section" id="hero">
-                <section class="hero" id="hero">
-                    <img src="https://i.familiscope.fr/1400x787/smart/2023/05/16/parc-chateau-de-versailles.jpg" alt="Hero Background" class="hero-bg">
-                    <div class="hero-content">
-                        <h1 class="hero-title">Découvre ta culture</h1>
-                        <p class="hero-subtitle">Explore l'art, l'architecture et l'histoire sous un nouveau regard. La culture française comme tu ne l'as jamais vue.</p>
-                        <div class="hero-cta">
-                            <a href="/connexion/register.php" class="btn btn-primary">Rejoins le mouvement</a>
-                            <a href="#categories" class="btn btn-secondary">Explorer</a>
+                petal.style.cssText = `
+                    left: ${startPosition}px;
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: white;
+                    border-radius: 150% 0 150% 0;
+                    --fall-distance: ${fallDistance}px;
+                    animation-duration: ${duration}s;
+                `;
+
+                document.body.appendChild(petal);
+
+                setTimeout(() => {
+                    petal.remove();
+                }, duration * 1000);
+            }
+
+            setTimeout(() => {
+                const petalInterval = setInterval(createPetal, 100);
+                setTimeout(() => {
+                    clearInterval(petalInterval);
+                }, 40000);
+            }, 1000);
+        </script>
+
+        <div class="container">
+
+            <!-- Header Navigation -->
+            <?php include 'includes/layout/navbar-rc.php'; ?>
+
+            <!-- Contenu principal -->
+            <main class="main-content">
+                <div class="hero-section">
+                    <h1 class="main-title">Ce que tu cherches est tout près, sauras-tu le trouver ?</h1>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">Créer un compte gratuitement</button>
+                        <button class="btn btn-secondary">Découvrir les activités</button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Mascotte gauche -->
+            <div class="mascotte mascotte-left">
+                <div class="message-bubble">Hey ! Je suis <b>Jardi</b>, je vais t'aider à découvrir les <b>jardins</b> !</div>
+                <img src="assets/images/vert.png" alt="Mascotte">
+            </div>
+
+            <!-- Mascotte droite -->
+            <div class="mascotte mascotte-right">
+                <div class="message-bubble">Salut ! Je suis <b>Archi</b>, je vais te guider dans <b>l'architecture</b> !</div>
+                <img src="assets/images/rouge.png" alt="Mascotte">
+            </div>
+
+            <!-- Sections informatives -->
+            <section class="info-sections">
+                <div class="info-card architecture-card">
+                    <div class="card-icon architecture-icon">
+                        <div class="icon-bars">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
                         </div>
                     </div>
-                    <a href="#architecture" class="theme-arrow">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
-                        </svg>
-                    </a>
-                </section>
-            </div>
-
-            <div class="section" id="architecture">
-                <section class="theme-section">
-                    <img src="https://www.district-immo.com/wp-content/uploads/2023/04/Immeuble-haussmannien-shutterstock.png" alt="Architecture" class="theme-bg">
-                    <div class="theme-overlay"></div>
-                    <div class="theme-elements architecture-elements"></div>
-                    <div class="theme-content" data-aos="fade-right">
-                        <h2 class="theme-title">Architecture</h2>
-                        <p class="theme-desc">De Notre-Dame aux buildings contemporains, l'architecture raconte notre histoire. Chaque bâtiment a son propre style et sa propre histoire à raconter. Découvre comment ces structures façonnent nos villes et nos vies.</p>
-                        <a href="/pages/architecture.php" class="btn btn-primary">Explore l'architecture</a>
+                    <div class="card-content">
+                        <h3 class="card-title">L'ARCHITECTURE</h3>
+                        <p class="card-description">
+                            L'architecture, c'est l'art et la technique de concevoir et construire des bâtiments et des espaces pour qu'ils soient utiles, beaux et adaptés à la vie des gens.
+                        </p>
                     </div>
-                    <a href="#patrimoine" class="theme-arrow">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
-                        </svg>
-                    </a>
-                </section>
-            </div>
+                </div>
 
-            <div class="section" id="patrimoine">
-                <section class="theme-section">
-                    <img src="https://images.unsplash.com/photo-1549877452-9c387954fbc2" alt="Patrimoine" class="theme-bg">
-                    <div class="theme-overlay"></div>
-                    <div class="theme-elements patrimoine-elements"></div>
-                    <div class="theme-content" data-aos="fade-right">
-                        <h2 class="theme-title">Patrimoine</h2>
-                        <p class="theme-desc">Plonge dans l'histoire vivante de la France. Des châteaux médiévaux aux traditions locales, notre patrimoine est la base de notre identité. Comprends comment le passé influence notre présent et inspire notre futur.</p>
-                        <a href="/pages/patrimoine.php" class="btn btn-primary">Découvre notre patrimoine</a>
+                <div class="info-card gardens-card">
+                    <div class="card-icon gardens-icon">
+                        <div class="icon-circles">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
                     </div>
-                    <a href="#jardins" class="theme-arrow">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
-                        </svg>
-                    </a>
-                </section>
-            </div>
+                    <div class="card-content">
+                        <h3 class="card-title">LES JARDINS</h3>
+                        <p class="card-description">
+                            L'architecture, c'est l'art et la technique de concevoir et construire des bâtiments et des espaces pour qu'ils soient utiles,
+                        </p>
+                    </div>
+                </div>
+            </section>
 
-            <div class="section" id="jardins">
-                <section class="theme-section">
-                    <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae" alt="Jardins" class="theme-bg">
-                    <div class="theme-overlay"></div>
-                    <div class="theme-elements jardins-elements"></div>
-                    <div class="theme-content" data-aos="fade-right">
-                        <h2 class="theme-title">Jardins</h2>
-                        <p class="theme-desc">Des jardins à la française aux parcs urbains modernes, explore ces espaces verts qui sont de véritables œuvres d'art vivantes. Découvre comment ils combinent esthétique, histoire et biodiversité dans un équilibre parfait.</p>
-                        <a href="/pages/jardins.php" class="btn btn-primary">Visite les jardins</a>
+
+            <!-- Section Découvrir -->
+            <section class="discover-section">
+                <div class="discover-section-container">
+                    <div class="best-places-header">
+                        <h2 class="best-places-title">LES MEILLEURS LIEUX</h2>
+                        <p class="best-places-subtitle">Découvrez les lieux préférés de nos internautes</p>
                     </div>
-                    <a href="#events" class="theme-arrow">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
-                        </svg>
-                    </a>
-                </section>
-            </div>
+                    <div class="best-places-carousel">
+                        <button class="carousel-arrow left"><span>&#10094;</span></button>
+                        <div class="carousel-track">
+                            <div class="carousel-card">
+                                <img src="/assets/images/1.png" alt="Lieu 1" class="carousel-img-none">
+                            </div>
+                            <div class="carousel-card carousel-card-info-none" style="display: none;">
+                                <div class="carousel-info-content">
+                                    <h3 class="carousel-info-title">TRÉSORS ARCHITECTURAUX<br>À DÉCOUVRIR</h3>
+                                    <p class="carousel-info-desc">Explorez les joyaux architecturaux qui ont façonné notre histoire et notre culture !</p>
+                                    <button class="carousel-info-btn">Voir plus</button>
+                                </div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="/assets/images/2.png" alt="Lieu 2" class="carousel-img-none">
+                            </div>
+                            <div class="carousel-card carousel-card-info-none" style="display: none;">
+                                <div class="carousel-info-content">
+                                    <h3 class="carousel-info-title">UN PATRIMOINE<br>CHARGÉ D'HISTOIRE</h3>
+                                    <p class="carousel-info-desc">Partez à la chasse aux histoires insolites qui se cachent juste au coin de votre rue !</p>
+                                    <button class="carousel-info-btn">Voir plus</button>
+                                </div>
+                            </div>
+                            <div class="carousel-card">
+                                <img src="/assets/images/3.png" alt="Lieu 3" class="carousel-img-none">
+                            </div>
+                            <div class="carousel-card carousel-card-info-none" style="display: none;">
+                                <div class="carousel-info-content">
+                                    <h3 class="carousel-info-title">DES JARDINS<br>REMARQUABLES</h3>
+                                    <p class="carousel-info-desc">Explorez les plus beaux jardins français classés et découvrez leurs secrets botaniques !</p>
+                                    <button class="carousel-info-btn">Voir plus</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-arrow right"><span>&#10095;</span></button>
+                    </div>
+                    <div class="carousel-indicators">
+                        <span class="carousel-dot active"></span>
+                        <span class="carousel-dot"></span>
+                        <span class="carousel-dot"></span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Nearby Places -->
+            <section class="nearby-places-section">
+                <h2 class="nearby-title">LES LIEUX PRÈS DE CHEZ TOI</h2>
+                <div class="nearby-geoloc-btn-container">
+                    <button class="nearby-geoloc-btn"><i class="fa-solid fa-location-dot"></i> Se géolocaliser</button>
+                </div>
+                <div class="nearby-cards-row">
+                    <div class="nearby-card nearby-card-left">
+                        <img src="https://offloadmedia.feverup.com/parissecret.com/wp-content/uploads/2021/04/17054435/shutterstock_455256892-1-scaled.jpg" alt="Jardin Albert Khan" class="nearby-card-img">
+                        <div class="nearby-card-label">JARDIN ALBERT KHAN</div>
+                        <div class="nearby-card-fav"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="nearby-card nearby-card-center">
+                        <img src="https://domaine-de-sceaux.hauts-de-seine.fr/fileadmin/_processed_/6/3/csm_chateauWilly_6e1650a2ea.jpg" alt="Château de Sceaux" class="nearby-card-img">
+                        <div class="nearby-card-fav"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                    <div class="nearby-card nearby-card-right">
+                        <img src="https://www.hauts-de-seine.fr/fileadmin/_processed_/3/f/csm_saintcloud1_1005999dec.jpg" alt="Domaine de St Cloud" class="nearby-card-img">
+                        <div class="nearby-card-label">DOMAINE DE ST CLOUD</div>
+                        <div class="nearby-card-fav"><i class="fa-regular fa-heart"></i></div>
+                    </div>
+                </div>
+                <div class="nearby-card-info">
+                    <div class="nearby-card-title">CHÂTEAU DE SCEAUX <span class="nearby-card-stars">★★★★★</span></div>
+                    <div class="nearby-card-desc">92330, Sceaux</div>
+                    <button class="nearby-card-btn">Voir plus</button>
+                </div>
+            </section>
+
+            <section class="enigmes-section">
+                <div class="path-background"></div>
+
+                <h1 class="main-title-enigme">LES ÉNIGMES DE JARDY ET ARCHY</h1>
+
+                <div class="characters-container">
+                    <!-- Jardy Character -->
+                    <div class="character jardy">
+                        <div class="character-avatar">
+                            <img src="/assets/images/1new.png" alt="Jardy" class="avatar-img">
+                        </div>
+                        <div class="speech-bubble jardy-bubble">
+                            <div class="character-name">🌿 Jardy</div>
+                            <p>Moi c'est calme, nature et<br>
+                                coins planqués.<br>
+                                J'te fais découvrir les jardins<br>
+                                qui valent le détour.<br>
+                                Tu crois connaître ta ville ?<br>
+                                On va voir ça.</p>
+                        </div>
+                    </div>
+
+                    <!-- Archy Character -->
+                    <div class="character archy">
+                        <div class="speech-bubble archy-bubble">
+                            <div class="character-name">🏛️ Archy</div>
+                            <p>Je repère les détails que<br>
+                                personne ne regarde.<br>
+                                Façades, colonnes, trucs<br>
+                                chelous sur les toits...<br>
+                                Si t'aimes explorer, je suis<br>
+                                ton gars sûr.</p>
+                        </div>
+                        <div class="character-avatar">
+                            <img src="/assets/images/2new.png" alt="Archy" class="avatar-img-2">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fun Facts Section -->
+                <div class="fun-facts">
+                    <div class="fact-card" data-fact="0">
+                        <div class="fact-original">
+                            <div class="fact-header">LE FUN FACT</div>
+                            <div class="fact-content">LA CATHÉDRALE DE<br>STRASBOURG</div>
+                        </div>
+                    </div>
+
+                    <div class="fact-card" data-fact="1">
+                        <div class="fact-original">
+                            <div class="fact-header">LE FUN FACT</div>
+                            <div class="fact-content">LA GRANDE MOSQUÉE<br>DE PARIS</div>
+                        </div>
+                    </div>
+
+                    <div class="fact-card" data-fact="2">
+                        <div class="fact-original">
+                            <div class="fact-header">LE FUN FACT</div>
+                            <div class="fact-content">LE CENTRE<br>POMPIDOU DE METZ</div>
+                        </div>
+                    </div>
+
+                    <div class="fact-card" data-fact="3">
+                        <div class="fact-original">
+                            <div class="fact-header">LE FUN FACT</div>
+                            <div class="fact-content">LE PALAIS IDÉAL<br>DU FACTEUR CHEVAL</div>
+                        </div>
+                    </div>
+
+                    <!-- Hover cards container -->
+                    <div class="fact-hover" id="hover-0">
+                        <img src="https://q-xx.bstatic.com/xdata/images/landmark/608x352/275344.webp?k=fe69f9d21286dc64e62d67386eedac822585742d8f177300060292e8365e6ea4&o=" alt="Cathédrale de Strasbourg" class="fact-image-hover">
+                        <div class="fact-text-area">
+                            Sa flèche gothique culmine à<br>
+                            142 mètres, faisant d'elle<br>
+                            l'une des plus hautes<br>
+                            cathédrales de France.<br>
+                            Son horloge astronomique<br>
+                            date de la Renaissance.
+                        </div>
+                        <button class="fact-button">En savoir +</button>
+                    </div>
+
+                    <div class="fact-hover" id="hover-1">
+                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/d2/95/f7/photo5jpg.jpg?w=800&h=500&s=1" alt="Grande Mosquée de Paris" class="fact-image-hover">
+                        <div class="fact-text-area">
+                            Construite en 1926, c'est la plus<br>
+                            ancienne mosquée de France<br>
+                            métropolitaine. Son minaret<br>
+                            s'élève à 33 mètres de haut,<br>
+                            inspiré de celui de Fès.
+                        </div>
+                        <button class="fact-button">En savoir +</button>
+                    </div>
+
+                    <div class="fact-hover" id="hover-2">
+                        <img src="https://api.centrepompidou-metz.fr/assets/q70-w1200/b16448a2/architecture_c_jacqueline_trichard_21_centre_pompidou_metz_29072020_2147.jpg" alt="Centre Pompidou de Metz" class="fact-image-hover">
+                        <div class="fact-text-area">
+                            Son toit en forme de<br>
+                            chapeau chinois est inspiré<br>
+                            d'un panama. La structure<br>
+                            couvre 8000m² sans aucun<br>
+                            pilier central.
+                        </div>
+                        <button class="fact-button">En savoir +</button>
+                    </div>
+
+                    <div class="fact-hover" id="hover-3">
+                        <img src="https://woody.cloudly.space/app/uploads/porte-dromardeche/2021/07/thumbs/palais00-1920x960-crop-1642494192.jpg" alt="Palais Idéal du Facteur Cheval" class="fact-image-hover">
+                        <div class="fact-text-area">
+                            Ferdinand Cheval a passé<br>
+                            33 ans à construire ce palais<br>
+                            seul, en ramassant des pierres<br>
+                            pendant sa tournée de<br>
+                            facteur rural.
+                        </div>
+                        <button class="fact-button">En savoir +</button>
+                    </div>
+                </div>
         </div>
+        </section>
 
-        <!-- Events Section -->
-        <div class="events" id="events">
-            <div class="container">
-                <div class="events-header" data-aos="fade-up">
-                    <h2 class="events-title">À ne pas manquer</h2>
-                    <p class="events-subtext">Des événements uniques pour vivre la culture autrement. Rencontres, ateliers et expériences immersives t'attendent.</p>
+        <section class="testimonials-section">
+            <h2 class="testimonials-title">CE QU'ILS EN PENSENT</h2>
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                    </div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"Une expérience incroyable ! J'ai découvert des lieux magnifiques que je ne connaissais pas dans ma propre ville."</p>
+                        <div class="testimonial-author">
+                            <h4>Marie L.</h4>
+                            <p>Paris</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="events-grid">
-                    <div class="event-card" data-aos="fade-up" data-aos-delay="100">
-                        <div class="event-img">
-                            <img src="https://images.unsplash.com/photo-1529088148495-2d9f231db829" alt="Urban Art Tour">
-                            <div class="event-date">28 Mai</div>
-                        </div>
-                        <div class="event-content">
-                            <h3 class="event-title">Urban Art Tour</h3>
-                            <div class="event-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Paris, 11ème
-                            </div>
-                            <p class="event-desc">Visite guidée du street art parisien. Découvre les artistes locaux qui transforment la ville en galerie à ciel ouvert.</p>
-                            <a href="/evenements/urban-art-tour.php" class="btn-outline">En savoir +</a>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                    </div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"Les défis sont vraiment amusants et m'ont permis d'en apprendre beaucoup sur l'architecture de ma ville."</p>
+                        <div class="testimonial-author">
+                            <h4>Thomas D.</h4>
+                            <p>Lyon</p>
                         </div>
                     </div>
-                    <div class="event-card" data-aos="fade-up" data-aos-delay="200">
-                        <div class="event-img">
-                            <img src="https://images.unsplash.com/photo-1513311068348-19c8fbdc0bb6" alt="Atelier d'architecture">
-                            <div class="event-date">12 Juin</div>
-                        </div>
-                        <div class="event-content">
-                            <h3 class="event-title">Atelier d'architecture</h3>
-                            <div class="event-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Lyon, Centre
-                            </div>
-                            <p class="event-desc">Construis ta vision de la ville de demain avec des architectes pros. Workshop créatif ouvert à tous.</p>
-                            <a href="/evenements/atelier-architecture.php" class="btn-outline">En savoir +</a>
-                        </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-avatar">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
                     </div>
-                    <div class="event-card" data-aos="fade-up" data-aos-delay="300">
-                        <div class="event-img">
-                            <img src="https://images.unsplash.com/photo-1547825407-2d060104b7f8" alt="Nuit des jardins">
-                            <div class="event-date">20 Juin</div>
-                        </div>
-                        <div class="event-content">
-                            <h3 class="event-title">Nuit des jardins</h3>
-                            <div class="event-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Bordeaux
-                            </div>
-                            <p class="event-desc">Visite nocturne des plus beaux jardins avec installations lumineuses et performances artistiques.</p>
-                            <a href="/evenements/nuit-jardins.php" class="btn-outline">En savoir +</a>
+                    <div class="testimonial-content">
+                        <p class="testimonial-text">"Une application qui rend la découverte culturelle accessible et ludique. Je recommande !"</p>
+                        <div class="testimonial-author">
+                            <h4>Sophie M.</h4>
+                            <p>Bordeaux</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Testimonials Section -->
-        <div class="testimonials" id="testimonials">
-            <div class="container">
-                <div class="testimonials-header" data-aos="fade-up">
-                    <h2 class="testimonials-title">Ils l'ont vécu</h2>
-                </div>
-                <div class="testimonials-container" data-aos="fade-up" data-aos-delay="200">
-                    <div class="testimonial-slider">
-                        <div class="testimonial-track">
-                            <div class="testimonial">
-                                <p class="testimonial-text">Je n'aurais jamais pensé que l'architecture pouvait être aussi fascinante. Les visites nocturnes ont complètement changé ma façon de voir ma propre ville.</p>
-                                <p class="testimonial-author">Léa, 19 ans</p>
-                                <p class="testimonial-role">Étudiante, Lyon</p>
-                            </div>
-                            <div class="testimonial">
-                                <p class="testimonial-text">L'atelier street art m'a fait découvrir une nouvelle passion. Maintenant je regarde chaque mur différemment et je commence même à créer mes propres designs.</p>
-                                <p class="testimonial-author">Thomas, 17 ans</p>
-                                <p class="testimonial-role">Lycéen, Marseille</p>
-                            </div>
-                            <div class="testimonial">
-                                <p class="testimonial-text">Les podcasts de Flow Media m'accompagnent partout. J'adore apprendre sur notre patrimoine local tout en me déplaçant. C'est comme avoir un guide personnel!</p>
-                                <p class="testimonial-author">Chloé, 22 ans</p>
-                                <p class="testimonial-role">Apprentie, Nantes</p>
-                            </div>
-                        </div>
+        <section class="partners-section">
+            <h2 class="partners-title">ILS NOUS ONT FAIT CONFIANCE</h2>
+            <div class="partners-carousel">
+                <button class="partners-arrow left"><span>&#10094;</span></button>
+                <div class="partners-track">
+                    <div class="partner-logo">
+                        <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
                     </div>
-                    <div class="testimonial-dots">
-                        <div class="dot active"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
+                    <div class="partner-logo">
+                        <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris">
+                    </div>
+                    <div class="partern-logo">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris">
+                    </div>
+                    <div class="partern-logo">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine">
                     </div>
                 </div>
+                <button class="partners-arrow right"><span>&#10095;</span></button>
             </div>
-        </div>
-
-        <!-- Newsletter Section -->
-        <div class="newsletter" id="newsletter">
-            <div class="container">
-                <div class="newsletter-content" data-aos="fade-up">
-                    <h2 class="newsletter-title">Reste connecté</h2>
-                    <p class="newsletter-text">Reçois nos bons plans, invitations exclusives et contenus inédits directement dans ta boîte mail.</p>
-                    <form class="newsletter-form" action="/includes/newsletter.php" method="POST">
-                        <input type="email" name="email" placeholder="Ton email" required class="newsletter-input">
-                        <button type="submit" class="newsletter-btn">S'abonner</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <?php include 'includes/layout/footer.php' ?>
-
+        </section>
 
     </div>
+
+    </div>
+
+    <?php include 'includes/layout/footer.php'; ?>
+
+    <script>
+        document.querySelectorAll('.carousel-img-none').forEach(function(link) {
+            const card = link.parentElement;
+            const infoCard = card.nextElementSibling;
+
+            if (infoCard && infoCard.classList.contains('carousel-card-info-none')) {
+                card.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+
+                infoCard.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+
+                infoCard.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+            }
+        });
+
+        document.querySelectorAll('.nearby-card-right').forEach(function(card) {
+            const infoCard = card.querySelector('.nearby-class-info-none');
+            if (infoCard) {
+                card.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+                card.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+                infoCard.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+                infoCard.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+            }
+        });
+
+        document.querySelectorAll('.nearby-card-left').forEach(function(card) {
+            const infoCard = card.querySelector('.nearby-card-info-none');
+            if (infoCard) {
+                card.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+                card.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+                infoCard.addEventListener('mouseenter', function() {
+                    infoCard.style.display = 'flex';
+                });
+                infoCard.addEventListener('mouseleave', function() {
+                    infoCard.style.display = 'none';
+                });
+            }
+        });
+
+        // Script simplifié pour le carousel des partenaires
+        const partnersTrack = document.querySelector('.partners-track');
+        let scrollAmount = 0;
+
+        function scrollPartners() {
+            scrollAmount += 0.5;
+            partnersTrack.style.transform = `translateX(-${scrollAmount}px)`;
+
+            // Réinitialiser la position quand on atteint la fin
+            if (scrollAmount >= partnersTrack.scrollWidth / 2) {
+                scrollAmount = 0;
+            }
+
+            requestAnimationFrame(scrollPartners);
+        }
+
+        // Démarrer le défilement
+        scrollPartners();
+
+        // fact card
+        document.addEventListener('DOMContentLoaded', function() {
+            const factCards = document.querySelectorAll('.fact-card');
+            const hoverCards = document.querySelectorAll('.fact-hover');
+
+            factCards.forEach((card, index) => {
+                const hoverCard = document.getElementById(`hover-${index}`);
+
+                card.addEventListener('mouseenter', function() {
+                    // Hide all hover cards first
+                    hoverCards.forEach(h => h.classList.remove('active'));
+
+                    // Show the corresponding hover card
+                    if (hoverCard) {
+                        // Position the hover card above the current card
+                        const cardRect = card.getBoundingClientRect();
+                        const containerRect = card.parentElement.getBoundingClientRect();
+
+                        // Calculate position relative to the container
+                        const leftOffset = cardRect.left - containerRect.left;
+
+                        hoverCard.style.left = leftOffset + 'px';
+                        hoverCard.style.bottom = '100%';
+                        hoverCard.style.marginBottom = '20px';
+
+                        hoverCard.classList.add('active');
+                    }
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    // Add a small delay before hiding to allow moving to hover card
+                    setTimeout(() => {
+                        if (!hoverCard.matches(':hover') && !card.matches(':hover')) {
+                            hoverCard.classList.remove('active');
+                        }
+                    }, 100);
+                });
+
+                // Keep hover card visible when hovering over it
+                if (hoverCard) {
+                    hoverCard.addEventListener('mouseenter', function() {
+                        hoverCard.classList.add('active');
+                    });
+
+                    hoverCard.addEventListener('mouseleave', function() {
+                        hoverCard.classList.remove('active');
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

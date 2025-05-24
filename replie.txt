@@ -1,0 +1,33 @@
+                <!-- Monument Image -->
+                <div class="monument-container">
+                    <div class="monument-image">
+                        <img src="https://www.pariszigzag.fr/wp-content/uploads/2020/07/mosquee-de-paris-zigzag.jpg" alt="Monument historique">
+                    </div>
+                </div>
+
+                <!-- Fun Facts Section -->
+                <div class="fun-facts">
+                    <div class="fact-card">
+                        <div class="fact-header">LE FUN FACT</div>
+                        <div class="fact-content">LA CATHÉDRALE DE<br>STRASBOURG</div>
+                    </div>
+
+                    <div class="fact-card center-fact">
+                        <div class="fact-header">LE FUN FACT</div>
+                        <div class="fact-content">LA GRANDE MOSQUÉE<br>DE PARIS</div>
+                        <div class="fact-detail">
+                            Construite sur un<br>
+                            facteur pendant 35 ans,<br>
+                            avec des pierres<br>
+                            européennes pendant sa<br>
+                            construction<br>
+                            touristique.
+                        </div>
+                        <div class="episode-badge">Épisode 1</div>
+                    </div>
+
+                    <div class="fact-card">
+                        <div class="fact-header">LE FUN FACT</div>
+                        <div class="fact-content">LE CENTRE<br>POMPIDOU DE METZ</div>
+                    </div>
+                </div>

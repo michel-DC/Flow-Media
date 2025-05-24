@@ -4,6 +4,7 @@ require_once '../../includes/auth.php';
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,12 +13,20 @@ require_once '../../includes/auth.php';
     <link rel="icon" href="../../assets/icons/icon-test.svg" type="image/svg+xml">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-        
+
         :root {
             --soft-black: #1a1a1a;
             --white: #f9f9f9;
+            --border: #e2e8f0;
+            --background: #ffffff;
+            --card-background: #ffffff;
+            --hover: #f1f5f9;
+            --muted: #64748b;
+            --selected-background: #e0e0e0;
+            --primary: #3a791f;
+            --primary-hover: #4e8c2b;
         }
-        
+
         body {
             font-family: "Poppins", sans-serif;
             margin: 0;
@@ -26,105 +35,147 @@ require_once '../../includes/auth.php';
             background: var(--white);
             line-height: 1.6;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 80px;
+            margin-top: 200px;
         }
-        
+
         section {
-            padding: 5rem 0;
+            padding: 80px 0;
         }
 
         .fin {
             margin-bottom: 40px;
         }
-        
-        h1, h2, h3 {
+
+        h1,
+        h2,
+        h3 {
             font-weight: 600;
         }
-        
+
         h1 {
-            font-size: 3rem;
+            font-size: 2.7rem;
+            font-weight: 800;
+            color: var(--primary);
             margin-bottom: 2rem;
+            letter-spacing: -1px;
         }
-        
+
         h2 {
             text-align: center;
             font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
             margin-bottom: 3rem;
+            letter-spacing: -1px;
         }
-        
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 40px;
         }
-        
+
         .card {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: var(--card-background);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
         }
-        
-        .image-placeholder {
-            height: 200px;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
         }
-        
+
         .team-member {
             text-align: center;
         }
-        
+
         .team-member img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 1rem;
+            border: 3px solid var(--border);
         }
-        
+
         .values-list {
             list-style-type: none;
             padding: 0;
         }
-        
+
         .values-list li {
             margin-bottom: 1.5rem;
             padding-left: 2rem;
             position: relative;
         }
-        
+
         .values-list li:before {
             content: "✓";
             position: absolute;
             left: 0;
-            color: var(--soft-black);
+            color: var(--primary);
             font-weight: bold;
         }
-        
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 60px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .container {
+                padding: 0 40px;
+            }
+
             h1 {
                 font-size: 2.5rem;
             }
-            
+
             h2 {
                 font-size: 2rem;
+            }
+
+            .grid {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 25px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .card {
+                padding: 25px;
             }
         }
     </style>
 </head>
+
 <body>
     <?php include '../../includes/layout/navbar.php'; ?>
 
     <section class="container">
+
+        <?php include '../../animations/maison/index.php'; ?>
+
         <h1>Notre mission</h1>
         <div class="grid" style="align-items: center;">
             <div>
@@ -201,6 +252,6 @@ require_once '../../includes/auth.php';
         </div>
     </section>
 
-    <?php include '../../includes/layout/footer.php'; ?>
 </body>
+
 </html>

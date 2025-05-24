@@ -133,6 +133,8 @@ mysqli_close($link);
             --hover: #f1f5f9;
             --muted: #64748b;
             --selected-background: #e0e0e0;
+            --primary: #3a791f;
+            --primary-hover: #4e8c2b;
         }
 
         body {
@@ -156,9 +158,11 @@ mysqli_close($link);
         .dashboard {
             display: flex;
             padding-top: 60px;
+            margin-top: 120px;
         }
 
         .sidebar {
+            margin-top: 120px;
             background: var(--card-background);
             border-right: 1px solid var(--border);
             padding: 2rem;
@@ -224,140 +228,158 @@ mysqli_close($link);
         .card {
             background: var(--card-background);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.5rem;
+            border-radius: 24px;
+            padding: 35px;
             margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             padding-bottom: 0.75rem;
             border-bottom: 1px solid var(--border);
         }
 
         .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: var(--primary);
             margin: 0;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            gap: 40px;
             align-items: start;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 25px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 10px;
             font-weight: 500;
-            font-size: 0.9rem;
             color: var(--soft-black);
         }
 
         .form-input {
             width: 100%;
-            padding: 0.75rem;
+            padding: 15px;
             border: 1px solid var(--border);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 0.9rem;
             box-sizing: border-box;
             transition: border-color 0.2s, box-shadow 0.2s;
             background-color: var(--background);
             color: var(--soft-black);
+            font-family: inherit;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--soft-black);
-            box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.2);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(58, 121, 31, 0.2);
         }
 
         .btn {
             display: inline-block;
-            padding: 12px 28px;
-            background: var(--soft-black);
+            padding: 15px 30px;
+            background: var(--primary);
             color: var(--white);
             text-decoration: none;
-            border-radius: 50px;
-            font-weight: 500;
+            border-radius: 8px;
+            font-weight: 600;
             margin: 1rem 0.5rem;
             transition: all 0.3s ease;
-            border: 2px solid var(--soft-black);
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
+            background: var(--primary-hover);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .interests-section {
             margin: 30px 0;
-            padding: 20px;
+            padding: 35px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 24px;
+            background: var(--card-background);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
         }
 
         .interests-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 15px;
+            margin-top: 20px;
         }
 
         .interest-item {
             display: flex;
             align-items: center;
+            padding: 8px 16px;
+            background: var(--hover);
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .interest-item:hover {
+            background: var(--selected-background);
         }
 
         .interest-item input {
-            margin-right: 5px;
+            margin-right: 8px;
         }
 
         .subscription-card {
             text-align: center;
+            background: var(--card-background);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
         }
 
         .subscription-icon {
             width: 64px;
             height: 64px;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.5rem;
         }
 
         .subscription-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--soft-black);
+            font-size: 1.9rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
         }
 
         .subscription-price {
-            font-size: 1.8rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
+            color: var(--soft-black);
         }
 
         .subscription-features {
             list-style: none;
             padding: 0;
             margin: 1.5rem 0;
+            text-align: left;
         }
 
         .subscription-features li {
-            padding: 0.5rem 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--border);
             font-size: 1rem;
-            text-align: left;
-            padding-left: 1.5rem;
+            padding-left: 2rem;
             position: relative;
         }
 
@@ -365,7 +387,7 @@ mysqli_close($link);
             content: "✓";
             position: absolute;
             left: 0;
-            color: var(--soft-black);
+            color: var(--primary);
             font-weight: bold;
         }
 
@@ -376,7 +398,7 @@ mysqli_close($link);
         .message {
             padding: 1rem;
             margin-bottom: 1.5rem;
-            border-radius: 6px;
+            border-radius: 8px;
             text-align: center;
             font-size: 0.9rem;
         }
@@ -399,7 +421,7 @@ mysqli_close($link);
             align-items: center;
             justify-content: center;
             background-color: var(--hover);
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid var(--border);
             color: var(--muted);
             font-style: italic;
@@ -458,7 +480,7 @@ mysqli_close($link);
             }
 
             .card {
-                padding: 1rem;
+                padding: 1.5rem;
             }
 
             .subscription-card {
@@ -479,8 +501,8 @@ mysqli_close($link);
 </head>
 
 <body>
-    
-<?php include '../../includes/layout/navbar.php'; ?>
+
+    <?php include '../../includes/layout/navbar.php'; ?>
 
     <div class="dashboard">
         <aside class="sidebar">

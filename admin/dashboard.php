@@ -1,5 +1,5 @@
-<?php 
-require_once '../includes/auth.php'; 
+<?php
+require_once '../includes/auth.php';
 $_SESSION['connecté'] = true;
 
 // Connexion à la base de données
@@ -26,9 +26,9 @@ $result6 = mysqli_query($link, $query6);
 $total_admins = mysqli_fetch_assoc($result6)['total'];
 
 // recuperer le nom du dev le plus réservé
-$query8 = "SELECT titre FROM activites ORDER BY nombre_reservation DESC LIMIT 1";
-$result8 = mysqli_query($link, $query8);
-$activite_plus_reserv = mysqli_fetch_assoc($result8)['fullname'];
+// $query8 = "SELECT titre FROM activites ORDER BY nombre_reservation DESC LIMIT 1";
+// $result8 = mysqli_query($link, $query8);
+// $activite_plus_reserv = mysqli_fetch_assoc($result8)['fullname'];
 
 // recuperer le nom de l'user qui à fait le plus de réservations
 $query9 = "SELECT fullname FROM users ORDER BY nombre_reservation DESC LIMIT 1";
@@ -62,6 +62,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,8 +102,9 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             padding: 25px;
             background: #FFFFFF;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-             border: 1px solid #000000; /* Black border */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #000000;
+            /* Black border */
         }
 
         .dashboard-header h1 {
@@ -114,7 +116,8 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
 
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Reverted to original grid */
+            grid-template-columns: repeat(2, 1fr);
+            /* Reverted to original grid */
             gap: 25px;
             margin-bottom: 30px;
         }
@@ -123,44 +126,55 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             background: #FFFFFF;
             padding: 25px;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border: 1px solid #000000; /* Black border */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #000000;
+            /* Black border */
             text-align: center;
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            min-height: 200px; /* Reverted to original min-height */
+            min-height: 200px;
+            /* Reverted to original min-height */
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .stat-number {
-            font-size: clamp(2rem, 5vw, 3rem); /* Reverted to original font size */
-            color: #000000; /* Black color */
+            font-size: clamp(2rem, 5vw, 3rem);
+            /* Reverted to original font size */
+            color: #000000;
+            /* Black color */
             font-weight: 700;
-            margin-bottom: 15px; /* Reverted to original margin */
+            margin-bottom: 15px;
+            /* Reverted to original margin */
             line-height: 1.2;
         }
 
         .stat-label {
-            font-size: clamp(1rem, 2vw, 1.2rem); /* Reverted to original font size */
-            color: #4a5568; /* Keep a slightly muted color for label */
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            /* Reverted to original font size */
+            color: #4a5568;
+            /* Keep a slightly muted color for label */
             font-weight: 500;
         }
 
         .chart-card {
             position: relative;
-            padding-top: 30px; /* Reverted to original padding */
-            min-height: 350px; /* Reverted to original min-height */
+            padding-top: 30px;
+            /* Reverted to original padding */
+            min-height: 350px;
+            /* Reverted to original min-height */
         }
 
         .message {
-            padding: 12px; /* Adjusted padding */
-            border-radius: 4px; /* Minimal border radius */
+            padding: 12px;
+            /* Adjusted padding */
+            border-radius: 4px;
+            /* Minimal border radius */
             margin: 10px auto;
             text-align: center;
             width: 90%;
@@ -171,26 +185,42 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             transform: translateX(-50%);
             animation: fadeOut 5s forwards;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border: 1px solid #000000; /* Black border */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #000000;
+            /* Black border */
         }
 
         @keyframes fadeOut {
-            0% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; visibility: hidden; }
+            0% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
         }
 
         .error {
-            background-color: #FFFFFF; /* White background */
-            color: #000000; /* Black text */
-            border-left: none; /* Removed border-left */
+            background-color: #FFFFFF;
+            /* White background */
+            color: #000000;
+            /* Black text */
+            border-left: none;
+            /* Removed border-left */
         }
 
         .success {
-            background-color: #FFFFFF; /* White background */
-            color: #000000; /* Black text */
-            border-left: none; /* Removed border-left */
+            background-color: #FFFFFF;
+            /* White background */
+            color: #000000;
+            /* Black text */
+            border-left: none;
+            /* Removed border-left */
         }
 
         canvas {
@@ -249,226 +279,230 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
         }
     </style>
 </head>
+
 <body>
-<?php include '../includes/layout/sidebar.php'; ?>  
+    <?php include '../includes/layout/sidebar.php'; ?>
 
-<div id="add-activity-section" style="display: none;"><?php include 'add_activity.php'; ?></div>
-<div id="supp-activity-section" style="display: none;"><?php include 'supp_activity.php'; ?></div>
-<div id="edit-activity-section" style="display: none;"><?php include 'edit_activity.php'; ?></div>
-<div id="see-activity-section" style="display: none;"><?php include 'activity.php'; ?></div>
-<div id="add-podcast-section" style="display: none;"><?php include 'add_podcast.php'; ?></div>
-<div id="supp-podcast-section" style="display: none;"><?php include 'supp_podcast.php'; ?></div>
-<div id="edit-podcast-section" style="display: none;"><?php include 'edit_podcast.php'; ?></div>
-<div id="see-podcast-section" style="display: none;"><?php include 'podcast.php'; ?></div>
-<div id="see-reserv-section" style="display: none;"><?php include 'reservation.php'; ?></div>
-<div id="see-user-section" style="display: none;"><?php include 'manage_user.php'; ?></div>
+    <div id="add-activity-section" style="display: none;"><?php include 'add_activity.php'; ?></div>
+    <div id="supp-activity-section" style="display: none;"><?php include 'supp_activity.php'; ?></div>
+    <div id="edit-activity-section" style="display: none;"><?php include 'edit_activity.php'; ?></div>
+    <div id="see-activity-section" style="display: none;"><?php include 'activity.php'; ?></div>
+    <div id="add-podcast-section" style="display: none;"><?php include 'add_podcast.php'; ?></div>
+    <div id="supp-podcast-section" style="display: none;"><?php include 'supp_podcast.php'; ?></div>
+    <div id="edit-podcast-section" style="display: none;"><?php include 'edit_podcast.php'; ?></div>
+    <div id="see-podcast-section" style="display: none;"><?php include 'podcast.php'; ?></div>
+    <div id="see-reserv-section" style="display: none;"><?php include 'reservation.php'; ?></div>
+    <div id="see-user-section" style="display: none;"><?php include 'manage_user.php'; ?></div>
 
-<div class="dashboard-container">
-    <div class="dashboard-header">
-        <h1>Tableau de Bord Administrateur</h1>
-    </div>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Tableau de Bord Administrateur</h1>
+        </div>
 
-    <div class="stats-container">
-        <div class="stat-card">
-            <div class="stat-number"><?= $total_activites ?></div>
-            <div class="stat-label">Nombre total d'activité 👨‍💻</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number"><?= $total_users ?></div>
-            <div class="stat-label">Utilisateurs inscrits 👤</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number"><?= $total_admins ?></div>
-            <div class="stat-label">Nombre d'administrateurs ✏️</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number"><?= $total_reservations ?></div>
-            <div class="stat-label">Nombre total de reservations 🗓️</div>
-        </div>
-        <div class="stat-card">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number"><?= $total_activites ?></div>
+                <div class="stat-label">Nombre total d'activité 👨‍💻</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $total_users ?></div>
+                <div class="stat-label">Utilisateurs inscrits 👤</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $total_admins ?></div>
+                <div class="stat-label">Nombre d'administrateurs ✏️</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number"><?= $total_reservations ?></div>
+                <div class="stat-label">Nombre total de reservations 🗓️</div>
+            </div>
+            <!-- <div class="stat-card">
             <div class="stat-number"><?= $activite_plus_reserv ?></div>
             <div class="stat-label">à été l'activité la plus réservé 👑</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number"><?= $user_max_reserv ?></div>
-            <div class="stat-label">est l'utilisateur qui a le plus réservé 🏆</div>
-        </div>
-        <div class="stat-card chart-card">
-            <canvas id="devEvolutionGraph"></canvas>
-            <div class="stat-label">Évolution des activités 👨‍💻</div>
-        </div>
-        <div class="stat-card chart-card">
-            <canvas id="userEvolutionGraph"></canvas>
-            <div class="stat-label">Évolution des utilisateurs 👤</div>
-        </div>
-        <div class="stat-card chart-card">
-            <canvas id="reservationEvolutionGraph"></canvas>
-            <div class="stat-label">Évolution des réservations 🗓️</div>
+        </div> -->
+            <div class="stat-card">
+                <div class="stat-number"><?= $user_max_reserv ?></div>
+                <div class="stat-label">est l'utilisateur qui a le plus réservé 🏆</div>
+            </div>
+            <div class="stat-card chart-card">
+                <canvas id="devEvolutionGraph"></canvas>
+                <div class="stat-label">Évolution des activités 👨‍💻</div>
+            </div>
+            <div class="stat-card chart-card">
+                <canvas id="userEvolutionGraph"></canvas>
+                <div class="stat-label">Évolution des utilisateurs 👤</div>
+            </div>
+            <div class="stat-card chart-card">
+                <canvas id="reservationEvolutionGraph"></canvas>
+                <div class="stat-label">Évolution des réservations 🗓️</div>
+            </div>
         </div>
     </div>
-</div>
 
-<?php
-if (isset($_GET['erreur']) && $_GET['erreur'] === 'acces_interdit_admin') {
-    echo "<div class='message error'>Vous devez être connecté en tant qu'utilisateur pour accéder à cette page, déconnectez-vous d'abord.</div>";
-}
-?>
-
-<script> 
-function showSection(sectionId) {
-    document.querySelectorAll('.dashboard-container, #add-activity-section, #supp-activity-section, #edit-activity-section, #see-activity-section, #add-podcast-section, #supp-podcast-section, #edit-podcast-section, #see-podcast-section, #see-reserv-section, #see-user-section')
-        .forEach(section => section.style.display = 'none');
-    document.getElementById(sectionId).style.display = 'block';
-}
-
-// Navigation depuis sidebar         
-document.getElementById('add-activity-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('add-activity-section');
-});
-document.getElementById('supp-activity-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('supp-activity-section');
-});
-document.getElementById('edit-activity-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('edit-activity-section');
-});
-document.getElementById('see-activity-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('see-activity-section');
-});
-document.getElementById('add-podcast-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('add-podcast-section');
-});
-document.getElementById('supp-podcast-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('supp-podcast-section');
-});
-document.getElementById('edit-podcast-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('edit-podcast-section');
-});
-document.getElementById('see-podcast-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('see-podcast-section');
-});
-document.getElementById('see-reserv-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('see-reserv-section');
-});
-document.getElementById('manage-user-link').addEventListener('click', function(event) {
-    event.preventDefault();
-    showSection('see-user-section');
-});
-
-// Gestion de l'ancre dans l'URL
-window.addEventListener('DOMContentLoaded', function() {
-    const anchor = window.location.hash;
-    if (anchor && document.querySelector(anchor)) {
-        showSection(anchor.substring(1));
+    <?php
+    if (isset($_GET['erreur']) && $_GET['erreur'] === 'acces_interdit_admin') {
+        echo "<div class='message error'>Vous devez être connecté en tant qu'utilisateur pour accéder à cette page, déconnectez-vous d'abord.</div>";
     }
-});
+    ?>
 
-// Configuration des graphiques
-const createChart = (ctx, labels, data, color) => {
-    return new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Nombre',
-                data: data,
-                borderColor: color,
-                backgroundColor: color + '20', 
-                borderWidth: 2,
-                fill: true,
-                tension: 0.4, 
-                pointBackgroundColor: color,
-                pointBorderColor: '#fff',
-                pointRadius: 4,
-                pointHoverRadius: 6
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { 
-                legend: { 
-                    display: false 
-                },
-                tooltip: {
-                    backgroundColor: 'rgba(0,0,0,0.8)',
-                    titleFont: {
-                        size: 14
-                    },
-                    bodyFont: {
-                        size: 13
-                    },
-                    padding: 10,
-                    cornerRadius: 4
-                }
-            }
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.dashboard-container, #add-activity-section, #supp-activity-section, #edit-activity-section, #see-activity-section, #add-podcast-section, #supp-podcast-section, #edit-podcast-section, #see-podcast-section, #see-reserv-section, #see-user-section')
+                .forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
         }
-    });
-};
 
-// Données et création des graphiques
-// Ensure these variables are correctly populated by your PHP code
-// Currently, they are commented out in the PHP section
-// const devEvolutionData = <?php // json_encode($dev_evolution) ?>;
-// const userEvolutionData = <?php // json_encode($user_evolution) ?>;
-// const reservationEvolutionData = <?php // json_encode($reservation_evolution) ?>;
+        // Navigation depuis sidebar         
+        document.getElementById('add-activity-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('add-activity-section');
+        });
+        document.getElementById('supp-activity-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('supp-activity-section');
+        });
+        document.getElementById('edit-activity-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('edit-activity-section');
+        });
+        document.getElementById('see-activity-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('see-activity-section');
+        });
+        document.getElementById('add-podcast-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('add-podcast-section');
+        });
+        document.getElementById('supp-podcast-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('supp-podcast-section');
+        });
+        document.getElementById('edit-podcast-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('edit-podcast-section');
+        });
+        document.getElementById('see-podcast-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('see-podcast-section');
+        });
+        document.getElementById('see-reserv-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('see-reserv-section');
+        });
+        document.getElementById('manage-user-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('see-user-section');
+        });
 
-// Placeholder data if PHP variables are not available or commented out
-const devEvolutionData = []; // Replace with actual data from PHP
-const userEvolutionData = []; // Replace with actual data from PHP
-const reservationEvolutionData = []; // Replace with actual data from PHP
+        // Gestion de l'ancre dans l'URL
+        window.addEventListener('DOMContentLoaded', function() {
+            const anchor = window.location.hash;
+            if (anchor && document.querySelector(anchor)) {
+                showSection(anchor.substring(1));
+            }
+        });
 
-const devLabels = devEvolutionData.map(data => data.date);
-const devCounts = devEvolutionData.map(data => data.count);
+        // Configuration des graphiques
+        const createChart = (ctx, labels, data, color) => {
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Nombre',
+                        data: data,
+                        borderColor: color,
+                        backgroundColor: color + '20',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: color,
+                        pointBorderColor: '#fff',
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0,0,0,0.8)',
+                            titleFont: {
+                                size: 14
+                            },
+                            bodyFont: {
+                                size: 13
+                            },
+                            padding: 10,
+                            cornerRadius: 4
+                        }
+                    }
+                }
+            });
+        };
 
-const userLabels = userEvolutionData.map(data => data.date);
-const userCounts = userEvolutionData.map(data => data.count);
+        // Données et création des graphiques
+        // Ensure these variables are correctly populated by your PHP code
+        // Currently, they are commented out in the PHP section
+        // const devEvolutionData = <?php // json_encode($dev_evolution) 
+                                    ?>;
+        // const userEvolutionData = <?php // json_encode($user_evolution) 
+                                        ?>;
+        // const reservationEvolutionData = <?php // json_encode($reservation_evolution) 
+                                            ?>;
 
-const reservationLabels = reservationEvolutionData.map(data => data.date);
-const reservationCounts = reservationEvolutionData.map(data => data.count);
+        // Placeholder data if PHP variables are not available or commented out
+        const devEvolutionData = []; // Replace with actual data from PHP
+        const userEvolutionData = []; // Replace with actual data from PHP
+        const reservationEvolutionData = []; // Replace with actual data from PHP
 
-// Check if canvas elements exist before getting context
-const devCanvas = document.getElementById('devEvolutionGraph');
-const userCanvas = document.getElementById('userEvolutionGraph');
-const reservationCanvas = document.getElementById('reservationEvolutionGraph');
+        const devLabels = devEvolutionData.map(data => data.date);
+        const devCounts = devEvolutionData.map(data => data.count);
 
-let devChart, userChart, reservationChart;
+        const userLabels = userEvolutionData.map(data => data.date);
+        const userCounts = userEvolutionData.map(data => data.count);
 
-if (devCanvas) {
-    const devCtx = devCanvas.getContext('2d');
-    devChart = createChart(devCtx, devLabels, devCounts, '#2ECC71');
-}
+        const reservationLabels = reservationEvolutionData.map(data => data.date);
+        const reservationCounts = reservationEvolutionData.map(data => data.count);
 
-if (userCanvas) {
-    const userCtx = userCanvas.getContext('2d');
-    userChart = createChart(userCtx, userLabels, userCounts, '#ff6e6e');
-}
+        // Check if canvas elements exist before getting context
+        const devCanvas = document.getElementById('devEvolutionGraph');
+        const userCanvas = document.getElementById('userEvolutionGraph');
+        const reservationCanvas = document.getElementById('reservationEvolutionGraph');
 
-if (reservationCanvas) {
-    const reservationCtx = reservationCanvas.getContext('2d');
-    reservationChart = createChart(reservationCtx, reservationLabels, reservationCounts, '#6eff8a');
-}
+        let devChart, userChart, reservationChart;
 
-// Gestion du redimensionnement
-window.addEventListener('resize', function() {
-    if (devChart) devChart.resize();
-    if (userChart) userChart.resize();
-    if (reservationChart) reservationChart.resize();
-});
+        if (devCanvas) {
+            const devCtx = devCanvas.getContext('2d');
+            devChart = createChart(devCtx, devLabels, devCounts, '#2ECC71');
+        }
 
-// Initial display based on hash or default
-// This call is handled by the DOMContentLoaded listener above now
-// showSection(window.location.hash ? window.location.hash.substring(1) : 'dashboard-container');
+        if (userCanvas) {
+            const userCtx = userCanvas.getContext('2d');
+            userChart = createChart(userCtx, userLabels, userCounts, '#ff6e6e');
+        }
 
-</script>
+        if (reservationCanvas) {
+            const reservationCtx = reservationCanvas.getContext('2d');
+            reservationChart = createChart(reservationCtx, reservationLabels, reservationCounts, '#6eff8a');
+        }
+
+        // Gestion du redimensionnement
+        window.addEventListener('resize', function() {
+            if (devChart) devChart.resize();
+            if (userChart) userChart.resize();
+            if (reservationChart) reservationChart.resize();
+        });
+
+        // Initial display based on hash or default
+        // This call is handled by the DOMContentLoaded listener above now
+        // showSection(window.location.hash ? window.location.hash.substring(1) : 'dashboard-container');
+    </script>
 
 </body>
+
 </html>
