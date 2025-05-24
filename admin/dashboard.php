@@ -279,6 +279,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
     <div id="add-activity-section" style="display: none;"><?php include 'add_activity.php'; ?></div>
     <div id="supp-activity-section" style="display: none;"><?php include 'supp_activity.php'; ?></div>
     <div id="edit-activity-section" style="display: none;"><?php include 'edit_activity.php'; ?></div>
+    <div id="add-fun-fact-section" style="display: none;"><?php include 'add_fun_fact.php'; ?></div>
     <div id="see-activity-section" style="display: none;"><?php include 'activity.php'; ?></div>
     <div id="add-podcast-section" style="display: none;"><?php include 'add_podcast.php'; ?></div>
     <div id="supp-podcast-section" style="display: none;"><?php include 'supp_podcast.php'; ?></div>
@@ -340,7 +341,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
 
     <script>
         function showSection(sectionId) {
-            document.querySelectorAll('.dashboard-container, #add-activity-section, #supp-activity-section, #edit-activity-section, #see-activity-section, #add-podcast-section, #supp-podcast-section, #edit-podcast-section, #see-podcast-section, #see-reserv-section, #see-user-section')
+            document.querySelectorAll('.dashboard-container, #add-activity-section, #supp-activity-section, #edit-activity-section, #add-fun-fact-section, #see-activity-section, #add-podcast-section, #supp-podcast-section, #edit-podcast-section, #see-podcast-section, #see-reserv-section, #see-user-section')
                 .forEach(section => section.style.display = 'none');
             document.getElementById(sectionId).style.display = 'block';
         }
@@ -357,6 +358,10 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
         document.getElementById('edit-activity-link').addEventListener('click', function(event) {
             event.preventDefault();
             showSection('edit-activity-section');
+        });
+        document.getElementById('add-fun-fact-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            showSection('add-fun-fact-section');
         });
         document.getElementById('see-activity-link').addEventListener('click', function(event) {
             event.preventDefault();

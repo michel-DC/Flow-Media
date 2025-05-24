@@ -29,6 +29,12 @@
                 </a>
             </li>
             <li>
+                <a href="#" id="add-fun-fact-link" class="nav-link">
+                    <span class="nav-icon">➕</span>
+                    <span class="nav-text">Ajouter un fun fact</span>
+                </a>
+            </li>
+            <li>
                 <a href="#" id="add-podcast-link" class="nav-link">
                     <span class="nav-icon">➕</span>
                     <span class="nav-text">Ajouter un podcast</span>

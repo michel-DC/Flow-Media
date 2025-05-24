@@ -1,3 +1,0 @@
-[20-May-2025 07:15:42 UTC] PHP Warning:  Undefined variable $user in /home/micheldjoumessi/flowmedia.michel.djoumessi.mmi-velizy.fr/includes/layout/navbar.php on line 43
-[20-May-2025 07:15:42 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/micheldjoumessi/flowmedia.michel.djoumessi.mmi-velizy.fr/includes/layout/navbar.php on line 43
-[20-May-2025 19:23:23 UTC] PHP Warning:  Undefined array key "user_id" in /home/micheldjoumessi/flowmedia.michel.djoumessi.mmi-velizy.fr/includes/layout/navbar.php on line 4

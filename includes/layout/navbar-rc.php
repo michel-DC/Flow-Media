@@ -42,12 +42,14 @@ if (isset($_SESSION['user_id'])) {
                     <a class="nav-dropbtn">Découvrir <i class="fa fa-caret-down"></i></a>
                 </div>
                 <div class="nav-dropdown-content">
+                    <a href="/pages/agenda"><i class="fas fa-calendar-alt"></i> Agenda culturel</a>
+                    <a href="/pages/fun-fact"><i class="fas fa-lightbulb"></i> Fun Facts</a>
                     <a href="/pages/activites"><i class="fas fa-running"></i> Activités</a>
                     <a href="/pages/defis"><i class="fas fa-trophy"></i> Défis</a>
                 </div>
             </div>
 
-            <div class="nav-item"><a href="pages/maps">Maps</a></div>
+            <div class="nav-item"><a href="/pages/maps">Maps</a></div>
 
             <?php if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true): ?>
                 <div class="nav-item"><a href="connexion/login.php">Connexion</a></div>

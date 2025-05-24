@@ -1715,6 +1715,7 @@ body {
   pointer-events: none;
   transition: all 0.3s ease;
   transform: translateY(-10px);
+  transition: fadeIn 0.3s ease;
 }
 
 .fact-hover.active {
@@ -1722,6 +1723,7 @@ body {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
+  transition: fadeIn 0.3s ease;
 }
 
 #hover-1 {
