@@ -511,6 +511,10 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
 
     <?php include 'includes/layout/footer.php'; ?>
 
+    <button id="scrollToTop" class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
         document.querySelectorAll('.carousel-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
@@ -652,6 +656,24 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                 carouselTrackElement.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
             });
         }
+
+        // Scroll to top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     </script>
 </body>
 
