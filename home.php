@@ -211,19 +211,6 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                         <div class="character-avatar">
                             <img src="/assets/images/1new.png" alt="Jardy" class="avatar-img">
                         </div>
-                        <div class="speech-bubble jardy-bubble">
-                            <div class="character-name">🌿 Jardy</div>
-                            <p>Moi c'est calme, nature et<br>
-                                coins planqués.<br>
-                                J'te fais découvrir les jardins<br>
-                                qui valent le détour.<br>
-                                Tu crois connaître ta ville ?<br>
-                                On va voir ça.</p>
-                        </div>
-                    </div>
-
-                    <!-- Archy Character -->
-                    <div class="character archy">
                         <div class="speech-bubble archy-bubble">
                             <div class="character-name">🏛️ Archy</div>
                             <p>Je repère les détails que<br>
@@ -232,6 +219,19 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                                 chelous sur les toits...<br>
                                 Si t'aimes explorer, je suis<br>
                                 ton gars sûr.</p>
+                        </div>
+                    </div>
+
+                    <!-- Archy Character -->
+                    <div class="character archy">
+                        <div class="speech-bubble jardy-bubble">
+                            <div class="character-name">🌿 Jardy</div>
+                            <p>Moi c'est calme, nature et<br>
+                                coins planqués.<br>
+                                J'te fais découvrir les jardins<br>
+                                qui valent le détour.<br>
+                                Tu crois connaître ta ville ?<br>
+                                On va voir ça.</p>
                         </div>
                         <div class="character-avatar">
                             <img src="/assets/images/2new.png" alt="Archy" class="avatar-img-2">
@@ -319,235 +319,249 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                         <button class="fact-button">En savoir +</button>
                     </div>
                 </div>
+            </section>
+
+            <section class="testimonials-section">ç
+                <h2 class="testimonials-title">CE QU'ILS EN PENSENT</h2>
+                <div class="testimonials-container">
+                    <div class="testimonial-card">
+                        <div class="testimonial-avatar">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"Une expérience incroyable ! J'ai découvert des lieux magnifiques que je ne connaissais pas dans ma propre ville."</p>
+                            <div class="testimonial-author">
+                                <h4>Marie L.</h4>
+                                <p>Paris</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"Les défis sont vraiment amusants et m'ont permis d'en apprendre beaucoup sur l'architecture de ma ville."</p>
+                            <div class="testimonial-author">
+                                <h4>Thomas D.</h4>
+                                <p>Lyon</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-avatar">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">"Une application qui rend la découverte culturelle accessible et ludique. Je recommande !"</p>
+                            <div class="testimonial-author">
+                                <h4>Sophie M.</h4>
+                                <p>Bordeaux</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="partners-section">
+                <h2 class="partners-title">ILS NOUS ONT FAIT CONFIANCE</h2>
+                <div class="partners-carousel">
+                    <button class="partners-arrow left"><span>&#10094;</span></button>
+                    <div class="partners-track">
+                        <div class="partner-logo">
+                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris">
+                        </div>
+                        <div class="partern-logo">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
+                        </div>
+                        <div class="partner-logo">
+                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris">
+                        </div>
+                        <div class="partern-logo">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine">
+                        </div>
+                    </div>
+                    <button class="partners-arrow right"><span>&#10095;</span></button>
+                </div>
+            </section>
+
+            <!-- Newsletter Section -->
+            <section class="newsletter-section">
+                <div class="newsletter-container">
+                    <div class="newsletter-content">
+                        <div class="newsletter-title">Newsletter</div>
+                        <div class="newsletter-form">
+                            <input type="email" class="newsletter-input" placeholder="Ton e-mail">
+                            <button class="newsletter-button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
-        </section>
 
-        <section class="testimonials-section">
-            <h2 class="testimonials-title">CE QU'ILS EN PENSENT</h2>
-            <div class="testimonials-container">
-                <div class="testimonial-card">
-                    <div class="testimonial-avatar">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
-                    </div>
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">"Une expérience incroyable ! J'ai découvert des lieux magnifiques que je ne connaissais pas dans ma propre ville."</p>
-                        <div class="testimonial-author">
-                            <h4>Marie L.</h4>
-                            <p>Paris</p>
-                        </div>
-                    </div>
-                </div>
+        </div>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-avatar">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
-                    </div>
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">"Les défis sont vraiment amusants et m'ont permis d'en apprendre beaucoup sur l'architecture de ma ville."</p>
-                        <div class="testimonial-author">
-                            <h4>Thomas D.</h4>
-                            <p>Lyon</p>
-                        </div>
-                    </div>
-                </div>
+        <?php include 'includes/layout/footer.php'; ?>
 
-                <div class="testimonial-card">
-                    <div class="testimonial-avatar">
-                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avatar">
-                    </div>
-                    <div class="testimonial-content">
-                        <p class="testimonial-text">"Une application qui rend la découverte culturelle accessible et ludique. Je recommande !"</p>
-                        <div class="testimonial-author">
-                            <h4>Sophie M.</h4>
-                            <p>Bordeaux</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <script>
+            document.querySelectorAll('.carousel-img-none').forEach(function(link) {
+                const card = link.parentElement;
+                const infoCard = card.nextElementSibling;
 
-        <section class="partners-section">
-            <h2 class="partners-title">ILS NOUS ONT FAIT CONFIANCE</h2>
-            <div class="partners-carousel">
-                <button class="partners-arrow left"><span>&#10094;</span></button>
-                <div class="partners-track">
-                    <div class="partner-logo">
-                        <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris">
-                    </div>
-                    <div class="partern-logo">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
-                    </div>
-                    <div class="partner-logo">
-                        <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Ville de Paris">
-                    </div>
-                    <div class="partern-logo">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région aquitaine">
-                    </div>
-                </div>
-                <button class="partners-arrow right"><span>&#10095;</span></button>
-            </div>
-        </section>
-
-    </div>
-
-    </div>
-
-    <?php include 'includes/layout/footer.php'; ?>
-
-    <script>
-        document.querySelectorAll('.carousel-img-none').forEach(function(link) {
-            const card = link.parentElement;
-            const infoCard = card.nextElementSibling;
-
-            if (infoCard && infoCard.classList.contains('carousel-card-info-none')) {
-                card.addEventListener('mouseenter', function() {
-                    infoCard.style.display = 'flex';
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    infoCard.style.display = 'none';
-                });
-
-                infoCard.addEventListener('mouseenter', function() {
-                    infoCard.style.display = 'flex';
-                });
-
-                infoCard.addEventListener('mouseleave', function() {
-                    infoCard.style.display = 'none';
-                });
-            }
-        });
-
-        document.querySelectorAll('.nearby-card-right').forEach(function(card) {
-            const infoCard = card.querySelector('.nearby-class-info-none');
-            if (infoCard) {
-                card.addEventListener('mouseenter', function() {
-                    infoCard.style.display = 'flex';
-                });
-                card.addEventListener('mouseleave', function() {
-                    infoCard.style.display = 'none';
-                });
-                infoCard.addEventListener('mouseenter', function() {
-                    infoCard.style.display = 'flex';
-                });
-                infoCard.addEventListener('mouseleave', function() {
-                    infoCard.style.display = 'none';
-                });
-            }
-        });
-
-        document.querySelectorAll('.nearby-card-left').forEach(function(card) {
-            const infoCard = card.querySelector('.nearby-card-info-none');
-            if (infoCard) {
-                card.addEventListener('mouseenter', function() {
-                    infoCard.style.display = 'flex';
-                });
-                card.addEventListener('mouseleave', function() {
-                    infoCard.style.display = 'none';
-                });
-                infoCard.addEventListener('mouseenter', function() {
-                    infoCard.style.display = 'flex';
-                });
-                infoCard.addEventListener('mouseleave', function() {
-                    infoCard.style.display = 'none';
-                });
-            }
-        });
-
-        // Script simplifié pour le carousel des partenaires
-        const partnersTrack = document.querySelector('.partners-track');
-        let scrollAmount = 0;
-
-        function scrollPartners() {
-            scrollAmount += 0.5;
-            partnersTrack.style.transform = `translateX(-${scrollAmount}px)`;
-
-            // Réinitialiser la position quand on atteint la fin
-            if (scrollAmount >= partnersTrack.scrollWidth / 2) {
-                scrollAmount = 0;
-            }
-
-            requestAnimationFrame(scrollPartners);
-        }
-
-        // Démarrer le défilement
-        scrollPartners();
-
-        // fact card
-        document.addEventListener('DOMContentLoaded', function() {
-            const factCards = document.querySelectorAll('.fact-card');
-            const hoverCards = document.querySelectorAll('.fact-hover');
-
-            factCards.forEach((card, index) => {
-                const hoverCard = document.getElementById(`hover-${index}`);
-
-                card.addEventListener('mouseenter', function() {
-                    // Hide all hover cards first
-                    hoverCards.forEach(h => h.classList.remove('active'));
-
-                    // Show the corresponding hover card
-                    if (hoverCard) {
-                        // Position the hover card above the current card
-                        const cardRect = card.getBoundingClientRect();
-                        const containerRect = card.parentElement.getBoundingClientRect();
-
-                        // Calculate position relative to the container
-                        const leftOffset = cardRect.left - containerRect.left;
-
-                        hoverCard.style.left = leftOffset + 'px';
-                        hoverCard.style.bottom = '100%';
-                        hoverCard.style.marginBottom = '20px';
-
-                        hoverCard.classList.add('active');
-                    }
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    // Add a small delay before hiding to allow moving to hover card
-                    setTimeout(() => {
-                        if (!hoverCard.matches(':hover') && !card.matches(':hover')) {
-                            hoverCard.classList.remove('active');
-                        }
-                    }, 100);
-                });
-
-                // Keep hover card visible when hovering over it
-                if (hoverCard) {
-                    hoverCard.addEventListener('mouseenter', function() {
-                        hoverCard.classList.add('active');
+                if (infoCard && infoCard.classList.contains('carousel-card-info-none')) {
+                    card.addEventListener('mouseenter', function() {
+                        infoCard.style.display = 'flex';
                     });
 
-                    hoverCard.addEventListener('mouseleave', function() {
-                        hoverCard.classList.remove('active');
+                    card.addEventListener('mouseleave', function() {
+                        infoCard.style.display = 'none';
+                    });
+
+                    infoCard.addEventListener('mouseenter', function() {
+                        infoCard.style.display = 'flex';
+                    });
+
+                    infoCard.addEventListener('mouseleave', function() {
+                        infoCard.style.display = 'none';
                     });
                 }
             });
-        });
-    </script>
-</body>
+
+            document.querySelectorAll('.nearby-card-right').forEach(function(card) {
+                const infoCard = card.querySelector('.nearby-class-info-none');
+                if (infoCard) {
+                    card.addEventListener('mouseenter', function() {
+                        infoCard.style.display = 'flex';
+                    });
+                    card.addEventListener('mouseleave', function() {
+                        infoCard.style.display = 'none';
+                    });
+                    infoCard.addEventListener('mouseenter', function() {
+                        infoCard.style.display = 'flex';
+                    });
+                    infoCard.addEventListener('mouseleave', function() {
+                        infoCard.style.display = 'none';
+                    });
+                }
+            });
+
+            document.querySelectorAll('.nearby-card-left').forEach(function(card) {
+                const infoCard = card.querySelector('.nearby-card-info-none');
+                if (infoCard) {
+                    card.addEventListener('mouseenter', function() {
+                        infoCard.style.display = 'flex';
+                    });
+                    card.addEventListener('mouseleave', function() {
+                        infoCard.style.display = 'none';
+                    });
+                    infoCard.addEventListener('mouseenter', function() {
+                        infoCard.style.display = 'flex';
+                    });
+                    infoCard.addEventListener('mouseleave', function() {
+                        infoCard.style.display = 'none';
+                    });
+                }
+            });
+
+            // Script simplifié pour le carousel des partenaires
+            const partnersTrack = document.querySelector('.partners-track');
+            let scrollAmount = 0;
+
+            function scrollPartners() {
+                scrollAmount += 0.5;
+                partnersTrack.style.transform = `translateX(-${scrollAmount}px)`;
+
+                // Réinitialiser la position quand on atteint la fin
+                if (scrollAmount >= partnersTrack.scrollWidth / 2) {
+                    scrollAmount = 0;
+                }
+
+                requestAnimationFrame(scrollPartners);
+            }
+
+            // Démarrer le défilement
+            scrollPartners();
+
+            // fact card
+            document.addEventListener('DOMContentLoaded', function() {
+                const factCards = document.querySelectorAll('.fact-card');
+                const hoverCards = document.querySelectorAll('.fact-hover');
+
+                factCards.forEach((card, index) => {
+                    const hoverCard = document.getElementById(`hover-${index}`);
+
+                    card.addEventListener('mouseenter', function() {
+                        // Hide all hover cards first
+                        hoverCards.forEach(h => h.classList.remove('active'));
+
+                        // Show the corresponding hover card
+                        if (hoverCard) {
+                            // Position the hover card above the current card
+                            const cardRect = card.getBoundingClientRect();
+                            const containerRect = card.parentElement.getBoundingClientRect();
+
+                            // Calculate position relative to the container
+                            const leftOffset = cardRect.left - containerRect.left;
+
+                            hoverCard.style.left = leftOffset + 'px';
+                            hoverCard.style.bottom = '100%';
+                            hoverCard.style.marginBottom = '20px';
+
+                            hoverCard.classList.add('active');
+                        }
+                    });
+
+                    card.addEventListener('mouseleave', function() {
+                        // Add a small delay before hiding to allow moving to hover card
+                        setTimeout(() => {
+                            if (!hoverCard.matches(':hover') && !card.matches(':hover')) {
+                                hoverCard.classList.remove('active');
+                            }
+                        }, 100);
+                    });
+
+                    // Keep hover card visible when hovering over it
+                    if (hoverCard) {
+                        hoverCard.addEventListener('mouseenter', function() {
+                            hoverCard.classList.add('active');
+                        });
+
+                        hoverCard.addEventListener('mouseleave', function() {
+                            hoverCard.classList.remove('active');
+                        });
+                    }
+                });
+            });
+        </script>
+    </body>
 
 </html>

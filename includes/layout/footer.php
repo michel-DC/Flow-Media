@@ -1,93 +1,127 @@
-<footer class="main-footer">
-        <div class="footer-container">
-        <?php require_once 'animations/snake/index.php'; ?>
-            <div class="footer-logo">Flow Media</div>
-            <div class="footer-links">
-                <a href="#">Accueil</a>
-                <a href="#">Découvrir</a>
-                <a href="#">Défis</a>
-                <a href="#">Maps</a>
-                <a href="#">Contact</a>
-            </div>
-            <div class="footer-socials">
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-            </div>
-            <div class="footer-copyright">
-                &copy; 2024 Flow Media. Tous droits réservés.
-            </div>
-        </div>
-    </footer>
+<footer class="new-footer">
+  <div class="footer-title">Flow Media</div>
+  <div class="footer-nav">
+    <a href="../../home.php">Accueil</a>
+    <a href="../../pages/about">À propos</a>
+    <a href="../../pages/activites">Découvrir</a>
+    <a href="../../pages/maps">Maps</a>
+    <a href="../../pages/contact">Contact</a>
+  </div>
+  <div class="footer-legal">
+    <a href="#">Politique de confidentialité</a>
+    <a href="#">Cookies</a>
+  </div>
+  <div class="footer-socials-new">
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-tiktok"></i></a>
+    <a href="#"><i class="fab fa-snapchat"></i></a>
+  </div>
+  <div class="footer-copyright">
+    &copy; 2025 Flow Media. Tous droits réservés.
+  </div>
+</footer>
 
 <style>
-    .main-footer {
-  background: linear-gradient(90deg, #b7b7b7 60%, #e6e6e6 100%);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
-  color: #222;
-  padding: 36px 0 18px 0;
-  text-align: center;
-  margin-top: 0;
-}
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-.footer-logo {
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #a259e6;
-}
-.footer-links {
-  display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.footer-links a {
-  color: #222;
-  text-decoration: none;
-  font-size: 1.1rem;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-.footer-links a:hover {
-  color: #a259e6;
-}
-.footer-socials {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-}
-.footer-socials a {
-  color: #222;
-  font-size: 1.4rem;
-  transition: color 0.2s;
-}
-.footer-socials a:hover {
-  color: #a259e6;
-}
-.footer-copyright {
-  color: #222;
-  font-size: 0.95rem;
-  margin-top: 12px;
-}
-@media (max-width: 600px) {
-  .footer-links {
-    gap: 14px;
+  .new-footer {
+    background-color: #e6e2d4;
+    padding: 30px 20px;
+    text-align: center;
+    color: #333;
+  }
+
+  .footer-title {
+    font-size: 3em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #C4BAA1;
+  }
+
+  .footer-nav {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+
+  .footer-nav a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.2s;
+  }
+
+  .footer-nav a:hover {
+    color: #a19f96;
+  }
+
+  .legal {
+    display: flex;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-legal {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+
+  .footer-legal a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.2s;
+  }
+
+  .footer-legal a:hover {
+    color: #a19f96;
+  }
+
+  .footer-socials-new {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .footer-socials-new a {
+    color: #ff003c;
+    /* Red color based on image */
+    font-size: 1.8em;
+    transition: opacity 0.2s;
+  }
+
+  .footer-socials-new a:hover {
+    opacity: 0.8;
+  }
+
+  .footer-copyright {
+    color: #222;
     font-size: 0.95rem;
+    margin-top: 12px;
   }
-  .footer-logo {
-    font-size: 1.3rem;
+
+  @media (max-width: 600px) {
+    .footer-nav {
+      gap: 15px;
+      font-size: 0.9em;
+    }
+
+    .footer-title {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+
+    .footer-socials-new {
+      gap: 15px;
+    }
+
+    .footer-socials-new a {
+      font-size: 1.5em;
+    }
   }
-  .footer-container {
-    gap: 14px;
-  }
-}
 </style>
