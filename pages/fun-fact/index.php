@@ -48,35 +48,105 @@ if (!$result) {
             padding: 0;
             background: var(--light-bg);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .fun-facts-container {
-            max-width: 800px;
-            margin: 100px auto;
+            position: relative;
+            max-width: 1200px;
+            margin: 120px auto 40px;
             padding: 20px;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
         }
 
         .fun-fact-card {
-            min-height: 400px;
-            background: var(--white);
-            border-radius: 24px;
-            margin-bottom: 40px;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-            position: relative;
-            transition: transform 0.3s ease;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            transform: translateX(100%);
         }
 
-        .fun-fact-card:hover {
-            transform: translateY(-5px);
+        .fun-fact-card.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fun-fact-card.prev {
+            transform: translateX(-100%);
         }
 
         .fun-fact-image {
             width: 100%;
-            height: 400px;
+            height: 100%;
             object-fit: cover;
             position: relative;
             display: block;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav.prev {
+            left: 20px;
+        }
+
+        .carousel-nav.next {
+            right: 20px;
+        }
+
+        .carousel-nav i {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--white);
+            transform: scale(1.2);
         }
 
         .fun-fact-content {
@@ -120,45 +190,28 @@ if (!$result) {
             margin-top: 15px;
         }
 
-        .scroll-indicator {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--primary-color);
-            font-size: 2rem;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-            z-index: 100;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-20px);
-            }
-
-            60% {
-                transform: translateY(-10px);
+        @media (max-width: 1200px) {
+            .fun-facts-container {
+                max-width: 90%;
             }
         }
 
         @media (max-width: 768px) {
             .fun-facts-container {
-                margin: 60px auto;
-                padding: 15px;
+                margin: 80px auto 20px;
             }
 
-            .fun-fact-image {
-                height: 300px;
+            .carousel-container {
+                height: 500px;
+            }
+
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            .carousel-nav i {
+                font-size: 20px;
             }
 
             .fun-fact-title {
@@ -171,72 +224,167 @@ if (!$result) {
             }
         }
 
-        /* Ajout de styles de débogage */
-        .debug-info {
-            background: #fff;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: var(--shadow-sm);
+        @media (max-width: 480px) {
+            .carousel-container {
+                height: 400px;
+            }
+
+            .carousel-nav {
+                width: 35px;
+                height: 35px;
+            }
+
+            .carousel-nav i {
+                font-size: 18px;
+            }
+
+            .fun-fact-content {
+                padding: 20px;
+            }
+
+            .fun-fact-title {
+                font-size: 1.2rem;
+            }
+
+            .fun-fact-story {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <?php include '../../includes/layout/navbar.php'; ?>
+
+    <?php include '../../includes/layout/navbar.php' ?>
 
     <div class="fun-facts-container">
-        <?php
-        mysqli_data_seek($result, 0);
-        while ($row = mysqli_fetch_assoc($result)):
-            // Afficher les données brutes pour le débogage
-            echo '<div class="debug-info">';
-            echo '<pre>';
-            print_r($row);
-            echo '</pre>';
-            echo '</div>';
-        ?>
-            <div class="fun-fact-card">
-                <?php if (isset($row['image_url']) && !empty($row['image_url'])): ?>
-                    <img src="<?php echo htmlspecialchars($row['image_url']); ?>"
-                        alt="<?php echo htmlspecialchars($row['nom']); ?>"
-                        class="fun-fact-image"
-                        onerror="this.src='../../assets/images/placeholder.jpg'">
-                <?php endif; ?>
-                <div class="fun-fact-content">
-                    <h2 class="fun-fact-title"><?php echo htmlspecialchars($row['nom']); ?></h2>
-                    <div class="fun-fact-details">
-                        <div class="fun-fact-detail">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span><?php echo htmlspecialchars($row['adresse']); ?></span>
+        <div class="carousel-container">
+            <?php
+            mysqli_data_seek($result, 0);
+            $index = 0;
+            while ($affiche = mysqli_fetch_assoc($result)):
+            ?>
+                <div class="fun-fact-card <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                    <?php if (isset($affiche['image_url']) && !empty($affiche['image_url'])): ?>
+                        <img src="../<?php echo htmlspecialchars($affiche['image_url']); ?>"
+                            alt="<?php echo htmlspecialchars($affiche['nom']); ?>"
+                            class="fun-fact-image">
+                    <?php endif; ?>
+                    <div class="fun-fact-content">
+                        <h2 class="fun-fact-title"><?php echo htmlspecialchars($affiche['nom']); ?></h2>
+                        <div class="fun-fact-details">
+                            <div class="fun-fact-detail">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span><?php echo htmlspecialchars($affiche['adresse']); ?></span>
+                            </div>
+                            <div class="fun-fact-detail">
+                                <i class="fas fa-user"></i>
+                                <span><?php echo htmlspecialchars($affiche['createur']); ?></span>
+                            </div>
+                            <div class="fun-fact-detail">
+                                <i class="fas fa-palette"></i>
+                                <span><?php echo htmlspecialchars($affiche['style']); ?></span>
+                            </div>
                         </div>
-                        <div class="fun-fact-detail">
-                            <i class="fas fa-user"></i>
-                            <span><?php echo htmlspecialchars($row['createur']); ?></span>
-                        </div>
-                        <div class="fun-fact-detail">
-                            <i class="fas fa-palette"></i>
-                            <span><?php echo htmlspecialchars($row['style']); ?></span>
-                        </div>
+                        <p class="fun-fact-story"><?php echo htmlspecialchars($affiche['histoire']); ?></p>
                     </div>
-                    <p class="fun-fact-story"><?php echo htmlspecialchars($row['histoire']); ?></p>
                 </div>
+            <?php
+                $index++;
+            endwhile;
+            ?>
+            <div class="carousel-nav prev">
+                <i class="fas fa-chevron-left"></i>
             </div>
-        <?php endwhile; ?>
-    </div>
-
-    <div class="scroll-indicator">
-        <i class="fas fa-chevron-down"></i>
+            <div class="carousel-nav next">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="carousel-dots">
+                <?php
+                mysqli_data_seek($result, 0);
+                $dotIndex = 0;
+                while (mysqli_fetch_assoc($result)):
+                ?>
+                    <div class="dot <?php echo $dotIndex === 0 ? 'active' : ''; ?>" data-index="<?php echo $dotIndex; ?>"></div>
+                <?php
+                    $dotIndex++;
+                endwhile;
+                ?>
+            </div>
+        </div>
     </div>
 
     <?php include '../../includes/layout/footer.php'; ?>
 
     <script>
-        document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            window.scrollBy({
-                top: window.innerHeight,
-                behavior: 'smooth'
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.fun-fact-card');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.querySelector('.carousel-nav.prev');
+            const nextBtn = document.querySelector('.carousel-nav.next');
+            let currentIndex = 0;
+
+            function updateCarousel(index) {
+                cards.forEach(card => {
+                    card.classList.remove('active', 'prev');
+                });
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+
+                cards[index].classList.add('active');
+                dots[index].classList.add('active');
+
+                if (index > 0) {
+                    cards[index - 1].classList.add('prev');
+                }
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % cards.length;
+                updateCarousel(currentIndex);
+            }
+
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+                updateCarousel(currentIndex);
+            }
+
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel(currentIndex);
+                });
             });
+
+            // Auto-advance slides every 5 seconds
+            setInterval(nextSlide, 5000);
+
+            // Touch events for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            document.querySelector('.carousel-container').addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            document.querySelector('.carousel-container').addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    nextSlide();
+                }
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    prevSlide();
+                }
+            }
         });
     </script>
 </body>

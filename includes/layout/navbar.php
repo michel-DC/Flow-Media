@@ -78,13 +78,13 @@ if (isset($_SESSION['user_id'])) {
 
 <style>
     .header {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        z-index: 100;
+        z-index: 1000;
         padding: 20px;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255, 255, 255, 0.95);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 

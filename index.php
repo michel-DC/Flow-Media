@@ -280,7 +280,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                             Son horloge astronomique<br>
                             date de la Renaissance.
                         </div>
-                        <button class="fact-button">En savoir +</button>
+                        <a href="/pages/fun-fact/"><button class="fact-button">En savoir +</button></a>
                     </div>
 
                     <div class="fact-hover" id="hover-1">
@@ -292,7 +292,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                             s'élève à 33 mètres de haut,<br>
                             inspiré de celui de Fès.
                         </div>
-                        <button class="fact-button">En savoir +</button>
+                        <a href="/pages/fun-fact/"><button class="fact-button">En savoir +</button></a>
                     </div>
 
                     <div class="fact-hover" id="hover-2">
@@ -304,7 +304,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                             couvre 8000m² sans aucun<br>
                             pilier central.
                         </div>
-                        <button class="fact-button">En savoir +</button>
+                        <a href="/pages/fun-fact/"><button class="fact-button">En savoir +</button></a>
                     </div>
 
                     <div class="fact-hover" id="hover-3">
@@ -316,7 +316,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                             pendant sa tournée de<br>
                             facteur rural.
                         </div>
-                        <button class="fact-button">En savoir +</button>
+                        <a href="/pages/fun-fact/"><button class="fact-button">En savoir +</button></a>
                     </div>
                 </div>
             </section>
