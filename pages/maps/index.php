@@ -30,7 +30,6 @@
             font-family: "Poppins", sans-serif;
             margin: 0;
             padding: 0;
-            font-family: sans-serif;
             background-color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -49,11 +48,12 @@
         }
 
         .map-title {
-            color: #853FD4;
-            font-size: 3em;
-            font-weight: bolder;
-            margin-bottom: 50px;
             text-align: center;
+            color: #a259e6;
+            font-size: clamp(1.5rem, 3vw, 2.7rem);
+            font-weight: 800;
+            margin-bottom: clamp(1.5rem, 3vh, 2.25rem);
+            letter-spacing: -1px;
         }
 
         .geo-button {

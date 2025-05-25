@@ -6,18 +6,12 @@ if (mysqli_connect_errno()) {
     die("Échec de la connexion à MySQL: " . mysqli_connect_error());
 }
 
-// Requête principale
 $query = "SELECT * FROM fun_fact ORDER BY id DESC";
 $result = mysqli_query($link, $query);
 
-// Ajout du débogage
 if (!$result) {
     die("Erreur de requête : " . mysqli_error($link));
 }
-
-// // Stocker le nombre de résultats pour le débogage
-// $num_rows = mysqli_num_rows($result);
-// echo "Nombre de fun facts trouvés : " . $num_rows;
 ?>
 
 <!DOCTYPE html>
@@ -51,10 +45,21 @@ if (!$result) {
             overflow-x: hidden;
         }
 
+        .page-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin: 150px 0 30px;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
         .fun-facts-container {
             position: relative;
             max-width: 1200px;
-            margin: 120px auto 40px;
+            margin: 0 auto 40px;
             padding: 20px;
             overflow: hidden;
         }
@@ -196,13 +201,24 @@ if (!$result) {
             }
         }
 
+        @media (max-width: 992px) {
+            .carousel-container {
+                height: 500px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+                margin: 80px 0 20px;
+            }
+
             .fun-facts-container {
-                margin: 80px auto 20px;
+                margin: 0 auto 20px;
             }
 
             .carousel-container {
-                height: 500px;
+                height: 450px;
             }
 
             .carousel-nav {
@@ -224,22 +240,41 @@ if (!$result) {
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 576px) {
+            .page-title {
+                font-size: 1.8rem;
+                margin: 40px 0 15px;
+            }
+
             .carousel-container {
                 height: 400px;
+            }
+
+            .fun-fact-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.5rem;
+                gap: 10px;
+                margin-top: 100px;
+            }
+
+            .carousel-container {
+                height: 350px;
+                margin-top: 200px;
             }
 
             .carousel-nav {
                 width: 35px;
                 height: 35px;
+                display: none;
             }
 
             .carousel-nav i {
-                font-size: 18px;
-            }
-
-            .fun-fact-content {
-                padding: 20px;
+                display: none;
             }
 
             .fun-fact-title {
@@ -249,13 +284,21 @@ if (!$result) {
             .fun-fact-story {
                 font-size: 0.9rem;
             }
+
+            .carousel-dots {
+                width: 10px;
+            }
         }
     </style>
 </head>
 
 <body>
-
     <?php include '../../includes/layout/navbar.php' ?>
+
+    <h1 class="page-title">
+        <i class="fas fa-lightbulb"></i>
+        Quelques fun facts
+    </h1>
 
     <div class="fun-facts-container">
         <div class="carousel-container">
@@ -361,7 +404,7 @@ if (!$result) {
             });
 
             // Auto-advance slides every 5 seconds
-            setInterval(nextSlide, 5000);
+            setInterval(nextSlide, 20000);
 
             // Touch events for mobile
             let touchStartX = 0;

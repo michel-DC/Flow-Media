@@ -175,7 +175,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
             <section class="nearby-places-section">
                 <h2 class="nearby-title">LES LIEUX PRÈS DE CHEZ TOI</h2>
                 <div class="nearby-geoloc-btn-container">
-                    <a href="/pages/maps/"></a><button class="nearby-geoloc-btn"><i class="fa-solid fa-location-dot"></i> Se géolocaliser</button></a>
+                    <a href="/pages/maps/"><button class="nearby-geoloc-btn"><i class="fa-solid fa-location-dot"></i> Se géolocaliser</button></a>
                 </div>
                 <div class="nearby-cards-row">
                     <div class="nearby-card nearby-card-left">

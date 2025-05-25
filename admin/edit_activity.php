@@ -25,6 +25,14 @@ while ($row = mysqli_fetch_assoc($result_all)) {
     $activities[] = $row;
 }
 
+// Ajouter après la connexion à la base de données
+$all_interests_query = "SELECT id, nom FROM interets";
+$all_interests_result = mysqli_query($link, $all_interests_query);
+$all_interests = [];
+while ($row = mysqli_fetch_assoc($all_interests_result)) {
+    $all_interests[$row['id']] = $row['nom'];
+}
+
 // Handle GET request to load activity data for editing
 if (isset($_GET['id'])) {
     $activity_id = mysqli_real_escape_string($link, $_GET['id']);
@@ -32,6 +40,14 @@ if (isset($_GET['id'])) {
     $result = mysqli_query($link, $query);
     if ($result && mysqli_num_rows($result) > 0) {
         $activity_data = mysqli_fetch_assoc($result);
+
+        // Récupérer les centres d'intérêt actuels de l'activité
+        $current_interests_query = "SELECT interet_id FROM activite_interet WHERE activite_id = '$activity_id'";
+        $current_interests_result = mysqli_query($link, $current_interests_query);
+        $current_interests = [];
+        while ($row = mysqli_fetch_assoc($current_interests_result)) {
+            $current_interests[] = $row['interet_id'];
+        }
     } else {
         $error_message = "Activité introuvable.";
     }
@@ -145,6 +161,21 @@ if (isset($_POST['update_activity'])) {
               WHERE id = '$activity_id'";
 
     if (mysqli_query($link, $query)) {
+        // Supprimer les anciens centres d'intérêt
+        $delete_query = "DELETE FROM activite_interet WHERE activite_id = '$activity_id'";
+        mysqli_query($link, $delete_query);
+
+        // Insérer les nouveaux centres d'intérêt sélectionnés
+        if (isset($_POST['interests']) && !empty($_POST['interests'])) {
+            $selected_interests = $_POST['interests'];
+
+            foreach ($selected_interests as $interest_id) {
+                $interest_id = mysqli_real_escape_string($link, $interest_id);
+                $insert_query = "INSERT INTO activite_interet (activite_id, interet_id) VALUES ('$activity_id', '$interest_id')";
+                mysqli_query($link, $insert_query);
+            }
+        }
+
         $success_message = "Activité mise à jour avec succès !";
         // Re-fetch updated data to display in the form
         $query_updated = "SELECT * FROM activites WHERE id = '$activity_id'";
@@ -545,6 +576,23 @@ if (isset($_POST['update_activity'])) {
                     <div class="edit-activity-form-group">
                         <label for="titre">Lien podcast</label>
                         <input type="text" id="podcast" name="podcast" placeholder="Entrez le lien vers le podcast" value="<?= htmlspecialchars($activity_data['podcast_url']) ?>">
+                    </div>
+
+                    <div class="edit-activity-form-group" style="grid-column: span 2;">
+                        <label>Centres d'intérêt</label>
+                        <div class="interests-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                            <?php foreach ($all_interests as $id => $nom): ?>
+                                <div class="interest-item" style="display: flex; align-items: center; padding: 8px 16px; background: #f1f5f9; border-radius: 6px;">
+                                    <input type="checkbox"
+                                        id="interest-<?php echo $id; ?>"
+                                        name="interests[]"
+                                        value="<?php echo $id; ?>"
+                                        <?php echo in_array($id, $current_interests) ? 'checked' : ''; ?>
+                                        style="margin-right: 8px;">
+                                    <label for="interest-<?php echo $id; ?>" style="margin: 0;"><?php echo htmlspecialchars($nom); ?></label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
 
                     <button type="submit" name="update_activity" class="btn">

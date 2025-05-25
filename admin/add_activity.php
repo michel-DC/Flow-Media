@@ -10,6 +10,13 @@ if (mysqli_connect_errno()) {
     die("Échec de la connexion à MySQL: " . mysqli_connect_error());
 }
 
+$all_interests_query = "SELECT id, nom FROM interets";
+$all_interests_result = mysqli_query($link, $all_interests_query);
+$all_interests = [];
+while ($row = mysqli_fetch_assoc($all_interests_result)) {
+    $all_interests[$row['id']] = $row['nom'];
+}
+
 if (isset($_POST['ajt_activite'])) {
     // Escape all input data
     $titre = mysqli_real_escape_string($link, $_POST['titre']);
@@ -112,8 +119,25 @@ if (isset($_POST['ajt_activite'])) {
                   )";
 
         if (mysqli_query($link, $query)) {
+            $activite_id = mysqli_insert_id($link);
+
+            // Supprimer les anciens centres d'intérêt si l'activité est mise à jour
+            $delete_query = "DELETE FROM activite_interet WHERE activite_id = '$activite_id'";
+            mysqli_query($link, $delete_query);
+
+            // Insérer les nouveaux centres d'intérêt sélectionnés
+            if (isset($_POST['interests']) && !empty($_POST['interests'])) {
+                $selected_interests = $_POST['interests'];
+
+                foreach ($selected_interests as $interest_id) {
+                    $interest_id = mysqli_real_escape_string($link, $interest_id);
+                    $insert_query = "INSERT INTO activite_interet (activite_id, interet_id) VALUES ('$activite_id', '$interest_id')";
+                    mysqli_query($link, $insert_query);
+                }
+            }
+
             $success = "Activité ajoutée avec succès !";
-            $_POST = array(); // Clear form after successful submission
+            $_POST = array();
         } else {
             $error = "Erreur lors de l'insertion en base de données: " . mysqli_error($link);
         }
@@ -174,6 +198,24 @@ if (isset($_POST['ajt_activite'])) {
         height: 3px;
         background-color: var(--primary-color);
         border-radius: 3px;
+    }
+
+    .add-activity-component .add-activity-container h1 span::before {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 3px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+
+    .add-activity-component .add-activity-container h1:hover span::before {
+        transform: scaleX(1);
     }
 
     .add-activity-component .add-activity-form-container {
@@ -434,6 +476,18 @@ if (isset($_POST['ajt_activite'])) {
                 <div class="add-activity-form-group">
                     <label for="prix">Prix (€)</label>
                     <input type="number" id="prix" name="prix" step="0.01" min="0" placeholder="Prix de l'activité" required>
+                </div>
+
+                <div class="add-activity-form-group" style="grid-column: span 2;">
+                    <label>Centres d'intérêt</label>
+                    <div class="interests-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                        <?php foreach ($all_interests as $id => $nom): ?>
+                            <div class="interest-item" style="display: flex; align-items: center; padding: 8px 16px; background: #f1f5f9; border-radius: 6px;">
+                                <input type="checkbox" id="interest-<?php echo $id; ?>" name="interests[]" value="<?php echo $id; ?>" style="margin-right: 8px;">
+                                <label for="interest-<?php echo $id; ?>" style="margin: 0;"><?php echo htmlspecialchars($nom); ?></label>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
 
                 <div class="add-activity-form-group">
