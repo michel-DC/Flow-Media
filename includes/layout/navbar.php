@@ -1,4 +1,5 @@
 <?php
+
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
 // Check if user is logged in before trying to access user_id

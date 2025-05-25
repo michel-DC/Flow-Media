@@ -1,5 +1,4 @@
 <?php
-require_once '../../includes/auth.php';
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 if (mysqli_connect_errno()) {
@@ -29,6 +28,7 @@ if (!$result) {
         :root {
             --primary-color: #3a791f;
             --secondary-color: #8ac571;
+            --accent-color: #ff6b6b;
             --text-color: #333;
             --light-bg: #f8f9fa;
             --white: #ffffff;
@@ -45,29 +45,87 @@ if (!$result) {
             overflow-x: hidden;
         }
 
-        .page-title {
-            color: var(--primary-color);
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(138, 197, 113, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(58, 121, 31, 0.05) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .page-header {
+            position: relative;
+            padding: clamp(60px, 15vh, 120px) 20px clamp(30px, 8vh, 60px);
             text-align: center;
-            margin: 150px 0 30px;
-            font-size: 2.5rem;
+            background: linear-gradient(135deg,
+                    var(--primary-color) 0%,
+                    #4a8c2a 25%,
+                    #ff6b6b 75%,
+                    #ff4757 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            margin-bottom: clamp(20px, 5vh, 40px);
+        }
+
+        .page-title {
+            color: var(--secondary-color);
+            font-size: clamp(1.8rem, 5vw, 4rem);
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: clamp(10px, 2vw, 20px);
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .page-title i {
+            font-size: clamp(1.5rem, 4vw, 3.5rem);
+            animation: pulse 2s infinite;
         }
 
         .fun-facts-container {
             position: relative;
-            max-width: 1200px;
-            margin: 0 auto 40px;
-            padding: 20px;
-            overflow: hidden;
+            width: min(1400px, 95%);
+            margin: 0 auto;
+            padding: clamp(15px, 3vw, 40px);
+            background: var(--white);
+            border-radius: clamp(15px, 3vw, 30px);
+            box-shadow: var(--shadow-md);
+            margin-top: clamp(200px, 15vh, 300px);
+        }
+
+        .fun-facts-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 40px;
+            z-index: -1;
+            opacity: 0.1;
         }
 
         .carousel-container {
             position: relative;
             width: 100%;
-            height: 600px;
+            height: clamp(300px, 50vh, 700px);
+            border-radius: clamp(10px, 2vw, 20px);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transform: perspective(1000px) rotateX(5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-container:hover {
+            transform: perspective(1000px) rotateX(0deg);
         }
 
         .fun-fact-card {
@@ -75,7 +133,7 @@ if (!$result) {
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: all 0.5s ease;
             transform: translateX(100%);
         }
 
@@ -96,93 +154,52 @@ if (!$result) {
             display: block;
         }
 
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-        }
-
-        .carousel-nav:hover {
-            background: rgba(255, 255, 255, 0.95);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .carousel-nav.prev {
-            left: 20px;
-        }
-
-        .carousel-nav.next {
-            right: 20px;
-        }
-
-        .carousel-nav i {
-            font-size: 24px;
-            color: var(--primary-color);
-        }
-
-        .carousel-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .dot.active {
-            background: var(--white);
-            transform: scale(1.2);
-        }
-
         .fun-fact-content {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 30px;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: clamp(15px, 3vw, 50px);
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
             color: var(--white);
             z-index: 2;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .fun-fact-card.active .fun-fact-content {
+            transform: translateY(0);
         }
 
         .fun-fact-title {
-            font-size: 2rem;
+            font-size: clamp(1.2rem, 3vw, 2.2rem);
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: clamp(8px, 2vw, 15px);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .fun-fact-details {
             display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            opacity: 0.9;
+            flex-wrap: wrap;
+            gap: clamp(8px, 2vw, 20px);
+            margin: clamp(10px, 2vw, 20px) 0;
         }
 
         .fun-fact-detail {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: clamp(5px, 1vw, 10px);
+            background: rgba(255, 255, 255, 0.15);
+            padding: clamp(8px, 1.5vw, 12px) clamp(12px, 2vw, 20px);
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .fun-fact-detail:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .fun-fact-detail i {
@@ -190,103 +207,196 @@ if (!$result) {
         }
 
         .fun-fact-story {
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
             line-height: 1.6;
-            margin-top: 15px;
+            margin-top: clamp(10px, 2vw, 20px);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        @media (max-width: 1200px) {
-            .fun-facts-container {
-                max-width: 90%;
+        .additional-content {
+            width: min(1200px, 95%);
+            margin: clamp(30px, 5vh, 50px) auto;
+            padding: 0 clamp(15px, 3vw, 20px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: clamp(15px, 3vw, 30px);
+            margin-top: clamp(20px, 4vh, 40px);
+        }
+
+        .info-card {
+            background: var(--white);
+            padding: clamp(15px, 3vw, 30px);
+            border-radius: clamp(10px, 2vw, 15px);
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card i {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--primary-color);
+            margin-bottom: clamp(10px, 2vw, 20px);
+        }
+
+        .info-card h3 {
+            color: var(--primary-color);
+            margin-bottom: clamp(8px, 1.5vw, 15px);
+        }
+
+        .info-card p {
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: clamp(35px, 8vw, 60px);
+            height: clamp(35px, 8vw, 60px);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-nav:hover {
+            transform: translateY(-50%) scale(1.1);
+            background: var(--white);
+        }
+
+        .carousel-nav.prev {
+            left: clamp(10px, 2vw, 20px);
+        }
+
+        .carousel-nav.next {
+            right: clamp(10px, 2vw, 20px);
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: clamp(10px, 2vw, 30px);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: clamp(8px, 1.5vw, 15px);
+            z-index: 10;
+        }
+
+        .dot {
+            width: clamp(8px, 1.5vw, 15px);
+            height: clamp(8px, 1.5vw, 15px);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .dot.active {
+            background: var(--accent-color);
+            transform: scale(1.2);
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: clamp(3rem, 8vw, 8rem);
+            opacity: 0.15;
+            animation: float 20s linear infinite;
+            color: var(--primary-color);
+            filter: drop-shadow(0 0 10px rgba(58, 121, 31, 0.3));
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            color: var(--primary-color);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: -5s;
+            color: var(--secondary-color);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: -10s;
+            color: var(--accent-color);
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: -15s;
+            color: var(--primary-color);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 30px) rotate(180deg) scale(1.1);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
             }
         }
 
-        @media (max-width: 992px) {
-            .carousel-container {
-                height: 500px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page-title {
-                font-size: 2rem;
-                margin: 80px 0 20px;
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
             }
 
-            .fun-facts-container {
-                margin: 0 auto 20px;
+            50% {
+                transform: scale(1.1);
             }
 
-            .carousel-container {
-                height: 450px;
-            }
-
-            .carousel-nav {
-                width: 40px;
-                height: 40px;
-            }
-
-            .carousel-nav i {
-                font-size: 20px;
-            }
-
-            .fun-fact-title {
-                font-size: 1.5rem;
-            }
-
-            .fun-fact-details {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .page-title {
-                font-size: 1.8rem;
-                margin: 40px 0 15px;
-            }
-
-            .carousel-container {
-                height: 400px;
-            }
-
-            .fun-fact-content {
-                padding: 20px;
+            100% {
+                transform: scale(1);
             }
         }
 
         @media (max-width: 480px) {
-            .page-title {
-                font-size: 1.5rem;
-                gap: 10px;
-                margin-top: 100px;
-            }
-
-            .carousel-container {
-                height: 350px;
-                margin-top: 200px;
-            }
-
             .carousel-nav {
-                width: 35px;
-                height: 35px;
                 display: none;
             }
 
-            .carousel-nav i {
-                display: none;
+            .fun-fact-details {
+                flex-direction: column;
             }
 
-            .fun-fact-title {
-                font-size: 1.2rem;
-            }
-
-            .fun-fact-story {
-                font-size: 0.9rem;
-            }
-
-            .carousel-dots {
-                width: 10px;
+            .fun-fact-detail {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -295,12 +405,18 @@ if (!$result) {
 <body>
     <?php include '../../includes/layout/navbar.php' ?>
 
-    <h1 class="page-title">
-        <i class="fas fa-lightbulb"></i>
-        Quelques fun facts
-    </h1>
+    <div class="floating-elements">
+        <i class="fas fa-paint-brush floating-element"></i>
+        <i class="fas fa-palette floating-element"></i>
+        <i class="fas fa-spray-can floating-element"></i>
+        <i class="fas fa-image floating-element"></i>
+    </div>
 
     <div class="fun-facts-container">
+        <h1 class="page-title">
+            <i class="fas fa-lightbulb"></i>
+            Fun Facts
+        </h1>
         <div class="carousel-container">
             <?php
             mysqli_data_seek($result, 0);
@@ -357,6 +473,27 @@ if (!$result) {
         </div>
     </div>
 
+    <div class="additional-content">
+        <h2 class="section-title">Pourquoi les Fun Facts ?</h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <i class="fas fa-book-open"></i>
+                <h3>Histoire Vivante</h3>
+                <p>Chaque œuvre raconte une histoire unique, témoignant de la richesse culturelle de notre ville et de ses artistes.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Art Urbain</h3>
+                <p>L'art urbain transforme nos rues en galeries à ciel ouvert, créant un dialogue entre l'artiste et le public.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-users"></i>
+                <h3>Communauté</h3>
+                <p>Ces œuvres rassemblent les communautés et créent des espaces de partage et d'échange culturel.</p>
+            </div>
+        </div>
+    </div>
+
     <?php include '../../includes/layout/footer.php'; ?>
 
     <script>
@@ -404,7 +541,7 @@ if (!$result) {
             });
 
             // Auto-advance slides every 5 seconds
-            setInterval(nextSlide, 20000);
+            setInterval(nextSlide, 25000);
 
             // Touch events for mobile
             let touchStartX = 0;
