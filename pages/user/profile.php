@@ -1,5 +1,6 @@
 <?php
-session_start();
+
+require_once '../../includes/auth.php';
 
 if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true) {
     header('Location: ../../connexion/login.php?erreur=non_connecte');
@@ -401,18 +402,21 @@ mysqli_close($link);
             border-radius: 8px;
             text-align: center;
             font-size: 0.9rem;
+            z-index: 999;
         }
 
         .error {
             background-color: #FEF2F2;
             color: #EF4444;
             border: 1px solid #FCA5A5;
+            z-index: 999;
         }
 
         .success {
             background-color: #F0F9FF;
             color: #0284C7;
             border: 1px solid #7DD3FC;
+            z-index: 999;
         }
 
         .map-placeholder {
@@ -703,6 +707,22 @@ mysqli_close($link);
             });
         });
     </script>
+
+
+    <?php
+    if (isset($error)):
+        echo "<div class='message error'>$error</div>";
+    endif;
+
+    if (isset($success)):
+        echo "<div class='message success'>$success</div>";
+    endif;
+
+    if (isset($_GET['erreur']) && $_GET['erreur'] === 'acces_refuse_user') {
+        echo "<div class='message error'>Vous n'êtes pas un administrateur, cette page vous est interdite !</div>";
+    }
+    ?>
+
 </body>
 
 </html>

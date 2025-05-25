@@ -1,10 +1,5 @@
 <?php
-session_start();
-
-if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] === 'user') {
-    header('Location: ../pages/user/profile.php?erreur=deja_connecte_user');
-    exit();
-}
+require_once '../includes/auth.php';
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
@@ -270,43 +265,6 @@ if (isset($_POST['login_user'])) {
             margin-left: .25em;
         }
 
-        .social-login {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .social-icon {
-            background: var(--light-bg);
-            /* Light background */
-            border: 1px solid #cccccc;
-            /* Light grey border */
-            border-radius: 4px;
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-        }
-
-        .social-icon:hover {
-            background: #e0e0e0;
-            /* Slightly darker light grey on hover */
-            border-color: #aaaaaa;
-            /* Darker grey border on hover */
-        }
-
-        .social-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: #555555;
-            /* Dark grey icons */
-        }
-
-
         .p {
             text-align: center;
             color: #555555;
@@ -478,28 +436,7 @@ if (isset($_POST['login_user'])) {
 
                 <button class="button-submit" name="login_user">Se connecter</button>
 
-                <div class="separator">Ou continuer avec</div>
-
-                <div class="social-login">
-                    <div class="social-icon">
-                        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#555">
-                            <path d="M152.9 512c-29.42 0-57.51-12.12-77.23-33.57-22.77-24.29-35.62-56.33-35.62-92.58 0-40.08 13.49-74.47 40.75-98.33 26-22.71 59.12-35 94.82-35.49V0h128a8 8 0 018 8v40h-85.79c-23.23 0-37.45 11.51-37.45 34.91v10.57h85.8a8 8 0 018 8v40a8 8 0 01-8 8h-85.8v13.4c0 24.12 14.65 36.4 40.57 36.4 10.65 0 18.6-.34 24.77-1V288a8 8 0 018 8v40a8 8 0 01-8 8h-27.54c-12.27 20.63-22.59 37.24-22.59 58.88 0 25.8 11.25 40.43 35.34 40.43 10.68 0 21.6-2.08 32.45-6.2l-9.38 40.23c-15.15 5.85-31.74 9.08-48.77 9.08zM478.44 0h-71.65a8 8 0 00-8 8v40a8 8 0 008 8h32.89a8 8 0 018 8v22.11a8 8 0 008 8h40a8 8 0 008-8V64a8 8 0 018-8h32.89a8 8 0 008-8V8a8 8 0 00-8-8z"></path>
-                        </svg>
-                    </div>
-                    <div class="social-icon">
-                        <svg fill="#555" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <g id="Google" stroke-width="0">
-                                <path d="M12.0003 4.16666C14.0206 4.16666 15.6943 4.85913 16.9648 6.07166L20.0302 3.0062C18.0762 1.14494 15.3143 0 12.0003 0C7.31249 0 3.23615 2.66842 1.31693 6.54517L5.38258 9.72488C6.22003 7.14762 8.80307 5.33332 12.0003 5.33332C13.5362 5.33332 14.8533 5.77627 15.9306 6.61796L12.0003 10.5483L15.9306 14.4786C14.8533 15.3203 13.5362 15.7632 12.0003 15.7632C8.80307 15.7632 6.22003 13.949 5.38258 11.3717L1.31693 14.5514C3.23615 18.4281 7.31249 21.0966 12.0003 21.0966C15.3143 21.0966 18.0762 19.9517 20.0302 18.0899L16.9648 15.0245C15.6943 13.812 14.0206 13.1195 12.0003 13.1195C8.80307 13.1195 6.22003 14.9338 5.38258 17.511L1.31693 14.5514Z" fill="#555"></path>
-                            </g>
-                        </svg>
-                    </div>
-                    <div class="social-icon">
-                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#555">
-                            <path d="M12 2.039c-5.45 0-9.91 4.28-9.91 9.553 0 4.354 2.79 8.073 6.72 9.469 0.499 0.092 0.682-0.215 0.682-0.477 0-0.237-0.008-0.869-0.013-1.705-2.705 0.584-3.273-1.307-3.273-1.307-0.442-1.116-1.08-1.413-1.08-1.413-0.886-0.604 0.066-0.593 0.066-0.593 0.981 0.07 1.495 1.007 1.495 1.007 0.871 1.487 2.284 1.058 2.837 0.807 0.087-0.627 0.342-1.058 0.622-1.303-2.176-0.248-4.462-1.088-4.462-4.831 0-1.066 0.377-1.936 1.006-2.614-0.1-0.248-0.436-1.238 0.095-2.575 0 0 0.82-0.262 2.705 1.001 0.783-0.217 1.626-0.325 2.462-0.329 0.836 0.004 1.68 0.112 2.462 0.329 1.884-1.263 2.702-1.001 2.702-1.001 0.533 1.337 0.2 2.327 0.096 2.575 0.63 0.678 1.004 1.548 1.004 2.614 0 3.752-2.289 4.58-4.468 4.823 0.355 0.308 0.677 0.916 0.677 1.849 0 1.334-0.013 2.415-0.013 2.74-2.13e-05 0.266 0.183 0.574 0.688 0.476c3.921-1.399 6.711-5.12 6.711-9.466 0-5.273-4.46-9.554-9.91-9.554z"></path>
-                        </svg>
-                    </div>
-                </div>
-
+                <div class="separator"></div>
 
                 <p class="p">Vous n'avez pas de compte ? <span class="span"><a href="register.php">Créer en un</a></span></p>
             </form>

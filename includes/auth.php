@@ -23,23 +23,27 @@ if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true) { // vér
 }
 
 // Si l'utilisateur connecté est "user" mais veut se connecter, je le bloque et redirige vers la page devs.php avec un message d'erreur
-if (strpos($chemin, 'connexion/login.php') !== false && isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] === 'user') {
+if (strpos($chemin, 'login.php') !== false && isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] === 'user') {
     // Redirection vers la page devs.php si l'utilisateur est déjà connecté
     header('Location: ../index.php?erreur=deja_connecte_user');
     exit();
 }
 
 // Si l'utilisateur connecté est "user" mais veut se connecter, je le bloque et redirige vers la page devs.php avec un message d'erreur
-if (strpos($chemin, 'connexion/register.php') !== false && isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] === 'user') {
+if (strpos($chemin, 'register.php') !== false && isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] === 'user') {
     // Redirection vers la page devs.php si l'utilisateur est déjà connecté
     header('Location: ../index.php?erreur=deja_connecte_user');
     exit();
 }
 
-
 // Si l'utilisateur connecté est "user" mais veut aller dans admin
 if (strpos($chemin, '/admin') !== false && isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
     header('Location: ../connexion/login.php?erreur=acces_refuse_user');
+    exit();
+}
+
+if (strpos($chemin, '/connexion/login-admin.php') !== false && isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
+    header('Location: ../pages/user/profile.php?erreur=acces_refuse_user');
     exit();
 }
 
