@@ -675,6 +675,22 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
             });
         });
     </script>
+
+    <?php
+
+    if (isset($error)):
+        echo "<div class='message error'>$error</div>";
+    endif;
+
+    if (isset($success)):
+        echo "<div class='message success'>$success</div>";
+    endif;
+
+    if (isset($_GET['message']) && $_GET['message'] === 'deja_connecte_user') {
+        echo "<div class='message error'>Vous êtes déja connecté, rendez-vous sur la page de reservation !</div>";
+    }
+
+    ?>
 </body>
 
 </html>
