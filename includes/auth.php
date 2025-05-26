@@ -19,6 +19,9 @@ if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true) { // vér
     } else if (strpos($chemin, '/pages/defis') !== false) { // si l'utilisateur veut aller sur devs.php, on le redirige vers la page de connexion utilisateur normal
         header('Location: ../../connexion/login.php?erreur=non_connecte');
         exit();
+    } else if (strpos($chemin, '/pages/podcast') !== false) { // si l'utilisateur veut aller sur devs.php, on le redirige vers la page de connexion utilisateur normal
+        header('Location: ../../connexion/login.php?erreur=non_connecte');
+        exit();
     }
 }
 

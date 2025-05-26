@@ -12,7 +12,7 @@ if (isset($_POST['register_user'])) {
     if ($_POST['password'] != $_POST['password_confirm']) {
         $error_password = "Les mots de passe ne correspondent pas, veuillez réessayer";
     } else {
-        // Check if email already exists
+
         $check_email_query = "SELECT id FROM users WHERE email='$email'";
         $check_email_result = mysqli_query($link, $check_email_query);
 

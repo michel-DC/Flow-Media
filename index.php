@@ -113,7 +113,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                     <div class="card-content">
                         <h3 class="card-title">LES JARDINS</h3>
                         <p class="card-description">
-                            L'architecture, c'est l'art et la technique de concevoir et construire des bâtiments et des espaces pour qu'ils soient utiles,
+                            Les jardins, c'est l'art et la science de concevoir et d'entretenir des espaces verts pour qu'ils soient à la fois esthétiques, fonctionnels et en harmonie avec la nature.
                         </p>
                     </div>
                 </div>

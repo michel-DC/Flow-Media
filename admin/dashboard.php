@@ -25,11 +25,6 @@ $query6 = "SELECT COUNT(*) as total FROM admin";
 $result6 = mysqli_query($link, $query6);
 $total_admins = mysqli_fetch_assoc($result6)['total'];
 
-// recuperer le nom du dev le plus réservé
-// $query8 = "SELECT titre FROM activites ORDER BY nombre_reservation DESC LIMIT 1";
-// $result8 = mysqli_query($link, $query8);
-// $activite_plus_reserv = mysqli_fetch_assoc($result8)['fullname'];
-
 // recuperer le nom de l'user qui à fait le plus de réservations
 $query9 = "SELECT fullname FROM users ORDER BY nombre_reservation DESC LIMIT 1";
 $result9 = mysqli_query($link, $query9);
@@ -286,7 +281,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
     <div id="edit-podcast-section" style="display: none;"><?php include 'edit_podcast.php'; ?></div>
     <div id="see-podcast-section" style="display: none;"><?php include 'podcast.php'; ?></div>
     <div id="see-reserv-section" style="display: none;"><?php include 'reservation.php'; ?></div>
-    <div id="see-user-section" style="display: none;"><?php include 'manage_user.php'; ?></div>
+    <div id="see-user-section" style="display: none;"><?php include 'user.php'; ?></div>
 
     <div class="dashboard-container">
         <div class="dashboard-header">

@@ -74,12 +74,17 @@ if (isset($_POST['update_profile'])) {
         }
 
         $filename = basename($_FILES["profile_picture"]["name"]);
-        $target_file = $upload_dir . $filename;
+        $target_file = $upload_dir . $filename; // Le point sert à concaténer le chemin du dossier ($upload_dir) avec le nom du fichier ($filename)
+        // Récupère l'extension du fichier image en minuscules (ex: jpg, png)
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
+        // Vérifie si le fichier est bien une image valide
         $check = getimagesize($_FILES["profile_picture"]["tmp_name"]);
+
+        // Si c'est une image valide et que l'extension est autorisée (jpg, jpeg, png, gif)
         if ($check !== false && in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+            // Déplace le fichier temporaire vers le dossier de destination
             if (move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file)) {
+                // Met à jour le nom du fichier photo de profil si le déplacement a réussi
                 $photo_profil = $filename;
             } else {
                 $error = "Erreur lors du téléchargement de l'image.";
