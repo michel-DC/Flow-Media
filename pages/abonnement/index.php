@@ -67,22 +67,30 @@ if (isset($_POST['changer_abonnement'])) {
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
         :root {
-            --soft-black: #1a1a1a;
-            --white: #f9f9f9;
+            --primary-color: #3a791f;
+            --secondary-color: #8ac571;
+            --primary-color-red: #e53e3e;
+            --secondary-color-red: #fc8181;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         body {
             font-family: "Poppins", sans-serif;
             margin: 0;
             padding: 0;
-            color: var(--soft-black);
-            background: var(--white);
+            background: var(--light-bg);
+            color: var(--text-color);
             line-height: 1.6;
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 150px auto 100px;
             padding: 2rem;
         }
 
@@ -90,6 +98,11 @@ if (isset($_POST['changer_abonnement'])) {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 2rem;
+            color: var(--primary-color-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
 
         .abonnements-grid {
@@ -101,28 +114,31 @@ if (isset($_POST['changer_abonnement'])) {
 
         .abonnement-card {
             background: var(--white);
-            border-radius: 8px;
+            border-radius: 15px;
             padding: 2rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--soft-black);
-            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(229, 62, 62, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
         .abonnement-card:hover {
             transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
         }
 
         .abonnement-card h2 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            color: var(--soft-black);
+            color: var(--primary-color-red);
         }
 
         .prix {
             font-size: 2rem;
             font-weight: bold;
             margin: 1rem 0;
-            color: var(--soft-black);
+            color: var(--primary-color);
         }
 
         .avantages {
@@ -135,13 +151,14 @@ if (isset($_POST['changer_abonnement'])) {
             margin-bottom: 0.8rem;
             padding-left: 1.5rem;
             position: relative;
+            color: var(--text-color);
         }
 
         .avantages li:before {
             content: "✓";
             position: absolute;
             left: 0;
-            color: var(--soft-black);
+            color: var(--primary-color-red);
             font-weight: bold;
         }
 
@@ -149,25 +166,27 @@ if (isset($_POST['changer_abonnement'])) {
             display: block;
             width: 100%;
             padding: 12px;
-            background: var(--soft-black);
+            background: var(--primary-color-red);
             color: var(--white);
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             font-size: 1rem;
             cursor: pointer;
             transition: background 0.3s ease;
+            font-weight: 500;
         }
 
         .btn-abonnement:hover {
-            background: #333;
+            background: var(--secondary-color-red);
         }
 
         .message {
-            padding: 12px;
-            border-radius: 4px;
+            padding: 15px;
+            border-radius: 8px;
             margin: 1rem auto;
             text-align: center;
             max-width: 600px;
+            font-weight: 500;
         }
 
         .error {
@@ -181,6 +200,17 @@ if (isset($_POST['changer_abonnement'])) {
             color: #2E7D32;
             border: 1px solid #A5D6A7;
         }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 120px auto 50px;
+                padding: 1rem;
+            }
+
+            .abonnements-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
@@ -188,7 +218,10 @@ if (isset($_POST['changer_abonnement'])) {
     <?php include '../../includes/layout/navbar.php'; ?>
 
     <div class="container">
-        <h1>Choisissez votre abonnement</h1>
+        <h1>
+            <i class="fas fa-crown"></i>
+            Choisissez votre abonnement
+        </h1>
 
         <?php if (isset($error)): ?>
             <div class="message error"><?php echo $error; ?></div>

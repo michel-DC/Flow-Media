@@ -632,7 +632,6 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
             });
         });
 
-        // Manual carousel navigation (example - you might need to implement full carousel logic)
         const carouselTrackElement = document.querySelector('.best-places-carousel .carousel-track');
         const carouselCards = document.querySelectorAll('.best-places-carousel .carousel-card');
         const prevArrow = document.querySelector('.best-places-carousel .carousel-arrow.left');

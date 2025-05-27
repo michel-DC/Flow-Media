@@ -5,9 +5,10 @@ $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", 
 // Check if user is logged in before trying to access user_id
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $query = "SELECT photo_profil FROM users WHERE id='$user_id'";
-    $result = mysqli_query($link, $query);
-    $photo_profil = mysqli_fetch_assoc($result);
+    // CORRECTION: Utiliser des noms de variables uniques pour éviter les conflits
+    $query_navbar = "SELECT photo_profil FROM users WHERE id='$user_id'";
+    $result_navbar = mysqli_query($link, $query_navbar);
+    $photo_profil = mysqli_fetch_assoc($result_navbar);
     $user_nav = $photo_profil;
 } else {
     $photo_profil = ['photo_profil' => 'default.jpg']; // Set default profile picture
@@ -85,7 +86,7 @@ if (isset($_SESSION['user_id'])) {
         left: 0;
         right: 0;
         z-index: 1000;
-        padding: 20px;
+        padding: 10px 20px;
         background-color: rgba(255, 255, 255, 0.95);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
@@ -165,12 +166,12 @@ if (isset($_SESSION['user_id'])) {
 
     .nav-item {
         color: #333;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 500;
         text-decoration: none;
         cursor: pointer;
         transition: all 0.3s ease;
-        padding: 8px 16px;
+        padding: 6px 12px;
         border-radius: 8px;
     }
 
@@ -202,7 +203,7 @@ if (isset($_SESSION['user_id'])) {
     .nav-dropbtn {
         background-color: transparent;
         color: #333;
-        padding: 12px 16px;
+        padding: 8px 12px;
         font-size: inherit;
         font-family: inherit;
         border: none;
@@ -213,15 +214,15 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .nav-dropbtn img {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
         object-fit: cover;
     }
 
     .nav-dropdown-content a {
         color: #000000;
-        padding: 12px 16px;
+        padding: 10px 14px;
         text-decoration: none;
         display: block;
         text-align: left;
@@ -238,7 +239,7 @@ if (isset($_SESSION['user_id'])) {
 
     @media (max-width: 768px) {
         .header {
-            padding: 15px;
+            padding: 8px 15px;
         }
 
         .nav-toggle {
@@ -252,7 +253,7 @@ if (isset($_SESSION['user_id'])) {
             left: 0;
             right: 0;
             background-color: rgba(255, 255, 255, 0.95);
-            padding: 1rem;
+            padding: 0.8rem;
             flex-direction: column;
             align-items: flex-start;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -271,7 +272,7 @@ if (isset($_SESSION['user_id'])) {
 
         .nav-dropdown-content a {
             color: #333;
-            padding: 8px 16px;
+            padding: 6px 12px;
         }
 
         .nav-dropdown-content a:hover {

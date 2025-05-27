@@ -518,7 +518,7 @@ require_once '../../includes/auth.php';
             </div>
         </div>
     </section>
-
+    
     <?php include '../../includes/layout/footer.php' ?>
 
 </body>

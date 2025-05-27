@@ -7,8 +7,8 @@
 }
 
 :root {
-  --primary-color: #3a791f;
-  --secondary-color: #8ac571;
+  --primary-color: #e53e3e;
+  --secondary-color: #fc8181;
   --text-color: #333;
   --light-bg: #f8f9fa;
   --white: #ffffff;
@@ -142,14 +142,14 @@ body {
 
 .mascotte-left .message-bubble {
   padding: 20px;
-  background: rgba(138, 197, 113, 0.85);
+  background: rgba(229, 62, 62, 0.85);
   top: -100px;
   left: 50%;
   transform: translateX(-50%) rotate(-45deg);
 }
 
 .mascotte-right .message-bubble {
-  background: rgba(255, 102, 102, 0.85);
+  background: rgba(252, 129, 129, 0.85);
   top: -100px;
   right: 50%;
   transform: translateX(50%) rotate(45deg);

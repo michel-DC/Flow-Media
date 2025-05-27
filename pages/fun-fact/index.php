@@ -26,8 +26,8 @@ if (!$result) {
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
         :root {
-            --primary-color: #3a791f;
-            --secondary-color: #8ac571;
+            --primary-color: #e53e3e;
+            --secondary-color: #fc8181;
             --accent-color: #ff6b6b;
             --text-color: #333;
             --light-bg: #f8f9fa;
@@ -53,9 +53,9 @@ if (!$result) {
             width: 100%;
             height: 100%;
             background:
-                radial-gradient(circle at 10% 20%, rgba(138, 197, 113, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 10% 20%, rgba(252, 129, 129, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 50% 50%, rgba(58, 121, 31, 0.05) 0%, transparent 30%);
+                radial-gradient(circle at 50% 50%, rgba(229, 62, 62, 0.05) 0%, transparent 30%);
             pointer-events: none;
             z-index: -1;
         }
@@ -66,7 +66,7 @@ if (!$result) {
             text-align: center;
             background: linear-gradient(135deg,
                     var(--primary-color) 0%,
-                    #4a8c2a 25%,
+                    #f56565 25%,
                     #ff6b6b 75%,
                     #ff4757 100%);
             clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);

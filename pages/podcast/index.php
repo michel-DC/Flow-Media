@@ -1,13 +1,13 @@
 <?php
 require_once '../../includes/auth.php';
 
-// Connexion à la base de données
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
+if (!$link) {
+    die("Erreur de connexion : " . mysqli_connect_error());
+}
 
-// Initialiser l'abonnement_id par défaut
-$abonnement_id = 1; // Abonnement gratuit par défaut
+$abonnement_id = 1;
 
-// Vérifier si l'utilisateur est connecté et récupérer son abonnement
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $query_user = "SELECT abonnement_id FROM users WHERE id = $user_id";
@@ -18,9 +18,14 @@ if (isset($_SESSION['user_id'])) {
     }
 }
 
-// Récupérer tous les podcasts
 $query = "SELECT * FROM podcasts ORDER BY id DESC";
 $result = mysqli_query($link, $query);
+
+if (!$result) {
+    die("Erreur lors de la récupération des podcasts : " . mysqli_error($link));
+}
+
+$num_podcasts = mysqli_num_rows($result);
 ?>
 
 <!DOCTYPE html>
@@ -46,120 +51,87 @@ $result = mysqli_query($link, $query);
         }
 
         body {
-            height: 100%;
+            font-family: "Poppins", sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--light-bg);
-            padding-top: 80px;
-            display: flex;
-            flex-direction: column;
+            background: var(--light-bg);
             min-height: 100vh;
         }
 
-        .podcast-component {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            flex: 1;
-            position: relative;
-            z-index: 2;
-        }
-
-        .podcast-component h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 45px;
+        .page-title {
             color: var(--primary-color);
             text-align: center;
-            position: relative;
-            padding-bottom: 10px;
+            margin: 150px 0 30px;
+            font-size: 2.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
         }
 
-        .podcast-component h1 i {
-            font-size: 2rem;
-        }
-
-        .podcasts-grid {
+        .events-container {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            padding: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            padding: 20px 0;
-            position: relative;
-            z-index: 2;
+            gap: 30px;
         }
 
-        .podcast-card {
+        .event-card {
             background: var(--white);
             border-radius: 15px;
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
         }
 
-        .podcast-card:hover {
+        .event-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-md);
         }
 
-        .podcast-image {
+        .event-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
 
-        .podcast-content {
+        .event-content {
             padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
         }
 
-        .podcast-title {
+        .event-title {
             font-size: 1.2rem;
             font-weight: 600;
-            color: var(--text-color);
             margin-bottom: 10px;
+            color: var(--text-color);
         }
 
-        .podcast-description {
+        .event-description {
             color: #666;
             font-size: 0.9rem;
             line-height: 1.5;
-            margin: 15px 0;
-            flex: 1;
+            margin-bottom: 15px;
         }
 
-        .podcast-links {
+        .event-links {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-top: auto;
         }
 
-        .podcast-link {
+        .event-link {
             display: flex;
             align-items: center;
             gap: 8px;
             color: var(--primary-color);
             text-decoration: none;
             font-size: 0.9rem;
-            transition: color 0.2s ease;
         }
 
-        .podcast-link:hover {
+        .event-link:hover {
             color: var(--secondary-color);
         }
 
@@ -179,6 +151,7 @@ $result = mysqli_query($link, $query);
             text-align: center;
             padding: 20px;
             z-index: 10;
+            border-radius: 15px;
         }
 
         .premium-overlay h3 {
@@ -197,56 +170,15 @@ $result = mysqli_query($link, $query);
             border-radius: 5px;
             text-decoration: none;
             font-weight: 500;
-            transition: background-color 0.2s ease;
         }
 
         .upgrade-button:hover {
             background-color: var(--secondary-color);
         }
 
-        .bottom-illustrations {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .bottom-illustration {
-            width: 300px;
-            height: auto;
-            opacity: 0.8;
-            transition: transform 0.3s ease;
-        }
-
-        .bottom-illustration.left {
-            margin-left: 20px;
-        }
-
-        .bottom-illustration.right {
-            margin-right: 20px;
-        }
-
         @media (max-width: 768px) {
-            .podcast-component h1 {
-                font-size: 2rem;
-            }
-
-            .podcast-card {
-                padding: 15px;
-            }
-
-            .bottom-illustrations {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .bottom-illustration {
-                width: 160px;
+            .events-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -255,55 +187,66 @@ $result = mysqli_query($link, $query);
 <body>
     <?php include '../../includes/layout/navbar.php' ?>
 
-    <div class="podcast-component">
-        <h1><i class="fas fa-podcast"></i> Nos Podcasts</h1>
+    <h1 class="page-title">
+        <i class="fas fa-podcast"></i>
+        Nos Podcasts
+    </h1>
 
-        <div class="podcasts-grid">
-            <?php
-            if (mysqli_num_rows($result) > 0) {
-                while ($podcast = mysqli_fetch_assoc($result)): ?>
-                    <div class="podcast-card">
-                        <img src="<?= htmlspecialchars($podcast['image_url']) ?>" alt="<?= htmlspecialchars($podcast['titre']) ?>" class="podcast-image">
-                        <div class="podcast-content">
-                            <h2 class="podcast-title"><?= htmlspecialchars($podcast['titre']) ?></h2>
-                            <p class="podcast-description"><?= htmlspecialchars($podcast['description']) ?></p>
-
-                            <div class="podcast-links">
-                                <?php if (!empty($podcast['fichier_audio_url'])): ?>
-                                    <a href="<?= htmlspecialchars($podcast['fichier_audio_url']) ?>" class="podcast-link" target="_blank">
-                                        <i class="fas fa-headphones"></i>
-                                        <span>Écouter le podcast</span>
-                                    </a>
-                                <?php endif; ?>
-
-                                <?php if (!empty($podcast['youtube_url'])): ?>
-                                    <a href="<?= htmlspecialchars($podcast['youtube_url']) ?>" class="podcast-link" target="_blank">
-                                        <i class="fab fa-youtube"></i>
-                                        <span>Voir sur YouTube</span>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
+    <div class="events-container">
+        <?php
+        if ($num_podcasts > 0) {
+            mysqli_data_seek($result, 0);
+            while ($podcast = mysqli_fetch_assoc($result)) {
+        ?>
+                <div class="event-card">
+                    <?php if (!empty($podcast['image_url'])): ?>
+                        <img src="../<?= htmlspecialchars($podcast['image_url']) ?>"
+                            alt="<?= htmlspecialchars($podcast['titre']) ?>"
+                            class="event-image">
+                    <?php else: ?>
+                        <div class="event-image" style="background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;">
+                            <i class="fas fa-podcast"></i>
                         </div>
+                    <?php endif; ?>
 
-                        <?php if ($abonnement_id == 1): ?>
-                            <div class="premium-overlay">
-                                <h3>Contenu Premium</h3>
-                                <p>Passez à un abonnement premium pour accéder à tous nos podcasts</p>
-                                <a href="../pages/abonnement/" class="upgrade-button">Mettre à niveau</a>
-                            </div>
-                        <?php endif; ?>
+                    <div class="event-content">
+                        <h3 class="event-title"><?= htmlspecialchars($podcast['titre']) ?></h3>
+                        <p class="event-description"><?= htmlspecialchars($podcast['description']) ?></p>
+
+                        <div class="event-links">
+                            <?php if (!empty($podcast['fichier_audio_url'])): ?>
+                                <a href="<?= htmlspecialchars($podcast['fichier_audio_url']) ?>" class="event-link" target="_blank">
+                                    <i class="fas fa-headphones"></i>
+                                    <span>Écouter le podcast</span>
+                                </a>
+                            <?php endif; ?>
+
+                            <?php if (!empty($podcast['youtube_url'])): ?>
+                                <a href="<?= htmlspecialchars($podcast['youtube_url']) ?>" class="event-link" target="_blank">
+                                    <i class="fab fa-youtube"></i>
+                                    <span>Voir sur YouTube</span>
+                                </a>
+                            <?php endif; ?>
+                        </div>
                     </div>
-            <?php endwhile;
-            } else {
-                echo "<p style='text-align: center; width: 100%;'>Aucun podcast disponible pour le moment.</p>";
-            }
-            ?>
-        </div>
-    </div>
 
-    <div class="bottom-illustrations">
-        <img src="../../assets/images/svg/family-1-12.svg" alt="Family illustration" class="bottom-illustration left">
-        <img src="../../assets/images/svg/adventure-95.svg" alt="Adventure illustration" class="bottom-illustration right">
+                    <?php if ($abonnement_id <= 1): ?>
+                        <div class="premium-overlay">
+                            <h3>Contenu Premium</h3>
+                            <p>Passez à un abonnement premium pour accéder à ce podcast</p>
+                            <a href="../abonnement/index.php?user_id=<?php echo $user_id; ?>" class="upgrade-button">Mettre à niveau</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
+        <?php
+            }
+        } else {
+            echo "<div style='grid-column: 1 / -1; text-align: center; padding: 40px;'>";
+            echo "<i class='fas fa-podcast' style='font-size: 3rem; color: #ccc; margin-bottom: 20px;'></i>";
+            echo "<p>Aucun podcast disponible pour le moment.</p>";
+            echo "</div>";
+        }
+        ?>
     </div>
 
     <?php include '../../includes/layout/footer.php' ?>

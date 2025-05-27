@@ -141,6 +141,8 @@ mysqli_close($link);
             --selected-background: #e0e0e0;
             --primary: #3a791f;
             --primary-hover: #4e8c2b;
+            --secondary: #e53e3e;
+            --secondary-hover: #c53030;
         }
 
         body {
@@ -289,14 +291,14 @@ mysqli_close($link);
 
         .form-input:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--secondary);
             box-shadow: 0 0 0 2px rgba(58, 121, 31, 0.2);
         }
 
         .btn {
             display: inline-block;
             padding: 15px 30px;
-            background: var(--primary);
+            background: var(--secondary);
             color: var(--white);
             text-decoration: none;
             border-radius: 8px;
@@ -308,7 +310,7 @@ mysqli_close($link);
         }
 
         .btn:hover {
-            background: var(--primary-hover);
+            background: var(--secondary-hover);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }

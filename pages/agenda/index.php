@@ -1,15 +1,12 @@
 <?php
+
+require_once '../../includes/auth.php';
+
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
-if (mysqli_connect_errno()) {
-    die("Échec de la connexion à MySQL: " . mysqli_connect_error());
-}
 
 $query = "SELECT * FROM evenements_culturels ORDER BY date_evenement ASC";
 $result = mysqli_query($link, $query);
 
-if (!$result) {
-    die("Erreur de requête : " . mysqli_error($link));
-}
 ?>
 
 <!DOCTYPE html>
