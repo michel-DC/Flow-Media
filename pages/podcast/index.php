@@ -181,11 +181,79 @@ $num_podcasts = mysqli_num_rows($result);
                 grid-template-columns: 1fr;
             }
         }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: clamp(3rem, 8vw, 8rem);
+            opacity: 0.15;
+            animation: float 20s linear infinite;
+            color: var(--primary-color);
+            filter: drop-shadow(0 0 10px rgba(58, 121, 31, 0.3));
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            color: var(--primary-color);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: -5s;
+            color: var(--secondary-color);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: -10s;
+            color: var(--primary-color);
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: -15s;
+            color: var(--secondary-color);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 30px) rotate(180deg) scale(1.1);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
+            }
+        }
     </style>
 </head>
 
 <body>
     <?php include '../../includes/layout/navbar.php' ?>
+
+    <div class="floating-elements">
+        <i class="fas fa-podcast floating-element"></i>
+        <i class="fas fa-microphone floating-element"></i>
+        <i class="fas fa-headphones floating-element"></i>
+        <i class="fas fa-volume-up floating-element"></i>
+    </div>
 
     <h1 class="page-title">
         <i class="fas fa-podcast"></i>

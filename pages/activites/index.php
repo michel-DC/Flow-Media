@@ -41,7 +41,7 @@ $result = mysqli_query($link, $query);
         }
 
         .page-title {
-            color: var(--primary-color);
+            color: var(--primary-color-red);
             text-align: center;
             margin: 150px 0 30px;
             font-size: 2.5rem;
@@ -256,6 +256,67 @@ $result = mysqli_query($link, $query);
             opacity: 0.8;
         }
 
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: clamp(3rem, 8vw, 8rem);
+            opacity: 0.15;
+            animation: float 20s linear infinite;
+            color: var(--primary-color-red);
+            filter: drop-shadow(0 0 10px rgba(229, 62, 62, 0.3));
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            color: var(--primary-color-red);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: -5s;
+            color: var(--secondary-color-red);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: -10s;
+            color: var(--primary-color-red);
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: -15s;
+            color: var(--secondary-color-red);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 30px) rotate(180deg) scale(1.1);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
+            }
+        }
+
         @media (max-width: 768px) {
             .bottom-illustrations {
                 display: none;
@@ -266,6 +327,13 @@ $result = mysqli_query($link, $query);
 
 <body>
     <?php include '../../includes/layout/navbar.php' ?>
+
+    <div class="floating-elements">
+        <i class="fas fa-hiking floating-element"></i>
+        <i class="fas fa-mountain floating-element"></i>
+        <i class="fas fa-campground floating-element"></i>
+        <i class="fas fa-tree floating-element"></i>
+    </div>
 
     <h1 class="page-title">
         <i class="fas fa-hiking"></i>
