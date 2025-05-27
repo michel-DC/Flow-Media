@@ -17,6 +17,8 @@ require_once '../../includes/auth.php';
         :root {
             --primary-color: #3a791f;
             --secondary-color: #8ac571;
+            --primary-color-red: #e53e3e;
+            --secondary-color-red: #fc8181;
             --text-color: #333;
             --light-bg: #f8f9fa;
             --white: #ffffff;
@@ -43,10 +45,9 @@ require_once '../../includes/auth.php';
         }
 
         .contact-hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../assets/images/contact-page.png');
-            background-size: 41%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../assets/images/flowmedia-icon.svg');
+            background-size: 73%;
             background-position: center;
-            background-attachment: fixed;
             padding: 140px 0 80px;
             position: relative;
             overflow: hidden;
@@ -127,7 +128,7 @@ require_once '../../includes/auth.php';
             left: 0;
             width: 100%;
             height: 6px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(90deg, var(--primary-color-red), var(--secondary-color-red));
         }
 
         .contact-info-item {
@@ -205,7 +206,7 @@ require_once '../../includes/auth.php';
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
-            border-color: var(--primary-color);
+            border-color: var(--secondary-color-red);
             outline: none;
             box-shadow: 0 0 0 4px rgba(58, 121, 31, 0.1);
         }
@@ -216,7 +217,7 @@ require_once '../../includes/auth.php';
         }
 
         button[type="submit"] {
-            background: var(--primary-color);
+            background: var(--primary-color-red);
             color: var(--white);
             border: none;
             padding: 15px 30px;
@@ -245,7 +246,7 @@ require_once '../../includes/auth.php';
         }
 
         button[type="submit"]:hover {
-            background: var(--secondary-color);
+            background: var(--secondary-color-red);
             transform: translateY(-2px);
         }
 
@@ -430,7 +431,7 @@ require_once '../../includes/auth.php';
 
             <div class="contact-form">
                 <h2>Envoyez-nous un message</h2>
-                <form action="/contact-form-handler.php" method="POST">
+                <form action="" method="POST">
                     <div class="form-group">
                         <label for="name">Nom complet</label>
                         <input type="text" id="name" name="name" required>

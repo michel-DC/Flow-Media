@@ -495,12 +495,12 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                 <div class="newsletter-container">
                     <div class="newsletter-content">
                         <div class="newsletter-title">Newsletter</div>
-                        <div class="newsletter-form">
-                            <input type="email" class="newsletter-input" placeholder="Ton e-mail">
-                            <button class="newsletter-button">
+                        <form method="POST" action="" class="newsletter-form">
+                            <input type="email" name="newsletter_email" class="newsletter-input" placeholder="Ton e-mail" required>
+                            <button type="submit" name="newsletter_submit" class="newsletter-button">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -677,6 +677,17 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
     </script>
 
     <?php
+
+    if (isset($_POST['newsletter_submit'])) {
+        $email = filter_var($_POST['newsletter_email'], FILTER_SANITIZE_EMAIL);
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            // Ici vous pouvez ajouter le code pour sauvegarder l'email dans votre base de données
+            $success = "Merci pour votre inscription à la newsletter !";
+        } else {
+            $error = "Veuillez entrer une adresse email valide.";
+        }
+    }
 
     if (isset($error)):
         echo "<div class='message error'>$error</div>";

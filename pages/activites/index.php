@@ -23,6 +23,8 @@ $result = mysqli_query($link, $query);
         :root {
             --primary-color: #3a791f;
             --secondary-color: #8ac571;
+            --primary-color-red: #e53e3e;
+            --secondary-color-red: #fc8181;
             --text-color: #333;
             --light-bg: #f8f9fa;
             --white: #ffffff;
@@ -64,6 +66,7 @@ $result = mysqli_query($link, $query);
             overflow: hidden;
             box-shadow: var(--shadow-sm);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(58, 121, 31, 0.1);
         }
 
         .activity-card:hover {
@@ -132,7 +135,7 @@ $result = mysqli_query($link, $query);
         }
 
         .activity-price {
-            color: var(--primary-color);
+            color: var(--primary-color-red);
             font-weight: 600;
         }
 
@@ -218,7 +221,7 @@ $result = mysqli_query($link, $query);
         }
 
         .swipe-button.skip {
-            color: #666;
+            color: var(--primary-color-red);
         }
 
         @media (max-width: 768px) {
@@ -346,12 +349,11 @@ $result = mysqli_query($link, $query);
 
             function updateSwipeCard() {
                 if (currentIndex >= activities.length) {
-                    swipeCard.style.display = 'none';
-                    return;
+                    currentIndex = 0;
                 }
 
                 const activity = activities[currentIndex];
-                swipeImage.src = activity.image_url;
+                swipeImage.src = "../" + activity.image_url;
                 swipeImage.alt = activity.titre;
                 swipeContent.querySelector('.activity-date').innerHTML = `
                     <i class="far fa-calendar"></i>

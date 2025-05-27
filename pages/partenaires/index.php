@@ -19,6 +19,7 @@ require_once '../../includes/auth.php';
             font-family: "Poppins", sans-serif;
             line-height: 1.6;
             color: #333;
+            background-color: #f8f9fa;
         }
 
         .partners-section {

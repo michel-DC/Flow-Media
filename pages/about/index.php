@@ -15,8 +15,9 @@ require_once '../../includes/auth.php';
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
         :root {
-            --primary-color: #3a791f;
-            --secondary-color: #8ac571;
+            --primary-color: #e53e3e;
+            --secondary-color: #fc8181;
+            --accent-color: #ff6b6b;
             --text-color: #333;
             --light-bg: #f8f9fa;
             --white: #ffffff;
@@ -38,6 +39,7 @@ require_once '../../includes/auth.php';
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            margin-bottom: 100px;
             padding: 0 80px;
             position: relative;
         }
@@ -96,6 +98,7 @@ require_once '../../includes/auth.php';
         section {
             padding: 80px 0;
             position: relative;
+            margin-bottom: 50px;
         }
 
         h2 {
@@ -518,7 +521,7 @@ require_once '../../includes/auth.php';
             </div>
         </div>
     </section>
-    
+
     <?php include '../../includes/layout/footer.php' ?>
 
 </body>

@@ -44,7 +44,7 @@ $num_podcasts = mysqli_num_rows($result);
             --primary-color: #3a791f;
             --secondary-color: #8ac571;
             --text-color: #333;
-            --light-bg: #f8f9fa;
+            --light-bg: #e6e2d4;
             --white: #ffffff;
             --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
             --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -54,7 +54,7 @@ $num_podcasts = mysqli_num_rows($result);
             font-family: "Poppins", sans-serif;
             margin: 0;
             padding: 0;
-            background: var(--light-bg);
+            background-color: #f8f9fa;
             min-height: 100vh;
         }
 
