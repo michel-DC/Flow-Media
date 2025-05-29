@@ -26,6 +26,7 @@
                 <span class="tooltip-text">Le système vous recommande des activités dans un rayon de 30km, en tenant compte de votre âge et de vos centres d'intérêt.</span>
             </div>
         </div>
+        <button id="locate_all" style=" text-decoration: none; color: #a259e6; margin-bottom: 3px;">Voir toutes les activités</button>
         <div id="map"></div>
     </main>
 
@@ -85,10 +86,11 @@
             border: none;
             border-radius: 50px;
             font-size: clamp(1rem, 2.5vw, 1.5em);
-            cursor: pointer;
+            cursor: button;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
             white-space: nowrap;
+            margin-bottom: -15px;
         }
 
         .geo-button:hover {
@@ -197,7 +199,6 @@
                         return;
                     }
 
-                    // Clear existing markers if any, before adding new ones
                     map.eachLayer(layer => {
                         if (layer instanceof L.Marker) {
                             map.removeLayer(layer);
@@ -214,7 +215,44 @@
                         `);
                     });
 
-                    // Optional: Fit map bounds to the new markers
+                    if (data.length > 0) {
+                        const latLngs = data.map(point => [point.latitude, point.longitude]);
+                        const bounds = L.latLngBounds(latLngs);
+                        map.fitBounds(bounds);
+                    }
+                })
+                .catch(error => {
+                    alert("Erreur de chargement des activités !");
+                    console.error(error);
+                });
+        });
+
+        document.getElementById('locate_all').addEventListener('click', () => {
+            fetch('../../algorithme/localise.php?all=1')
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.length === 0) {
+                        alert("Aucune activité trouvée.");
+                        return;
+                    }
+
+                    map.eachLayer(layer => {
+                        if (layer instanceof L.Marker) {
+                            map.removeLayer(layer);
+                        }
+                    });
+
+                    data.forEach(point => {
+                        const marker = L.marker([point.latitude, point.longitude]).addTo(map);
+                        marker.bindPopup(`
+                            <strong>${point.titre}</strong><br>
+                            <strong>À: </strong>${point.lieu}</br> 
+                            <strong>Le: </strong>${point.date_activite}<br>
+                            <a href="/pages/activites/details.php?id=${point.id}" class="btn">Réserver</a>
+                        `);
+                    });
+
                     if (data.length > 0) {
                         const latLngs = data.map(point => [point.latitude, point.longitude]);
                         const bounds = L.latLngBounds(latLngs);

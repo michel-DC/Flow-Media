@@ -68,6 +68,17 @@ $query = $pdo->prepare($sql);
 $query->execute($params);
 $activities = $query->fetchAll(PDO::FETCH_ASSOC);
 
-// Retour JSON
+// Endpoint pour récupérer toutes les activités
+if (isset($_GET['all'])) {
+    $queryAll = $pdo->prepare("SELECT id, titre, date_activite, lieu, latitude, longitude FROM activites");
+    $queryAll->execute();
+    $allActivities = $queryAll->fetchAll(PDO::FETCH_ASSOC);
+
+    header('Content-Type: application/json');
+    echo json_encode($allActivities);
+    exit;
+}
+
+// Retour JSON pour la géolocalisation
 header('Content-Type: application/json');
 echo json_encode($activities);

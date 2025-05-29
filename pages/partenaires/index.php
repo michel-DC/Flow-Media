@@ -30,6 +30,21 @@ require_once '../../includes/auth.php';
             margin-top: 120px;
         }
 
+        .partners-section::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(111, 206, 71, 0.2) 0%, transparent 11%),
+                radial-gradient(circle at 90% 80%, rgba(95, 224, 102, 0.2) 0%, transparent 11%),
+                radial-gradient(circle at 50% 50%, rgba(178, 245, 150, 0.1) 0%, transparent 11%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
         .partners-title {
             text-align: center;
             color: #3a791f;
@@ -113,7 +128,7 @@ require_once '../../includes/auth.php';
             </div>
 
             <div class="partner-card">
-                <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture" class="partner-logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdSPWnxwcMCopn4RT7E94Hs3nd5Xs1fE7hlg&s" alt="Pass Culture" class="partner-logo">
                 <h3>Pass Culture</h3>
                 <p class="partner-description">Partenaire pour l'accès à la culture pour les jeunes.</p>
             </div>
@@ -131,13 +146,7 @@ require_once '../../includes/auth.php';
             </div>
 
             <div class="partner-card">
-                <img src="https://www.clique.tv/wp-content/uploads/2024/03/0000_ARTICLE-4-1.jpg" alt="Nota Bene" class="partner-logo">
-                <h3>Nota Bene</h3>
-                <p class="partner-description">Créateur de contenu historique qui rend la culture accessible aux jeunes.</p>
-            </div>
-
-            <div class="partner-card">
-                <img src="https://www.radiofrance.fr/s3/cruister-production/2021/11/eac4208f-148f-44fe-8cd0-86a7a393703b/1200x680_dirtybiology.jpg" alt="DirtyBiology" class="partner-logo">
+                <img src="https://www.radiofrance.fr/s3/cruiser-production/2021/11/eac4208f-148f-44fe-8cd0-86a7a393703b/1200x680_dirtybiology.jpg" alt="DirtyBiology" class="partner-logo">
                 <h3>DirtyBiology</h3>
                 <p class="partner-description">Chaîne de vulgarisation scientifique qui explore les liens entre science et culture.</p>
             </div>
@@ -151,31 +160,31 @@ require_once '../../includes/auth.php';
             <div class="partner-card">
                 <img src="https://cdn-s-www.bienpublic.com/images/50EE43B2-24F2-4ECC-8974-37E3C646F414/MF_contenu/apres-quatre-mois-de-pause-squeezie-revient-sur-youtube-le-18-mai-1715513377.jpg" alt="EGO" class="partner-logo">
                 <h3>Squeezie</h3>
-                <p class="partner-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut deserunt asperiores tempora optio laudantium laborum magni deleniti nemo.</p>
+                <p class="partner-description">Créateur de contenu engagé dans la démocratisation de la culture digitale et des nouveaux médias.</p>
             </div>
 
             <div class="partner-card">
                 <img src="https://yt3.googleusercontent.com/57vFhA34Dk7HxGyhJB2zGHoy4uQW8WTy0r3wDO-pncYxLiWYRhU_e_ZQlrhKA0bRJLxNKzrH=s900-c-k-c0x00ffffff-no-rj" alt="EGO" class="partner-logo">
                 <h3>Tsuku</h3>
-                <p class="partner-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut deserunt asperiores tempora optio laudantium laborum magni deleniti nemo.</p>
+                <p class="partner-description">Artiste numérique spécialisé dans la création de contenus visuels innovants et immersifs.</p>
             </div>
 
             <div class="partner-card">
                 <img src="https://ondec.media/wp-content/uploads/2024/08/lena-situations-entre-attaques-et-succes-ep-2.png" alt="EGO" class="partner-logo">
                 <h3>Lena situation</h3>
-                <p class="partner-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut deserunt asperiores tempora optio laudantium laborum magni deleniti nemo.</p>
+                <p class="partner-description">Influenceuse engagée dans la promotion de la culture mode et lifestyle auprès des jeunes.</p>
             </div>
 
             <div class="partner-card">
                 <img src="https://journaldemickey.com/wp-content/uploads/2023/01/michou-683x1024.jpg" alt="EGO" class="partner-logo">
                 <h3>Michou</h3>
-                <p class="partner-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut deserunt asperiores tempora optio laudantium laborum magni deleniti nemo.</p>
+                <p class="partner-description">Créateur de divertissement populaire qui participe à la modernisation des médias jeunesse.</p>
             </div>
 
             <div class="partner-card">
                 <img src="https://yt3.googleusercontent.com/K9oQlDW3f-YUPAw7A-rjg4DQDP8HJMohnhpjoJrL7zhhvvSCD-6ykCkFvHaCVujCJyK2sgAH=s900-c-k-c0x00ffffff-no-rj" alt="EGO" class="partner-logo">
                 <h3>Hugo decrypte</h3>
-                <p class="partner-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut deserunt asperiores tempora optio laudantium laborum magni deleniti nemo.</p>
+                <p class="partner-description">Journaliste numérique spécialisé dans l'analyse et la vulgarisation de l'actualité culturelle.</p>
             </div>
 
         </div>

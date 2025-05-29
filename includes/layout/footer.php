@@ -98,6 +98,8 @@
     font-size: 1.1em;
     transition: color 0.2s;
     padding: 5px 10px;
+    text-align: right;
+    /* Alignement du texte des liens à droite */
   }
 
   .footer-nav a:hover {
@@ -125,6 +127,8 @@
     font-size: 1em;
     transition: color 0.2s;
     padding: 5px 10px;
+    text-align: right;
+    /* Alignement du texte des liens à droite */
   }
 
   .footer-legal a:hover {
@@ -177,8 +181,18 @@
       justify-content: flex-start;
     }
 
+    .footer-nav a {
+      text-align: right;
+      /* Maintien de l'alignement à droite sur desktop */
+    }
+
     .footer-secondary {
       align-items: flex-end;
+    }
+
+    .footer-legal a {
+      text-align: right;
+      /* Maintien de l'alignement à droite sur desktop */
     }
   }
 
@@ -213,7 +227,8 @@
     .footer-nav a {
       font-size: 1em;
       width: 100%;
-      text-align: center;
+      text-align: right;
+      /* Alignement à droite sur mobile */
     }
 
     .footer-legal {
@@ -225,7 +240,8 @@
     .footer-legal a {
       font-size: 0.9em;
       width: 100%;
-      text-align: center;
+      text-align: right;
+      /* Alignement à droite sur mobile */
     }
 
     .footer-socials-new {
@@ -283,7 +299,8 @@
 
     .footer-nav a {
       width: 100%;
-      text-align: center;
+      text-align: right;
+      /* Alignement à droite sur petit mobile */
     }
 
     .footer-legal {
@@ -294,7 +311,8 @@
 
     .footer-legal a {
       width: 100%;
-      text-align: center;
+      text-align: right;
+      /* Alignement à droite sur petit mobile */
     }
 
     .footer-socials-new a {
