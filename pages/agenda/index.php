@@ -39,6 +39,21 @@ $result = mysqli_query($link, $query);
             min-height: 100vh;
         }
 
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(138, 197, 113, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(58, 121, 31, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(46, 125, 50, 0.05) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
         .page-title {
             color: var(--primary-color);
             text-align: center;

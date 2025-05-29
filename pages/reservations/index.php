@@ -53,6 +53,12 @@ if (isset($_POST['cancel_reservation'])) {
             padding: 0;
             background: var(--light-bg);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content-wrapper {
+            flex-grow: 1;
         }
 
         .page-title {
@@ -265,61 +271,63 @@ if (isset($_POST['cancel_reservation'])) {
 <body>
     <?php include '../../includes/layout/navbar.php' ?>
 
-    <div class="floating-elements">
-        <i class="fas fa-calendar-check floating-element"></i>
-        <i class="fas fa-ticket-alt floating-element"></i>
-        <i class="fas fa-clock floating-element"></i>
-        <i class="fas fa-calendar-times floating-element"></i>
-    </div>
+    <div class="main-content-wrapper">
+        <div class="floating-elements">
+            <i class="fas fa-calendar-check floating-element"></i>
+            <i class="fas fa-ticket-alt floating-element"></i>
+            <i class="fas fa-clock floating-element"></i>
+            <i class="fas fa-calendar-times floating-element"></i>
+        </div>
 
-    <h1 class="page-title">Mes réservations</h1>
+        <h1 class="page-title">Mes réservations</h1>
 
-    <?php if (isset($_GET['success'])): ?>
-        <div class="message success">Réservation annulée avec succès !</div>
-    <?php endif; ?>
-
-    <?php if (isset($error)): ?>
-        <div class="message error"><?php echo $error; ?></div>
-    <?php endif; ?>
-
-    <div class="reservations-container">
-        <?php if (mysqli_num_rows($result) > 0): ?>
-            <div class="reservations-grid">
-                <?php while ($reservation = mysqli_fetch_assoc($result)): ?>
-                    <div class="reservation-card">
-                        <img src="../../<?php echo htmlspecialchars($reservation['image_url']); ?>" alt="<?php echo htmlspecialchars($reservation['titre']); ?>" class="reservation-image">
-                        <div class="reservation-content">
-                            <h3 class="reservation-title"><?php echo htmlspecialchars($reservation['titre']); ?></h3>
-                            <div class="reservation-details">
-                                <div class="detail-item">
-                                    <i class="far fa-calendar"></i>
-                                    <?php echo date('d/m/Y', strtotime($reservation['date_activite'])); ?>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <?php echo htmlspecialchars($reservation['lieu']); ?>
-                                </div>
-                                <div class="detail-item">
-                                    <i class="fas fa-user"></i>
-                                    <?php echo $reservation['places']; ?> place(s)
-                                </div>
-                            </div>
-                            <div class="reservation-price">
-                                Total: <?php echo number_format($reservation['prix'] * $reservation['places'], 2); ?> €
-                            </div>
-                            <a href="annuler.php?id=<?php echo $reservation['id']; ?>" class="cancel-button">
-
-                                Annuler la réservation
-                            </a>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-            </div>
-        <?php else: ?>
-            <div class="no-reservations">
-                Vous n'avez aucune réservation pour le moment.
-            </div>
+        <?php if (isset($_GET['success'])): ?>
+            <div class="message success">Réservation annulée avec succès !</div>
         <?php endif; ?>
+
+        <?php if (isset($error)): ?>
+            <div class="message error"><?php echo $error; ?></div>
+        <?php endif; ?>
+
+        <div class="reservations-container">
+            <?php if (mysqli_num_rows($result) > 0): ?>
+                <div class="reservations-grid">
+                    <?php while ($reservation = mysqli_fetch_assoc($result)): ?>
+                        <div class="reservation-card">
+                            <img src="../../<?php echo htmlspecialchars($reservation['image_url']); ?>" alt="<?php echo htmlspecialchars($reservation['titre']); ?>" class="reservation-image">
+                            <div class="reservation-content">
+                                <h3 class="reservation-title"><?php echo htmlspecialchars($reservation['titre']); ?></h3>
+                                <div class="reservation-details">
+                                    <div class="detail-item">
+                                        <i class="far fa-calendar"></i>
+                                        <?php echo date('d/m/Y', strtotime($reservation['date_activite'])); ?>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <?php echo htmlspecialchars($reservation['lieu']); ?>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-user"></i>
+                                        <?php echo $reservation['places']; ?> place(s)
+                                    </div>
+                                </div>
+                                <div class="reservation-price">
+                                    Total: <?php echo number_format($reservation['prix'] * $reservation['places'], 2); ?> €
+                                </div>
+                                <a href="annuler.php?id=<?php echo $reservation['id']; ?>" class="cancel-button">
+
+                                    Annuler la réservation
+                                </a>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            <?php else: ?>
+                <div class="no-reservations">
+                    Vous n'avez aucune réservation pour le moment.
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
 
     <?php include '../../includes/layout/footer.php'; ?>
