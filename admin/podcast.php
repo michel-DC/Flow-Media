@@ -222,17 +222,10 @@ $result = mysqli_query($link, $query);
                         <img src="<?= htmlspecialchars($podcast['image_url']) ?>" alt="<?= htmlspecialchars($podcast['titre']) ?>" class="podcast-image">
                         <div class="podcast-content">
                             <h2 class="podcast-title"><?= htmlspecialchars($podcast['titre']) ?></h2>
-                            
+
                             <p class="podcast-description"><?= htmlspecialchars($podcast['description']) ?></p>
 
                             <div class="podcast-links">
-                                <?php if (!empty($podcast['fichier_audio_url'])): ?>
-                                    <a href="<?= htmlspecialchars($podcast['fichier_audio_url']) ?>" class="podcast-link" target="_blank">
-                                        <i class="fas fa-headphones"></i>
-                                        <span>Écouter le podcast</span>
-                                    </a>
-                                <?php endif; ?>
-
                                 <?php if (!empty($podcast['youtube_url'])): ?>
                                     <a href="<?= htmlspecialchars($podcast['youtube_url']) ?>" class="podcast-link" target="_blank">
                                         <i class="fab fa-youtube"></i>

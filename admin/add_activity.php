@@ -112,8 +112,8 @@ if (isset($_POST['ajt_activite'])) {
                     '$age_max',
                     '$prix',
                     " . ($image_url !== null ? "'$image_url'" : "NULL") . ",
-                    " . ($image_url_2 !== null ? "'$image_url'" : "NULL") . ",
-                    " . ($image_url_3 !== null ? "'$image_url'" : "NULL") . ",
+                    " . ($image_url_2 !== null ? "'$image_url_2'" : "NULL") . ",
+                    " . ($image_url_3 !== null ? "'$image_url_3'" : "NULL") . ",
                     '$lien_video',
                     '$lien_podcast'
                   )";

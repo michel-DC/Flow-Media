@@ -641,21 +641,21 @@ mysqli_close($link);
                         <li>Accès à tous les contenus premium</li>
                         <li>5 activités réservables par mois</li>
                         <li>Podcasts exclusifs</li>
-                        <li>Codes promo mensuels</li>
-                    </ul>
-                <?php elseif ($user['abonnement_id'] == 3): ?>
-                    <img src="../../assets/icons/plat-star.png" alt="Platine" class="subscription-icon">
-                    <div class="subscription-price" style="color: #A8A8A8;">Platine</div>
-                    <ul class="subscription-features">
-                        <li>Accès à tous les contenus premium</li>
-                        <li>10 activités réservables par mois</li>
-                        <li>Podcasts exclusifs</li>
-                        <li>Codes promo mensuels</li>
-                        <li>Accès prioritaire aux événements</li>
-                        <li>Invitations VIP</li>
-                    </ul>
-                <?php endif; ?>
-                <a href="../abonnement/index.php?user_id=<?php echo $user_id; ?>" class="btn" style="margin-top: 1.5rem;">Changer d'abonnement</a>
+                        <li>Codes promo mensuels</li
+                            </ul>
+                    <?php elseif ($user['abonnement_id'] == 3): ?>
+                        <img src="../../assets/icons/plat-star.png" alt="Platine" class="subscription-icon">
+                        <div class="subscription-price" style="color: #A8A8A8;">Platine</div>
+                        <ul class="subscription-features">
+                            <li>Accès à tous les contenus premium</li>
+                            <li>Nombre illimité d'activités réservables par mois</li>
+                            <li>Podcasts exclusifs</li>
+                            <li>Codes promo mensuels</li>
+                            <li>Accès prioritaire aux événements</li>
+                            <li>Invitations VIP</li>
+                        </ul>
+                    <?php endif; ?>
+                    <a href="../abonnement/index.php?user_id=<?php echo $user_id; ?>" class="btn" style="margin-top: 1.5rem;">Changer d'abonnement</a>
             </div>
 
         </main>

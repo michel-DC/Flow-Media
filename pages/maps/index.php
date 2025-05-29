@@ -210,7 +210,7 @@
                             <strong>${point.titre}</strong><br>
                             <strong>À: </strong>${point.lieu}</br> 
                             <strong>Le: </strong>${point.date_activite}<br>
-                            <a href="/pages/reservation/index.php?activite_id=${point.id}" class="btn">Réserver</a>
+                            <a href="/pages/activites/details.php?id=${point.id}" class="btn">Réserver</a>
                         `);
                     });
 

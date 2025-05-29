@@ -16,7 +16,6 @@ if (isset($_POST['ajt_podcast'])) {
     $description = mysqli_real_escape_string($link, $_POST['description']);
     $youtube_url = mysqli_real_escape_string($link, $_POST['youtube_url']);
 
-    $audio_url = null;
     $image_url = null;
     $upload_dir = '../assets/uploads/podcasts/';
 
@@ -24,7 +23,8 @@ if (isset($_POST['ajt_podcast'])) {
         mkdir($upload_dir, 0755, true);
     }
 
-    function processFile($file, $upload_dir, $allowed_types) {
+    function processFile($file, $upload_dir, $allowed_types)
+    {
         if (isset($file) && $file['error'] === 0) {
             $filename = basename($file['name']);
             $filename = preg_replace("/[^a-zA-Z0-9.-]/", "_", $filename);
@@ -40,14 +40,6 @@ if (isset($_POST['ajt_podcast'])) {
         return false;
     }
 
-    // Process audio file
-    $audio_url = processFile($_FILES['audio'], $upload_dir, ['audio/mpeg', 'audio/mp3', 'audio/wav']);
-    if ($audio_url === false) {
-        $error = "Erreur avec le fichier audio. Seuls les MP3 et WAV sont acceptés.";
-    } else {
-        $audio_url = mysqli_real_escape_string($link, $audio_url);
-    }
-
     // Process image file
     $image_url = processFile($_FILES['image'], $upload_dir, ['image/jpeg', 'image/png', 'image/gif']);
     if ($image_url === false) {
@@ -58,11 +50,10 @@ if (isset($_POST['ajt_podcast'])) {
 
     if (!isset($error)) {
         $query = "INSERT INTO podcasts (
-                    titre, description, fichier_audio_url, youtube_url, image_url
+                    titre, description, youtube_url, image_url
                   ) VALUES (
                     '$titre',
                     '$description',
-                    " . ($audio_url !== null ? "'$audio_url'" : "NULL") . ",
                     '$youtube_url',
                     " . ($image_url !== null ? "'$image_url'" : "NULL") . "
                   )";
@@ -252,9 +243,18 @@ if (isset($_POST['ajt_podcast'])) {
     }
 
     @keyframes fadeOut {
-        0% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { opacity: 0; display: none; }
+        0% {
+            opacity: 1;
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            display: none;
+        }
     }
 
     @media (max-width: 768px) {
@@ -310,18 +310,13 @@ if (isset($_POST['ajt_podcast'])) {
                 </div>
 
                 <div class="add-podcast-form-group">
-                    <label for="audio">Fichier audio</label>
-                    <input type="file" id="audio" name="audio" accept="audio/*">
-                </div>
-
-                <div class="add-podcast-form-group">
                     <label for="image">Image du podcast</label>
                     <input type="file" id="image" name="image" accept="image/*" required>
                 </div>
 
                 <div class="add-podcast-form-group">
-                    <label for="youtube_url">Lien YouTube (optionnel)</label>
-                    <input type="text" id="youtube_url" name="youtube_url" placeholder="Entrez le lien YouTube du podcast">
+                    <label for="youtube_url">Lien YouTube</label>
+                    <input type="text" id="youtube_url" name="youtube_url" placeholder="Entrez le lien YouTube du podcast" required>
                 </div>
 
                 <button type="submit" name="ajt_podcast" class="btn">

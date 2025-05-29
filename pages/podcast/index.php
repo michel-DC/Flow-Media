@@ -50,6 +50,8 @@ $num_podcasts = mysqli_num_rows($result);
             padding: 0;
             background-color: #f8f9fa;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .page-title {
@@ -65,11 +67,12 @@ $num_podcasts = mysqli_num_rows($result);
 
         .events-container {
             max-width: 1200px;
-            margin: 0 auto 100px;
+            margin: 0 auto 80px;
             padding: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            flex: 1;
         }
 
         .event-card {
@@ -79,6 +82,7 @@ $num_podcasts = mysqli_num_rows($result);
             box-shadow: var(--shadow-sm);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
+            height: fit-content;
         }
 
         .event-card:hover {
@@ -171,6 +175,24 @@ $num_podcasts = mysqli_num_rows($result);
         }
 
         @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: var(--white);
+                box-shadow: var(--shadow-sm);
+            }
+
+            .page-title {
+                margin-top: 120px;
+            }
+
+            .events-container {
+                margin-top: 20px;
+            }
+
             .events-container {
                 grid-template-columns: 1fr;
             }
@@ -236,6 +258,10 @@ $num_podcasts = mysqli_num_rows($result);
                 transform: translate(0, 0) rotate(360deg) scale(1);
             }
         }
+
+        footer {
+            margin-top: auto;
+        }
     </style>
 </head>
 
@@ -285,10 +311,10 @@ $num_podcasts = mysqli_num_rows($result);
                                     <span>Écouter le podcast</span>
                                 </a>
                                 <audio controls>
-  <source src="../<?= htmlspecialchars($podcast['fichier_audio_url']) ?>" type="audio/ogg">
-  <source src="horse.mp3" type="audio/mpeg">
-Your browser does not support the audio element.
-</audio>
+                                    <source src="../<?= htmlspecialchars($podcast['fichier_audio_url']) ?>" type="audio/ogg">
+                                    <source src="horse.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
                             <?php endif; ?>
 
                             <?php if (!empty($podcast['youtube_url'])): ?>

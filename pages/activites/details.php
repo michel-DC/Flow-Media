@@ -8,17 +8,15 @@ if (!isset($_GET['id'])) {
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-$query = "SELECT * FROM activites WHERE id = ?";
-$stmt = mysqli_prepare($link, $query);
-mysqli_stmt_bind_param($stmt, "i", $_GET['id']);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+$query = "SELECT * FROM activites WHERE id = " . $_GET['id'];
+$result = mysqli_query($link, $query);
 $activity = mysqli_fetch_assoc($result);
 
 if (!$activity) {
     header('Location: index.php');
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +32,8 @@ if (!$activity) {
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
         :root {
-            --primary-color: #3a791f;
-            --secondary-color: #8ac571;
+            --primary-color: #e53e3e;
+            --secondary-color: #fc8181;
             --text-color: #333;
             --light-bg: #f8f9fa;
             --white: #ffffff;
@@ -219,11 +217,79 @@ if (!$activity) {
                 display: none;
             }
         }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: clamp(3rem, 8vw, 8rem);
+            opacity: 0.15;
+            animation: float 20s linear infinite;
+            color: var(--primary-color-red);
+            filter: drop-shadow(0 0 10px rgba(229, 62, 62, 0.3));
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            color: var(--primary-color-red);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: -5s;
+            color: var(--secondary-color-red);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: -10s;
+            color: var(--primary-color-red);
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: -15s;
+            color: var(--secondary-color-red);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 30px) rotate(180deg) scale(1.1);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
+            }
+        }
     </style>
 </head>
 
 <body>
     <?php include '../../includes/layout/navbar.php' ?>
+
+    <div class="floating-elements">
+        <i class="fas fa-hiking floating-element"></i>
+        <i class="fas fa-mountain floating-element"></i>
+        <i class="fas fa-campground floating-element"></i>
+        <i class="fas fa-tree floating-element"></i>
+    </div>
 
     <div class="activity-container">
         <div class="activity-header">
@@ -249,12 +315,14 @@ if (!$activity) {
         </div>
 
         <div class="activity-images">
-            <img src="../<?php echo htmlspecialchars($activity['image_url']); ?>" alt="<?php echo htmlspecialchars($activity['titre']); ?>" class="activity-image">
+            <?php if (!empty($activity['image_url'])): ?>
+                <img src="../../<?php echo htmlspecialchars($activity['image_url']); ?>?t=<?php echo time(); ?>" alt="Image 1 - <?php echo htmlspecialchars($activity['titre']); ?>" class="activity-image">
+            <?php endif; ?>
             <?php if (!empty($activity['image_url_2'])): ?>
-                <img src="../<?php echo htmlspecialchars($activity['image_url_2']); ?>" alt="<?php echo htmlspecialchars($activity['titre']); ?>" class="activity-image">
+                <img src="../../<?php echo htmlspecialchars($activity['image_url_2']); ?>?t=<?php echo time(); ?>" alt="Image 2 - <?php echo htmlspecialchars($activity['titre']); ?>" class="activity-image">
             <?php endif; ?>
             <?php if (!empty($activity['image_url_3'])): ?>
-                <img src="../<?php echo htmlspecialchars($activity['image_url_3']); ?>" alt="<?php echo htmlspecialchars($activity['titre']); ?>" class="activity-image">
+                <img src="../../<?php echo htmlspecialchars($activity['image_url_3']); ?>?t=<?php echo time(); ?>" alt="Image 3 - <?php echo htmlspecialchars($activity['titre']); ?>" class="activity-image">
             <?php endif; ?>
         </div>
 

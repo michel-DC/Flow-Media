@@ -249,7 +249,7 @@ if (isset($_POST['changer_abonnement'])) {
                         <?php endif; ?>
                         <?php if ($abonnement['id'] == 3): ?>
                             <li>Accès à tous les contenus premium</li>
-                            <li>5 activités réservables par mois</li>
+                            <li>Nombre illimité d'activités réservables par mois</li>
                             <li>Podcasts exclusifs</li>
                             <li>Codes promo mensuels</li>
                             <li>Accès prioritaire aux événements</li>

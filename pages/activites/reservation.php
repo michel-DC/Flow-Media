@@ -1,5 +1,6 @@
 <?php
 require_once '../../includes/auth.php';
+require_once '../../includes/reservation_auth.php';
 
 if (!isset($_GET['id'])) {
     header('Location: index.php');
@@ -8,17 +9,52 @@ if (!isset($_GET['id'])) {
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-$query = "SELECT * FROM activites WHERE id = ?";
-$stmt = mysqli_prepare($link, $query);
-mysqli_stmt_bind_param($stmt, "i", $_GET['id']);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+$user_query = "SELECT fullname, email FROM users WHERE id = " . $_SESSION['user_id'];
+$user_result = mysqli_query($link, $user_query);
+$user = mysqli_fetch_assoc($user_result);
+
+$query = "SELECT * FROM activites WHERE id = " . $_GET['id'];
+$result = mysqli_query($link, $query);
 $activity = mysqli_fetch_assoc($result);
 
 if (!$activity) {
     header('Location: index.php');
     exit;
 }
+
+$success_message = '';
+$error_message = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $auth_result = checkReservationAuth($_SESSION['user_id']);
+    if (!$auth_result['authorized']) {
+        $error_message = $auth_result['message'];
+        if (isset($auth_result['upgrade_link'])) {
+            $error_message .= ' <a href="' . $auth_result['upgrade_link'] . '" style="color: var(--primary-color); text-decoration: underline;">Cliquez ici pour changer d\'abonnement</a>';
+        }
+    } else {
+        $places = $_POST['spots'];
+        $date_reservation = date('Y-m-d H:i:s');
+
+        $insert_query = "INSERT INTO reservations (user_id, activite_id, date_reservation, places) 
+                        VALUES (" . $_SESSION['user_id'] . ", " . $_GET['id'] . ", '" . $date_reservation . "', " . $places . ")";
+
+        if (mysqli_query($link, $insert_query)) {
+            header('Location: resume.php');
+            exit;
+        } else {
+            $error_message = "Une erreur est survenue lors de la réservation.";
+        }
+    }
+}
+
+if (isset($error_message)):
+    echo "<div class='message error'>$error_message</div>";
+endif;
+
+if (isset($success_message)):
+    echo "<div class='message success'>$success_message</div>";
+endif;
 ?>
 
 <!DOCTYPE html>
@@ -249,13 +285,134 @@ if (!$activity) {
                 display: none;
             }
         }
+
+        .message {
+            padding: 12px;
+            border-radius: 4px;
+            margin: 10px auto;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fadeOut 12s forwards;
+            font-size: 14px;
+            z-index: 9999;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            /* Light red */
+            color: #721c24;
+            /* Dark red */
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: clamp(3rem, 8vw, 8rem);
+            opacity: 0.15;
+            animation: float 20s linear infinite;
+            color: var(--primary-color);
+            filter: drop-shadow(0 0 10px rgba(58, 121, 31, 0.3));
+        }
+
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            color: var(--primary-color);
+        }
+
+        .floating-element:nth-child(2) {
+            top: 20%;
+            right: 10%;
+            animation-delay: -5s;
+            color: var(--secondary-color);
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 15%;
+            animation-delay: -10s;
+            color: var(--primary-color);
+        }
+
+        .floating-element:nth-child(4) {
+            bottom: 20%;
+            right: 20%;
+            animation-delay: -15s;
+            color: var(--secondary-color);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 30px) rotate(180deg) scale(1.1);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
     </style>
 </head>
 
 <body>
     <?php include '../../includes/layout/navbar.php' ?>
 
+    <div class="floating-elements">
+        <i class="fas fa-calendar-check floating-element"></i>
+        <i class="fas fa-ticket-alt floating-element"></i>
+        <i class="fas fa-user-check floating-element"></i>
+        <i class="fas fa-check-circle floating-element"></i>
+    </div>
+
     <h1 class="page-title">Réserver une activité</h1>
+
+    <?php if ($success_message): ?>
+        <div class="message success"><?php echo $success_message; ?></div>
+    <?php endif; ?>
+
+    <?php if ($error_message): ?>
+        <div class="message error"><?php echo $error_message; ?></div>
+    <?php endif; ?>
 
     <div class="reservation-container">
         <div class="activity-summary">
@@ -285,12 +442,12 @@ if (!$activity) {
 
             <div class="form-group">
                 <label for="name">Nom complet</label>
-                <input type="text" id="name" name="name" class="form-control" required>
+                <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($user['fullname'] ?? ''); ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" class="form-control" required>
+                <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>" required>
             </div>
 
             <div class="form-group">
@@ -357,10 +514,25 @@ if (!$activity) {
                 formData.append('activity_id', <?php echo $activity['id']; ?>);
                 formData.append('total_price', (spots * pricePerPerson).toFixed(2));
 
-                // Here you would typically send the form data to your server
-                // For now, we'll just show a success message
-                alert('Réservation confirmée ! Nous vous contacterons bientôt pour finaliser les détails.');
-                window.location.href = 'index.php';
+                fetch(window.location.href, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                        } else {
+                            return response.text();
+                        }
+                    })
+                    .then(html => {
+                        if (html) {
+                            document.documentElement.innerHTML = html;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             });
         });
     </script>

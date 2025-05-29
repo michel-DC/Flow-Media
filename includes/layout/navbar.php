@@ -17,6 +17,10 @@ if (isset($_SESSION['user_id'])) {
 ?>
 
 <header class="header">
+    <div class="floating-elements-nav">
+        <i class="fas fa-seedling floating-element-nav left"></i>
+        <i class="fas fa-chess-rook floating-element-nav right"></i>
+    </div>
     <nav class="navigation">
         <div class="nav-brand">
             <div class="nav-item home-nav">
@@ -285,6 +289,53 @@ if (isset($_SESSION['user_id'])) {
         .nav-dropbtn {
             width: 100%;
             justify-content: space-between;
+        }
+    }
+
+    .floating-elements-nav {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        transform: translateY(-50%);
+        pointer-events: none;
+        z-index: -1;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .floating-element-nav {
+        font-size: 2rem;
+        opacity: 0.2;
+        animation: floatNav 3s ease-in-out infinite;
+    }
+
+    .floating-element-nav.left {
+        animation-delay: 0s;
+        color: var(--primary-color);
+    }
+
+    .floating-element-nav.right {
+        animation-delay: 1.5s;
+        color: var(--danger-color);
+    }
+
+    @keyframes floatNav {
+
+        0%,
+        100% {
+            transform: translateY(0) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-10px) rotate(10deg);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .floating-elements-nav {
+            display: none;
         }
     }
 </style>
