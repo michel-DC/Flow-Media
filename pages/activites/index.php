@@ -338,6 +338,94 @@ $result = mysqli_query($link, $query);
                 display: none;
             }
         }
+
+        .filters-container {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filters {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            font-family: "Poppins", sans-serif;
+            color: var(--text-color);
+            background: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-group select:hover {
+            border-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+        }
+
+        .info-tooltip {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .info-tooltip i {
+            font-size: clamp(20px, 4vw, 24px);
+            color: #a259e6;
+            cursor: help;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: min(300px, 90vw);
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: clamp(0.5rem, 1.5vw, 0.7rem);
+        }
+
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -354,11 +442,55 @@ $result = mysqli_query($link, $query);
     <h1 class="page-title">
         <i class="fas fa-hiking"></i>
         Nos Activités
+        <div class="info-tooltip">
+            <i class="fas fa-question-circle"></i>
+            <span class="tooltip-text">Malheuresement, il est impossible pour nous de toujours proposer des activités proche de chez vous. Mais restez restez à l'affût.</span>
+        </div>
     </h1>
+
+    <div class="filters-container">
+        <div class="filters">
+            <div class="filter-group">
+                <label for="date-filter">Date</label>
+                <select id="date-filter">
+                    <option value="all">Toutes les dates</option>
+                    <option value="this-month">Ce mois</option>
+                    <option value="next-month">Mois prochain</option>
+                    <option value="next-3-months">3 prochains mois</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="location-filter">Lieu</label>
+                <select id="location-filter">
+                    <option value="all">Tous les lieux</option>
+                    <?php
+                    $locations_query = "SELECT DISTINCT lieu FROM activites ORDER BY lieu";
+                    $locations_result = mysqli_query($link, $locations_query);
+                    while ($location = mysqli_fetch_assoc($locations_result)) {
+                        echo '<option value="' . strtolower($location['lieu']) . '">' . htmlspecialchars($location['lieu']) . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="price-filter">Prix</label>
+                <select id="price-filter">
+                    <option value="all">Tous les prix</option>
+                    <option value="0-20">0-20€</option>
+                    <option value="20-50">20-50€</option>
+                    <option value="50-100">50-100€</option>
+                    <option value="100+">100€ et plus</option>
+                </select>
+            </div>
+        </div>
+    </div>
 
     <div class="activities-container">
         <?php while ($activity = mysqli_fetch_assoc($result)): ?>
-            <div class="activity-card">
+            <div class="activity-card"
+                data-date="<?php echo $activity['date_activite']; ?>"
+                data-location="<?php echo strtolower($activity['lieu']); ?>"
+                data-price="<?php echo $activity['prix']; ?>">
                 <img src="../<?php echo htmlspecialchars($activity['image_url']); ?>"
                     alt="<?php echo htmlspecialchars($activity['titre']); ?>"
                     class="activity-image">
@@ -481,6 +613,65 @@ $result = mysqli_query($link, $query);
             skipButton.addEventListener('click', () => handleSwipe('left'));
 
             updateSwipeCard();
+
+            const dateFilter = document.getElementById('date-filter');
+            const locationFilter = document.getElementById('location-filter');
+            const priceFilter = document.getElementById('price-filter');
+            const activityCards = document.querySelectorAll('.activity-card');
+
+            function filterActivities() {
+                const selectedDate = dateFilter.value;
+                const selectedLocation = locationFilter.value;
+                const selectedPrice = priceFilter.value;
+
+                activityCards.forEach(card => {
+                    const cardDate = new Date(card.dataset.date);
+                    const cardLocation = card.dataset.location;
+                    const cardPrice = parseFloat(card.dataset.price);
+                    let showCard = true;
+
+                    if (selectedDate !== 'all') {
+                        const today = new Date();
+                        const threeMonthsFromNow = new Date();
+                        threeMonthsFromNow.setMonth(today.getMonth() + 3);
+
+                        switch (selectedDate) {
+                            case 'this-month':
+                                showCard = cardDate.getMonth() === today.getMonth() &&
+                                    cardDate.getFullYear() === today.getFullYear();
+                                break;
+                            case 'next-month':
+                                const nextMonth = new Date(today);
+                                nextMonth.setMonth(today.getMonth() + 1);
+                                showCard = cardDate.getMonth() === nextMonth.getMonth() &&
+                                    cardDate.getFullYear() === nextMonth.getFullYear();
+                                break;
+                            case 'next-3-months':
+                                showCard = cardDate >= today && cardDate <= threeMonthsFromNow;
+                                break;
+                        }
+                    }
+
+                    if (selectedLocation !== 'all' && showCard) {
+                        showCard = cardLocation === selectedLocation;
+                    }
+
+                    if (selectedPrice !== 'all' && showCard) {
+                        const [min, max] = selectedPrice.split('-').map(Number);
+                        if (max) {
+                            showCard = cardPrice >= min && cardPrice <= max;
+                        } else {
+                            showCard = cardPrice >= min;
+                        }
+                    }
+
+                    card.style.display = showCard ? 'block' : 'none';
+                });
+            }
+
+            dateFilter.addEventListener('change', filterActivities);
+            locationFilter.addEventListener('change', filterActivities);
+            priceFilter.addEventListener('change', filterActivities);
         });
     </script>
 </body>
