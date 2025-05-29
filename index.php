@@ -10,7 +10,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flow Media | Explorez la culture autrement</title>
-    <link rel="icon" href="/assets/icons/icon-test.svg" type="image/svg+xml">
+    <link rel="shortcut icon" href="/assets/icons/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/style/index.css">
 </head>
