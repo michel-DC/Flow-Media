@@ -13,6 +13,60 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
     <link rel="shortcut icon" href="/assets/icons/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/style/index.css">
+
+    <!-- gestion des cookies avec -> tarte au citrons (citron js) -->
+    <script src="/node_modules/tarteaucitronjs/tarteaucitron.min.js"></script>
+
+    <script type="text/javascript">
+        tarteaucitron.init({
+            "privacyUrl": "/legal/politique-confidentialite.php",
+            "bodyPosition": "top",
+            "hashtag": "#tarteaucitron",
+            "cookieName": "tarteaucitron",
+            "orientation": "popup",
+            "groupServices": true,
+            "showDetailsOnClick": true,
+            "serviceDefaultState": "wait",
+            "showAlertSmall": false,
+            "cookieslist": false,
+            "closePopup": true,
+            "showIcon": false,
+            "iconPosition": "bottom",
+            "adblocker": false,
+            "DenyAllCta": true,
+            "AcceptAllCta": true,
+            "highPrivacy": true,
+            "handleBrowserDNTRequest": false,
+            "removeCredit": false,
+            "moreInfoLink": true,
+            "useExternalCss": false,
+            "useExternalJs": false,
+            "mandatory": true,
+            "mandatoryCta": false,
+            "googleConsentMode": true,
+            "bingConsentMode": true,
+            "softConsentMode": false,
+            "dataLayer": false,
+            "serverSide": false,
+            "partnersList": true,
+            "cookiesDuration": 365,
+            "cookieDomain": window.location.hostname,
+            "popupPosition": "bottom",
+            "popupBackground": "#fff",
+            "popupTextColor": "#000",
+            "popupLinkColor": "#000",
+            "popupButtonBackground": "#000",
+            "popupButtonTextColor": "#fff",
+            "popupButtonHoverBackground": "#333",
+            "popupButtonHoverTextColor": "#fff"
+        });
+
+        tarteaucitron.user.gtagUa = 'G-XXXXXXXXXX';
+        tarteaucitron.user.gtagMore = function() {
+            tarteaucitron.addService('gtag');
+        };
+        (tarteaucitron.job = tarteaucitron.job || []).push('gtag');
+    </script>
 </head>
 
 <?php require_once 'loader/loader.php'; ?>
