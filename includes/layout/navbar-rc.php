@@ -31,7 +31,7 @@ if (isset($_SESSION['user_id'])) {
                     <a class="nav-dropbtn">A propos <i class="fa fa-caret-down"></i></a>
                 </div>
                 <div class="nav-dropdown-content">
-                    <a href="/pages/about"><i class="fas fa-info-circle"></i> FlowMedia</a>
+                    <a href="/pages/about"><i class="fas fa-info-circle"></i> L'AMF</a>
                     <a href="/pages/partenaires"><i class="fas fa-handshake"></i> Nos partenaires</a>
                     <a href="/pages/contact"><i class="fas fa-envelope"></i> Nous contacter</a>
                 </div>
