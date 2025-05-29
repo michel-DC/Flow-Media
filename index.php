@@ -19,41 +19,6 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
 
 <body>
     <div id="body">
-        <script>
-            // Animation des pétales
-            function createPetal() {
-                const petal = document.createElement('div');
-                petal.className = 'petal';
-
-                const size = Math.random() * 10 + 5;
-                const startPosition = Math.random() * window.innerWidth;
-                const fallDistance = Math.random() * 100 - 50;
-                const duration = Math.random() * 4 + 4;
-
-                petal.style.cssText = `
-                    left: ${startPosition}px;
-                    width: ${size}px;
-                    height: ${size}px;
-                    background: white;
-                    border-radius: 150% 0 150% 0;
-                    --fall-distance: ${fallDistance}px;
-                    animation-duration: ${duration}s;
-                `;
-
-                document.body.appendChild(petal);
-
-                setTimeout(() => {
-                    petal.remove();
-                }, duration * 1000);
-            }
-
-            setTimeout(() => {
-                const petalInterval = setInterval(createPetal, 100);
-                setTimeout(() => {
-                    clearInterval(petalInterval);
-                }, 60000);
-            }, 1000);
-        </script>
 
         <div class="container">
 

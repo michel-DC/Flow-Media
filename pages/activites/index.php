@@ -3,7 +3,7 @@ require_once '../../includes/auth.php';
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-$query = "SELECT * FROM activites ORDER BY date_activite ASC";
+$query = "SELECT * FROM activites ORDER BY date_activite DESC";
 $result = mysqli_query($link, $query);
 ?>
 
@@ -38,6 +38,8 @@ $result = mysqli_query($link, $query);
             padding: 0;
             background: var(--light-bg);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .page-title {
@@ -53,11 +55,12 @@ $result = mysqli_query($link, $query);
 
         .activities-container {
             max-width: 1200px;
-            margin: 0 auto 100px;
+            margin: 0 auto;
             padding: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            flex: 1;
         }
 
         .activity-card {
@@ -225,17 +228,30 @@ $result = mysqli_query($link, $query);
         }
 
         @media (max-width: 768px) {
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: var(--white);
+                box-shadow: var(--shadow-sm);
+            }
+
+            .page-title {
+                margin-top: 120px;
+            }
+
+            .activities-container {
+                margin-top: 20px;
+            }
+
             .activities-container {
                 display: none;
             }
 
             .mobile-swipe-container {
                 display: block;
-            }
-
-            .page-title {
-                font-size: 2rem;
-                margin: 100px 0 20px;
             }
         }
 
@@ -353,8 +369,9 @@ $result = mysqli_query($link, $query);
                     </div>
                     <h3 class="activity-title"><?php echo htmlspecialchars($activity['titre']); ?></h3>
                     <div class="activity-location">
-                        <i class="fas fa-map-marker-alt"></i>
+
                         <?php echo htmlspecialchars($activity['lieu']); ?>
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <p class="activity-description"><?php echo htmlspecialchars($activity['description']); ?></p>
                     <div class="activity-details">
@@ -377,7 +394,7 @@ $result = mysqli_query($link, $query);
 
     <div class="mobile-swipe-container">
         <div class="swipe-card">
-            <img src="../" alt="" class="swipe-image">
+            <img src="" alt="" class="swipe-image">
             <div class="swipe-content">
                 <div class="activity-date"></div>
                 <h3 class="activity-title"></h3>
@@ -398,7 +415,6 @@ $result = mysqli_query($link, $query);
             </button>
         </div>
     </div>
-
 
     <?php include '../../includes/layout/footer.php'; ?>
 

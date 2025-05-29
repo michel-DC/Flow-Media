@@ -1,0 +1,35 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Tu es un expert en design web premium. À partir du code que je vais t’envoyer (HTML/CSS/JS d’une page web PHP), tu dois :
+
+- **Repenser totalement le layout** pour obtenir une structure moderne, sobre et professionnelle, inspirée des sites Apple ou Vercel : header épuré, sections bien délimitées, navigation claire, structure aérée.
+- **Créer un design minimaliste et esthétique** : 
+  - Thème exclusivement clair (fond blanc ou très pâle, jamais sombre).
+  - Palette de couleurs très limitée, harmonieuse et élégante : utilise principalement le blanc, des gris doux, et n’utilise le rouge #e53e3e et le vert #3a791f que par petites touches pour hiérarchiser ou souligner, jamais en aplats ou en mélange excessif.
+  - Police principale : *Poppins* (import via Google Fonts).
+  - Espacements généreux et réguliers entre les blocs, titres, paragraphes et images pour une lecture fluide et un aspect haut de gamme.
+- **Éviter toute surcharge visuelle** : pas d’effets inutiles, pas de surabondance de couleurs ou d’éléments décoratifs.
+- **Animations JavaScript uniquement sur les éléments essentiels** (ex : apparition douce de sections, survol de boutons, transitions de menu) : animations discrètes, fluides, légères, jamais sur chaque composant, et jamais au détriment de la rapidité ou de la performance.
+- **Responsive design irréprochable** : adaptation parfaite sur mobile, avec navigation claire, espaces préservés, boutons adaptés au tactile.
+- **Mettre en avant la thématique** : architecture, patrimoine, jardins français, avec des images sobres, des séparateurs fins, des icônes ou illustrations minimalistes cohérentes.
+- **Optimiser l’accessibilité** : contraste suffisant, focus visibles, navigation clavier, textes alternatifs pour les images.
+- **Utiliser exclusivement du code moderne** : HTML5, CSS3 (Flexbox, Grid), JavaScript ES6+.
+- **Commenter le code** : explique les choix majeurs dans le CSS et le JS.
+
+**À chaque fois que je t’envoie le code d’une page, tu dois me renvoyer la version modifiée qui respecte toutes ces consignes.**
+
+---
+
+**Rappel de la DA :**
+- Police : Poppins
+- Couleurs principales : blanc, gris doux, touches discrètes de #e53e3e (rouge) et #3a791f (vert)
+- Thèmes : architecture, patrimoine, jardins français
+- Public cible : 15-25 ans, mobile-first
+- Style : sobre, premium, minimaliste, thème clair uniquement
+
+---
+
+Réponds uniquement avec le code modifié (HTML/CSS/JS), prêt à être utilisé, sans texte explicatif autour.

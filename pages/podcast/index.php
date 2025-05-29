@@ -2,9 +2,6 @@
 require_once '../../includes/auth.php';
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
-if (!$link) {
-    die("Erreur de connexion : " . mysqli_connect_error());
-}
 
 $abonnement_id = 1;
 
@@ -21,9 +18,6 @@ if (isset($_SESSION['user_id'])) {
 $query = "SELECT * FROM podcasts ORDER BY id DESC";
 $result = mysqli_query($link, $query);
 
-if (!$result) {
-    die("Erreur lors de la récupération des podcasts : " . mysqli_error($link));
-}
 
 $num_podcasts = mysqli_num_rows($result);
 ?>
@@ -262,8 +256,11 @@ $num_podcasts = mysqli_num_rows($result);
 
     <div class="events-container">
         <?php
+        // Vérifie s'il y a des podcasts dans la base de données
         if ($num_podcasts > 0) {
+            // Réinitialise le pointeur de résultat au début pour pouvoir parcourir les enregistrements
             mysqli_data_seek($result, 0);
+            // Boucle à travers chaque enregistrement de podcast
             while ($podcast = mysqli_fetch_assoc($result)) {
         ?>
                 <div class="event-card">
@@ -287,6 +284,11 @@ $num_podcasts = mysqli_num_rows($result);
                                     <i class="fas fa-headphones"></i>
                                     <span>Écouter le podcast</span>
                                 </a>
+                                <audio controls>
+  <source src="../<?= htmlspecialchars($podcast['fichier_audio_url']) ?>" type="audio/ogg">
+  <source src="horse.mp3" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
                             <?php endif; ?>
 
                             <?php if (!empty($podcast['youtube_url'])): ?>

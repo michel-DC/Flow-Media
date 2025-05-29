@@ -218,7 +218,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                                 Façades, colonnes, trucs<br>
                                 chelous sur les toits...<br>
                                 Si t'aimes explorer, je suis<br>
-                                ton gars sûr.</p>
+                                ton gars sûr. Je connais tout sur tout le monde</p>
                         </div>
                     </div>
 

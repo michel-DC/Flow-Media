@@ -61,6 +61,7 @@ if (!$activity) {
         .activity-container {
             max-width: 1200px;
             margin: 0 auto 100px;
+            margin-top: 100px;
             padding: 20px;
         }
 
@@ -223,8 +224,6 @@ if (!$activity) {
 
 <body>
     <?php include '../../includes/layout/navbar.php' ?>
-
-    <h1 class="page-title"><?php echo htmlspecialchars($activity['titre']); ?></h1>
 
     <div class="activity-container">
         <div class="activity-header">
