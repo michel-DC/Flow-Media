@@ -69,7 +69,7 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
     </script>
 </head>
 
-<?php require_once 'loader/loader.php'; ?>
+
 
 <body>
     <div id="body">
@@ -85,8 +85,14 @@ $link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist",
                     <h1 class="main-title">Ce que tu cherches est tout près, sauras-tu le trouver ?</h1>
 
                     <div class="action-buttons">
-                        <a href="/connexion/register.php"><button class="btn btn-primary">Créer un compte gratuitement</button></a>
-                        <a href="/pages/activites/"><button class="btn btn-secondary">Découvrir les activités</button></a>
+                        <a href="/connexion/register.php" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i>
+                            Commencer l'aventure
+                        </a>
+                        <a href="/pages/activites/" class="btn btn-secondary">
+                            <i class="fas fa-compass"></i>
+                            Découvrir
+                        </a>
                     </div>
                 </div>
             </main>
