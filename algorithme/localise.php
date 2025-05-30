@@ -6,18 +6,17 @@ $userId = $_SESSION['user_id'] ?? null;
 
 if (!$userId) {
     http_response_code(401);
-    echo json_encode(['error' => 'Unauthorized']);
+    echo json_encode(['error' => 'Utilisateur introuvable ']);
     exit;
 }
 
-// Récupération des infos utilisateur (position + âge)
 $queryUser = $pdo->prepare("SELECT latitude, longitude, age FROM users WHERE id = ?");
 $queryUser->execute([$userId]);
 $user = $queryUser->fetch();
 
 if (!$user) {
     http_response_code(404);
-    echo json_encode(['error' => 'User not found']);
+    echo json_encode(['error' => 'Utilisateur introuvable']);
     exit;
 }
 
@@ -31,11 +30,9 @@ $queryInterets->execute([$userId]);
 $interetIds = $queryInterets->fetchAll(PDO::FETCH_COLUMN);
 
 if (empty($interetIds)) {
-    // Aucun centre d'intérêt => retourner uniquement les résultats géographiques + âge
     $interetFilter = "";
 } else {
     // Génération de placeholders pour les intérêts
-    $placeholders = implode(',', array_fill(0, count($interetIds), '?'));
     $interetFilter = "
         AND a.id IN (
             SELECT activite_id
