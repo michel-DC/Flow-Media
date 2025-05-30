@@ -7,8 +7,8 @@
 }
 
 :root {
-  --primary-color: #e53e3e;
-  --secondary-color: #fc8181;
+  --primary-color: #3a791f;
+  --secondary-color: #8ac571;
   --text-color: #333;
   --light-bg: #f8f9fa;
   --white: #ffffff;
@@ -2164,79 +2164,4 @@ body {
   color: #155724;
   /* Dark green */
   border: 1px solid #c3e6cb;
-}
-
-.tarteaucitronRoot,
-.tarteaucitronPopup,
-.tarteaucitronAlertBig {
-  background: #fff !important;
-  color: #222 !important;
-  border-radius: 18px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18) !important;
-  border: 1px solid #e2e8f0 !important;
-  font-family: "Poppins", sans-serif !important;
-  max-width: 420px;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-}
-.tarteaucitronAlertBig {
-  padding: 2.5rem 2rem 2rem 2rem !important;
-  text-align: center !important;
-}
-.tarteaucitronTitle {
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
-  color: #e53e3e !important;
-  margin-bottom: 1rem !important;
-}
-.tarteaucitronText {
-  font-size: 1.1rem !important;
-  color: #333 !important;
-  margin-bottom: 1.5rem !important;
-}
-.tarteaucitronCTAButton,
-.tarteaucitronCTAButton--accept,
-.tarteaucitronCTAButton--deny {
-  background: #e53e3e !important;
-  color: #fff !important;
-  border: none !important;
-  border-radius: 1.5rem !important;
-  font-size: 1rem !important;
-  font-weight: 600 !important;
-  padding: 0.75rem 2.5rem !important;
-  margin: 0 0.5rem !important;
-  cursor: pointer !important;
-  transition: background 0.2s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-}
-.tarteaucitronCTAButton:hover,
-.tarteaucitronCTAButton--accept:hover,
-.tarteaucitronCTAButton--deny:hover {
-  background: #a259e6 !important;
-}
-.tarteaucitronClosePanel {
-  color: #e53e3e !important;
-  font-size: 1.5rem !important;
-  top: 1.2rem !important;
-  right: 1.2rem !important;
-}
-@media (max-width: 600px) {
-  .tarteaucitronRoot,
-  .tarteaucitronPopup,
-  .tarteaucitronAlertBig {
-    max-width: 98vw !important;
-    padding: 1.2rem 0.5rem !important;
-  }
-  .tarteaucitronTitle {
-    font-size: 1.1rem !important;
-  }
-  .tarteaucitronText {
-    font-size: 0.95rem !important;
-  }
-  .tarteaucitronCTAButton,
-  .tarteaucitronCTAButton--accept,
-  .tarteaucitronCTAButton--deny {
-    font-size: 0.95rem !important;
-    padding: 0.6rem 1.2rem !important;
-  }
 }

@@ -180,6 +180,8 @@ $result = mysqli_query($link, $query);
             bottom: 0;
             background: var(--light-bg);
             z-index: 1000;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
         .swipe-card {
@@ -187,7 +189,7 @@ $result = mysqli_query($link, $query);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%;
+            width: 100%;
             max-width: 400px;
             background: var(--white);
             border-radius: 20px;
