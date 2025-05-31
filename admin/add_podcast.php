@@ -5,7 +5,6 @@
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
 if (isset($_POST['ajt_podcast'])) {
-    // Escape all input data
     $titre = mysqli_real_escape_string($link, $_POST['titre']);
     $description = mysqli_real_escape_string($link, $_POST['description']);
     $youtube_url = mysqli_real_escape_string($link, $_POST['youtube_url']);
@@ -34,7 +33,6 @@ if (isset($_POST['ajt_podcast'])) {
         return false;
     }
 
-    // Process image file
     $image_url = processFile($_FILES['image'], $upload_dir, ['image/jpeg', 'image/png', 'image/gif']);
     if ($image_url === false) {
         $error = "Erreur avec l'image. Seuls les JPG, PNG et GIF sont acceptés.";

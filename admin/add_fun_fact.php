@@ -1,13 +1,9 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
-if (mysqli_connect_errno()) {
-    die("Échec de la connexion à MySQL: " . mysqli_connect_error());
-}
+
 
 if (isset($_POST['ajt_fun_fact'])) {
     $nom = mysqli_real_escape_string($link, $_POST['nom']);

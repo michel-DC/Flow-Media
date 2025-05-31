@@ -1,14 +1,10 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
-if (mysqli_connect_errno()) {
-    die("Échec de la connexion à MySQL: " . mysqli_connect_error());
-}
+
 
 $all_interests_query = "SELECT id, nom FROM interets";
 $all_interests_result = mysqli_query($link, $all_interests_query);
@@ -18,7 +14,7 @@ while ($row = mysqli_fetch_assoc($all_interests_result)) {
 }
 
 if (isset($_POST['ajt_activite'])) {
-    // Escape all input data
+
     $titre = mysqli_real_escape_string($link, $_POST['titre']);
     $description = mysqli_real_escape_string($link, $_POST['description']);
     $date_activite = mysqli_real_escape_string($link, $_POST['date_activite']);
@@ -31,7 +27,7 @@ if (isset($_POST['ajt_activite'])) {
     $lien_podcast = mysqli_real_escape_string($link, $_POST['lien_podcast']);
 
     require_once '../algorithme/geocode.php';
-    $geocode_result = geocodeCity($_POST['ville']); // Use the original POST value for geocoding
+    $geocode_result = geocodeCity($_POST['ville']);
 
     $latitude = null;
     $longitude = null;
@@ -96,7 +92,6 @@ if (isset($_POST['ajt_activite'])) {
     }
 
     if (!isset($error)) {
-        // Using direct mysqli_query with escaped variables
         $query = "INSERT INTO activites (
                     abonnement_id, titre, description, date_activite, lieu, latitude, longitude,
                     age_min, age_max, prix, image_url, image_url_2, image_url_3, video_url, podcast_url
@@ -121,11 +116,9 @@ if (isset($_POST['ajt_activite'])) {
         if (mysqli_query($link, $query)) {
             $activite_id = mysqli_insert_id($link);
 
-            // Supprimer les anciens centres d'intérêt si l'activité est mise à jour
             $delete_query = "DELETE FROM activite_interet WHERE activite_id = '$activite_id'";
             mysqli_query($link, $delete_query);
 
-            // Insérer les nouveaux centres d'intérêt sélectionnés
             if (isset($_POST['interests']) && !empty($_POST['interests'])) {
                 $selected_interests = $_POST['interests'];
 
@@ -550,27 +543,4 @@ if (isset($_POST['ajt_activite'])) {
                 });
             });
     });
-
-    // This script part seems specific to displaying a map for a user, maybe remove if not needed here?
-    // <?php // if (!empty($user['latitude']) && !empty($user['longitude'])):
-        ?>
-    //     document.addEventListener('DOMContentLoaded', function() {
-    //         const map = L.map('user-map').setView([<?php // echo $user['latitude'];
-                                                        ?>, <?php // echo $user['longitude'];
-                                                            ?>], 13);
-
-    //         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //             attribution: '© OpenStreetMap contributors'
-    //         }).addTo(map);
-
-    //         L.marker([<?php // echo $user['latitude'];
-                            ?>, <?php // echo $user['longitude'];
-                                ?>])
-    //             .addTo(map)
-    //             .bindPopup('<?php // echo htmlspecialchars($user['ville']);
-                                ?>')
-    //             .openPopup();
-    //     });
-    // <?php // endif;
-        ?>
 </script>

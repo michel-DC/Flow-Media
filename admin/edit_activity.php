@@ -463,7 +463,6 @@ if (isset($_POST['update_activity'])) {
 
         <h1>Modifier une <span>activité</span></h1>
 
-        <!-- Nouveau formulaire de sélection -->
         <div class="activity-select-form">
             <form method="GET" action="dashboard.php#edit-activity-section">
                 <select name="id" required>
