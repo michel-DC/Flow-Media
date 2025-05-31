@@ -1,14 +1,8 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
-if (mysqli_connect_errno()) {
-    die("Échec de la connexion à MySQL: " . mysqli_connect_error());
-}
 
 $podcast_id = null;
 $podcast_data = null;
@@ -23,7 +17,6 @@ while ($row = mysqli_fetch_assoc($result_all)) {
     $podcasts[] = $row;
 }
 
-// Handle GET request to load podcast data for confirmation
 if (isset($_GET['id'])) {
     $podcast_id = mysqli_real_escape_string($link, $_GET['id']);
     $query = "SELECT * FROM podcasts WHERE id = '$podcast_id'";
@@ -35,29 +28,25 @@ if (isset($_GET['id'])) {
     }
 }
 
-// Handle POST request to delete podcast
 if (isset($_POST['delete_podcast'])) {
     $podcast_id = mysqli_real_escape_string($link, $_POST['podcast_id']);
-    
-    // Récupérer les informations du podcast avant suppression
+
     $query = "SELECT fichier_audio_url, image_url FROM podcasts WHERE id = '$podcast_id'";
     $result = mysqli_query($link, $query);
     if ($result && mysqli_num_rows($result) > 0) {
         $podcast = mysqli_fetch_assoc($result);
-        
-        // Supprimer les fichiers associés
+
         if ($podcast['fichier_audio_url'] && file_exists($podcast['fichier_audio_url'])) {
             unlink($podcast['fichier_audio_url']);
         }
         if ($podcast['image_url'] && file_exists($podcast['image_url'])) {
             unlink($podcast['image_url']);
         }
-        
-        // Supprimer le podcast de la base de données
+
         $delete_query = "DELETE FROM podcasts WHERE id = '$podcast_id'";
         if (mysqli_query($link, $delete_query)) {
             $success_message = "Podcast supprimé avec succès !";
-            $podcast_data = null; // Clear the data after successful deletion
+            $podcast_data = null;
         } else {
             $error_message = "Erreur lors de la suppression en base de données: " . mysqli_error($link);
         }
@@ -222,9 +211,18 @@ if (isset($_POST['delete_podcast'])) {
     }
 
     @keyframes fadeOut {
-        0% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { opacity: 0; display: none; }
+        0% {
+            opacity: 1;
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            display: none;
+        }
     }
 
     @media (max-width: 768px) {
@@ -277,7 +275,7 @@ if (isset($_POST['delete_podcast'])) {
                 <h2>Confirmer la suppression</h2>
                 <p>Êtes-vous sûr de vouloir supprimer le podcast "<?= htmlspecialchars($podcast_data['titre']) ?>" ?</p>
                 <p>Cette action est irréversible et supprimera également les fichiers audio et images associés.</p>
-                
+
                 <form method="POST" action="dashboard.php#delete-podcast-section">
                     <input type="hidden" name="podcast_id" value="<?= htmlspecialchars($podcast_data['id']) ?>">
                     <button type="submit" name="delete_podcast" class="btn-danger">

@@ -1,16 +1,10 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
-if (mysqli_connect_errno()) {
-    die("Échec de la connexion à MySQL: " . mysqli_connect_error());
-}
 
-require_once '../algorithme/geocode.php'; // Include geocoding script
+require_once '../algorithme/geocode.php';
 
 $activity_id = null;
 $activity_data = null;
@@ -25,7 +19,7 @@ while ($row = mysqli_fetch_assoc($result_all)) {
     $activities[] = $row;
 }
 
-// Ajouter après la connexion à la base de données
+
 $all_interests_query = "SELECT id, nom FROM interets";
 $all_interests_result = mysqli_query($link, $all_interests_query);
 $all_interests = [];
@@ -33,7 +27,7 @@ while ($row = mysqli_fetch_assoc($all_interests_result)) {
     $all_interests[$row['id']] = $row['nom'];
 }
 
-// Handle GET request to load activity data for editing
+
 if (isset($_GET['id'])) {
     $activity_id = mysqli_real_escape_string($link, $_GET['id']);
     $query = "SELECT * FROM activites WHERE id = '$activity_id'";
@@ -53,9 +47,8 @@ if (isset($_GET['id'])) {
     }
 }
 
-// Handle POST request to update activity data
+
 if (isset($_POST['update_activity'])) {
-    // Escape all input data
     $activity_id = mysqli_real_escape_string($link, $_POST['activity_id']);
     $titre = mysqli_real_escape_string($link, $_POST['titre']);
     $description = mysqli_real_escape_string($link, $_POST['description']);
@@ -71,34 +64,30 @@ if (isset($_POST['update_activity'])) {
     $latitude = null;
     $longitude = null;
 
-    // Get existing activity data to retain location if city isn't changed
     $existing_query = "SELECT lieu, latitude, longitude FROM activites WHERE id = '$activity_id'";
     $existing_result = mysqli_query($link, $existing_query);
     $existing_data = mysqli_fetch_assoc($existing_result);
 
-    // Only re-geocode if the city has changed or if coordinates are missing
     if ($ville !== $existing_data['lieu'] || empty($existing_data['latitude']) || empty($existing_data['longitude'])) {
-        $geocode_result = geocodeCity($_POST['ville']); // Use original POST value
+        $geocode_result = geocodeCity($_POST['ville']);
         if ($geocode_result && isset($geocode_result['latitude']) && isset($geocode_result['longitude'])) {
             $latitude = mysqli_real_escape_string($link, $geocode_result['latitude']);
             $longitude = mysqli_real_escape_string($link, $geocode_result['longitude']);
         } else {
             $error_message = "Impossible de géolocaliser la nouvelle ville. L'activité sera mise à jour avec les anciennes coordonnées si disponibles.";
-            // Keep old coordinates if geocoding fails for the new city
+
             $latitude = mysqli_real_escape_string($link, $existing_data['latitude']);
             $longitude = mysqli_real_escape_string($link, $existing_data['longitude']);
         }
     } else {
-        // Keep old coordinates if city hasn't changed
         $latitude = mysqli_real_escape_string($link, $existing_data['latitude']);
         $longitude = mysqli_real_escape_string($link, $existing_data['longitude']);
     }
 
-    $image_url = mysqli_real_escape_string($link, $_POST['existing_image']); // Start with existing image URL
+    $image_url = mysqli_real_escape_string($link, $_POST['existing_image']);
     $image_url_2 = mysqli_real_escape_string($link, $_POST['existing_image_2'] ?? null);
     $image_url_3 = mysqli_real_escape_string($link, $_POST['existing_image_3'] ?? null);
 
-    // Handle new image uploads
     $upload_dir = '../assets/uploads/activities/';
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0755, true);
@@ -177,7 +166,6 @@ if (isset($_POST['update_activity'])) {
         }
 
         $success_message = "Activité mise à jour avec succès !";
-        // Re-fetch updated data to display in the form
         $query_updated = "SELECT * FROM activites WHERE id = '$activity_id'";
         $result_updated = mysqli_query($link, $query_updated);
         if ($result_updated && mysqli_num_rows($result_updated) > 0) {

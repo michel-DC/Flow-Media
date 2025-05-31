@@ -1,18 +1,14 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-// Connexion à la base de données
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-// Gestion de la suppression d'un utilisateur
 if (isset($_POST['delete_user'])) {
     $user_id = mysqli_real_escape_string($link, $_POST['user_id']);
-    
-    // Supprimer d'abord les enregistrements liés dans user_abonnement
+
     $delete_abonnement = "DELETE FROM user_abonnement WHERE user_id = '$user_id'";
     mysqli_query($link, $delete_abonnement);
-    
-    // Ensuite supprimer l'utilisateur
+
     $delete_user = "DELETE FROM users WHERE id = '$user_id'";
     if (mysqli_query($link, $delete_user)) {
         $success_message = "Utilisateur supprimé avec succès !";
@@ -21,10 +17,8 @@ if (isset($_POST['delete_user'])) {
     }
 }
 
-// Default query to get all users
 $query = "SELECT * FROM users ORDER BY id DESC";
 
-// Traitement de la recherche
 if (isset($_POST['search_users'])) {
     $search = mysqli_real_escape_string($link, $_POST['search']);
     $query = "SELECT * FROM users WHERE 
@@ -35,7 +29,6 @@ if (isset($_POST['search_users'])) {
 }
 
 if (isset($_POST['see_users'])) {
-    // Reset to default query
     $query = "SELECT * FROM users ORDER BY id DESC";
 }
 
@@ -227,9 +220,18 @@ $result = mysqli_query($link, $query);
     }
 
     @keyframes fadeOut {
-        0% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { opacity: 0; display: none; }
+        0% {
+            opacity: 1;
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            display: none;
+        }
     }
 
     @media (max-width: 768px) {
@@ -307,7 +309,7 @@ $result = mysqli_query($link, $query);
                                     <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['id']) ?>">
                                     <button type="submit" name="delete_user" style="background: none; border: none; padding: 0; cursor: pointer;">
                                         <svg class="delete-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
                                         </svg>
                                     </button>
                                 </form>

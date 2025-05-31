@@ -1,14 +1,12 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-// Connexion à la base de données
+
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-// Traitement de la suppression
 if (isset($_POST['delete_activity'])) {
     $activity_id = mysqli_real_escape_string($link, $_POST['activity_id']);
 
-    // Optional: Get image URL before deleting record to delete the file
     $image_query = "SELECT image_url FROM activites WHERE id = '$activity_id'";
     $image_result = mysqli_query($link, $image_query);
     $image_data = mysqli_fetch_assoc($image_result);
@@ -17,7 +15,6 @@ if (isset($_POST['delete_activity'])) {
 
     $delete_query = "DELETE FROM activites WHERE id = '$activity_id'";
     if (mysqli_query($link, $delete_query)) {
-        // Delete the image file if it exists
         if ($image_to_delete && file_exists($image_to_delete)) {
             unlink($image_to_delete);
         }
@@ -27,7 +24,6 @@ if (isset($_POST['delete_activity'])) {
     }
 }
 
-// Récupérer toutes les activités pour l'affichage
 $query = "SELECT * FROM activites ORDER BY id DESC";
 $result = mysqli_query($link, $query);
 ?>

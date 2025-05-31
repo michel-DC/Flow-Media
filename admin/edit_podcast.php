@@ -1,14 +1,8 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
-if (mysqli_connect_errno()) {
-    die("Échec de la connexion à MySQL: " . mysqli_connect_error());
-}
 
 $podcast_id = null;
 $podcast_data = null;
@@ -23,7 +17,6 @@ while ($row = mysqli_fetch_assoc($result_all)) {
     $podcasts[] = $row;
 }
 
-// Handle GET request to load podcast data for editing
 if (isset($_GET['id'])) {
     $podcast_id = mysqli_real_escape_string($link, $_GET['id']);
     $query = "SELECT * FROM podcasts WHERE id = '$podcast_id'";
@@ -35,9 +28,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-// Handle POST request to update podcast data
 if (isset($_POST['edit_podcast'])) {
-    // Escape all input data
     $podcast_id = mysqli_real_escape_string($link, $_POST['podcast_id']);
     $titre = mysqli_real_escape_string($link, $_POST['titre']);
     $description = mysqli_real_escape_string($link, $_POST['description']);
@@ -51,7 +42,8 @@ if (isset($_POST['edit_podcast'])) {
         mkdir($upload_dir, 0755, true);
     }
 
-    function processFile($file, $upload_dir, $allowed_types) {
+    function processFile($file, $upload_dir, $allowed_types)
+    {
         if (isset($file) && $file['error'] === 0) {
             $filename = basename($file['name']);
             $filename = preg_replace("/[^a-zA-Z0-9.-]/", "_", $filename);
@@ -67,7 +59,6 @@ if (isset($_POST['edit_podcast'])) {
         return false;
     }
 
-    // Process audio file if a new one is uploaded
     if (isset($_FILES['audio']) && $_FILES['audio']['error'] === 0) {
         $new_audio_url = processFile($_FILES['audio'], $upload_dir, ['audio/mpeg', 'audio/mp3', 'audio/wav']);
         if ($new_audio_url === false) {
@@ -81,7 +72,6 @@ if (isset($_POST['edit_podcast'])) {
         }
     }
 
-    // Process image file if a new one is uploaded
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $new_image_url = processFile($_FILES['image'], $upload_dir, ['image/jpeg', 'image/png', 'image/gif']);
         if ($new_image_url === false) {
@@ -106,7 +96,6 @@ if (isset($_POST['edit_podcast'])) {
 
         if (mysqli_query($link, $query)) {
             $success_message = "Podcast mis à jour avec succès !";
-            // Re-fetch updated data to display in the form
             $query_updated = "SELECT * FROM podcast WHERE id = '$podcast_id'";
             $result_updated = mysqli_query($link, $query_updated);
             if ($result_updated && mysqli_num_rows($result_updated) > 0) {
@@ -336,9 +325,18 @@ if (isset($_POST['edit_podcast'])) {
     }
 
     @keyframes fadeOut {
-        0% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { opacity: 0; display: none; }
+        0% {
+            opacity: 1;
+        }
+
+        90% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0;
+            display: none;
+        }
     }
 
     @media (max-width: 768px) {

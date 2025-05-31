@@ -2,57 +2,59 @@
 require_once '../includes/auth.php';
 $_SESSION['connecté'] = true;
 
-// Connexion à la base de données
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-// Récupérer le nombre de développeurs
+// Récupérer le nombre d'activités
 $query = "SELECT COUNT(*) as total FROM activites";
 $result = mysqli_query($link, $query);
 $total_activites = mysqli_fetch_assoc($result)['total'];
-
-// Récupérer le nombre d'utilisateurs
-$query2 = "SELECT COUNT(*) as total FROM users";
-$result2 = mysqli_query($link, $query2);
-$total_users = mysqli_fetch_assoc($result2)['total'];
 
 // Récuperer le nombre de réservation
 $query5 = "SELECT COUNT(*) as total FROM reservations";
 $result5 = mysqli_query($link, $query5);
 $total_reservations = mysqli_fetch_assoc($result5)['total'];
 
-// Récuperer le nombre d'admin
-$query6 = "SELECT COUNT(*) as total FROM admin";
-$result6 = mysqli_query($link, $query6);
-$total_admins = mysqli_fetch_assoc($result6)['total'];
+// Récuperer le nombre de reservation ce mois 
+$query_month = "SELECT COUNT(*) as total FROM reservations WHERE MONTH(date_reservation) = MONTH(CURRENT_DATE()) AND YEAR(date_reservation) = YEAR(CURRENT_DATE())";
+$result_month = mysqli_query($link, $query_month);
+$reservations_this_month = mysqli_fetch_assoc($result_month)['total'];
+
+$query_ca = "SELECT SUM(a.prix * r.places) as chiffre_affaire 
+             FROM activites a 
+             JOIN reservations r ON a.id = r.activite_id";
+$result_ca = mysqli_query($link, $query_ca);
+$chiffre_affaire = mysqli_fetch_assoc($result_ca)['chiffre_affaire'];
+
+$query_max_reserv = "SELECT a.titre, COUNT(r.id) as reservation_count 
+                        FROM activites a 
+                        JOIN reservations r ON a.id = r.activite_id 
+                        GROUP BY a.id 
+                        ORDER BY reservation_count DESC 
+                        LIMIT 1";
+$result_max_reserv = mysqli_query($link, $query_max_reserv);
+$max_reserv = mysqli_fetch_assoc($result_max_reserv)['titre'];
+
+$query_lieu = "SELECT SUM(places) as total_places FROM reservations";
+$result_lieu = mysqli_query($link, $query_lieu);
+$lieu_max_reserv = mysqli_fetch_assoc($result_lieu)['total_places'];
+
+
+
+// Récupérer le nombre d'utilisateurs
+$query2 = "SELECT COUNT(*) as total FROM users";
+$result2 = mysqli_query($link, $query2);
+$total_users = mysqli_fetch_assoc($result2)['total'];
 
 // recuperer le nom de l'user qui à fait le plus de réservations
 $query9 = "SELECT fullname FROM users ORDER BY nombre_reservation DESC LIMIT 1";
 $result9 = mysqli_query($link, $query9);
 $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
 
-// Récupérer l'évolution du nombre de développeurs par jour
-// $query3 = "SELECT DATE(date_creation) as date, COUNT(*) as count FROM developpeurs GROUP BY DATE(date_creation)";
-// $result3 = mysqli_query($link, $query3);
-// $dev_evolution = [];
-// while ($row = mysqli_fetch_assoc($result3)) {
-//     $dev_evolution[] = $row;
-// }
+// Récuperer le nombre d'admin
+$query6 = "SELECT COUNT(*) as total FROM admin";
+$result6 = mysqli_query($link, $query6);
+$total_admins = mysqli_fetch_assoc($result6)['total'];
 
-// // Récupérer l'évolution du nombre d'utilisateurs par jour
-// $query4 = "SELECT DATE(date_creation) as date, COUNT(*) as count FROM users GROUP BY DATE(date_creation)";
-// $result4 = mysqli_query($link, $query4);
-// $user_evolution = [];
-// while ($row = mysqli_fetch_assoc($result4)) {
-//     $user_evolution[] = $row;
-// }
-
-// // Récupérer l'évolution du nombre de réservations par jour
-// $query7 = "SELECT DATE(date_creation) as date, COUNT(*) as count FROM reservations GROUP BY DATE(date_creation)";
-// $result7 = mysqli_query($link, $query7);
-// $reservation_evolution = [];
-// while ($row = mysqli_fetch_assoc($result7)) {
-//     $reservation_evolution[] = $row;
-// }
 ?>
 
 <!DOCTYPE html>
@@ -63,42 +65,132 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Flow Media</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-    <link rel="icon" href="../assets/icons/icon-test.svg" type="image/svg+xml">
+    <link rel="icon" href="../assets/icons/logo.png" type="image/svg+xml">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
         :root {
-            --primary-color: #2ECC71;
-            --secondary-color: #25a25a;
-            --text-color: #333;
-            --light-bg: #f8f9fa;
-            --white: #ffffff;
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --soft-black: #1a1a1a;
+            --white: #f9f9f9;
+            --border: #e2e8f0;
+            --background: #ffffff;
+            --card-background: #ffffff;
+            --hover: #f1f5f9;
+            --muted: #64748b;
+            --selected-background: #e0e0e0;
+            --primary: #3a791f;
+            --primary-hover: #4e8c2b;
+            --secondary: #e53e3e;
+            --secondary-hover: #c53030;
         }
 
         body {
             font-family: "Poppins", sans-serif;
-            background-color: #f0f0f0;
+            background-color: var(--background);
+            color: var(--soft-black);
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background: var(--card-background);
+            border-right: 1px solid var(--border);
+            padding: 2rem;
+            width: 280px;
+            flex-shrink: 0;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem;
+            margin-left: 280px;
+        }
+
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--border);
+        }
+
+        .profile-header h2 {
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .profile-header p {
+            font-size: 0.875rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .sidebar nav a {
+            display: block;
+            text-decoration: none;
+            color: var(--soft-black);
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+            font-weight: 500;
+        }
+
+        .sidebar nav a:hover {
+            background-color: var(--hover);
+            color: var(--soft-black);
+        }
+
+        .logout-link {
+            display: block;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+            font-weight: 500;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+            margin-top: 20px;
+        }
+
+        .logout-link:hover {
+            background-color: #721c24;
+            color: var(--white);
+            border-color: #721c24;
         }
 
         .dashboard-container {
-            width: 95%;
-            max-width: 1400px;
-            margin: 20px auto;
-            padding: 20px;
-            transition: all 0.3s ease;
+            background: var(--card-background);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
         }
 
         .dashboard-header {
@@ -107,18 +199,18 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             padding: 25px;
             background: var(--white);
             border-radius: 12px;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         .dashboard-header h1 {
             margin: 0;
             font-size: 36px;
-            color: var(--text-color);
+            color: var(--soft-black);
             font-weight: 700;
         }
 
         .dashboard-header h1 span {
-            color: var(--primary-color);
+            color: var(--primary);
             position: relative;
         }
 
@@ -129,7 +221,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             left: 0;
             width: 100%;
             height: 3px;
-            background-color: var(--primary-color);
+            background-color: var(--primary);
             border-radius: 3px;
         }
 
@@ -144,7 +236,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             background: var(--white);
             padding: 25px;
             border-radius: 12px;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             text-align: center;
             transition: all 0.3s ease;
             display: flex;
@@ -155,12 +247,12 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         .stat-number {
             font-size: 2.5rem;
-            color: var(--primary-color);
+            color: var(--primary);
             font-weight: 700;
             margin-bottom: 15px;
             line-height: 1.2;
@@ -168,7 +260,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
 
         .stat-label {
             font-size: 1.1rem;
-            color: var(--text-color);
+            color: var(--soft-black);
             font-weight: 500;
         }
 
@@ -191,7 +283,7 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
             transform: translateX(-50%);
             animation: fadeOut 5s forwards;
             z-index: 1000;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .error {
@@ -228,19 +320,49 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
         }
 
         @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .profile-header {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+            }
+
+            .profile-avatar {
+                width: 60px;
+                height: 60px;
+            }
+
+            .sidebar nav {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .sidebar nav a {
+                flex-grow: 1;
+                text-align: center;
+                padding: 0.5rem;
+            }
+
             .dashboard-container {
-                width: 98%;
-                padding: 10px;
-                margin: 10px auto;
-            }
-
-            .dashboard-header {
-                padding: 15px;
-                margin-bottom: 20px;
-            }
-
-            .dashboard-header h1 {
-                font-size: 28px;
+                padding: 1.5rem;
             }
 
             .stats-container {
@@ -265,237 +387,221 @@ $user_max_reserv = mysqli_fetch_assoc($result9)['fullname'];
                 min-height: 250px;
             }
         }
+
+        .map-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .map-container h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--soft-black);
+        }
+
+        .map-container h2 span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .map-container h2 span::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .leaflet-popup-content {
+            font-size: 0.9rem;
+        }
+
+        .leaflet-popup-content a.btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        .leaflet-popup-content a.btn:hover {
+            background-color: var(--primary-hover);
+        }
     </style>
 </head>
 
 <body>
-    <?php include '../includes/layout/sidebar.php'; ?>
 
-    <div id="add-activity-section" style="display: none;"><?php include 'add_activity.php'; ?></div>
-    <div id="supp-activity-section" style="display: none;"><?php include 'supp_activity.php'; ?></div>
-    <div id="edit-activity-section" style="display: none;"><?php include 'edit_activity.php'; ?></div>
-    <div id="add-fun-fact-section" style="display: none;"><?php include 'add_fun_fact.php'; ?></div>
-    <div id="see-activity-section" style="display: none;"><?php include 'activity.php'; ?></div>
-    <div id="add-podcast-section" style="display: none;"><?php include 'add_podcast.php'; ?></div>
-    <div id="supp-podcast-section" style="display: none;"><?php include 'supp_podcast.php'; ?></div>
-    <div id="edit-podcast-section" style="display: none;"><?php include 'edit_podcast.php'; ?></div>
-    <div id="see-podcast-section" style="display: none;"><?php include 'podcast.php'; ?></div>
-    <div id="see-reserv-section" style="display: none;"><?php include 'reservation.php'; ?></div>
-    <div id="see-user-section" style="display: none;"><?php include 'user.php'; ?></div>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="profile-header">
+                <div class="profile-avatar" style="background-color: var(--border); display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 2rem;">👤</span>
+                </div>
+                <div>
+                    <h2>Administrateur</h2>
+                    <p style="color: #155724;">Flowmedia</p>
+                </div>
+            </div>
 
-    <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h1>Tableau de Bord <span>Administrateur</span></h1>
-        </div>
+            <nav>
+                <a href="#dashboard">Dashboard</a>
+                <a href="#add-activity-section">Ajouter une activité</a>
+                <a href="#supp-activity-section">Supprimer une activité</a>
+                <a href="#edit-activity-section">Modifier une activité</a>
+                <a href="#add-fun-fact-section">Ajouter un fun fact</a>
+                <a href="#add-podcast-section">Ajouter un podcast</a>
+                <a href="#supp-podcast-section">Supprimer un podcast</a>
+                <a href="#edit-podcast-section">Modifier un podcast</a>
+                <a href="#see-activity-section">Voir toutes les activités</a>
+                <a href="#see-podcast-section">Voir tous les podcasts</a>
+                <a href="#see-reserv-section">Voir toutes les réservations</a>
+                <a href="#see-user-section">Gérer Utilisateurs</a>
+            </nav>
+            <a href="../connexion/logout-admin.php" class="logout-link">Se déconnecter 🔌</a>
+        </aside>
 
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-number"><?= $total_activites ?></div>
-                <div class="stat-label">Nombre total d'activité 👨‍💻</div>
+        <main class="main-content">
+            <div id="add-activity-section" style="display: none;"><?php include 'add_activity.php'; ?></div>
+            <div id="supp-activity-section" style="display: none;"><?php include 'supp_activity.php'; ?></div>
+            <div id="edit-activity-section" style="display: none;"><?php include 'edit_activity.php'; ?></div>
+            <div id="add-fun-fact-section" style="display: none;"><?php include 'add_fun_fact.php'; ?></div>
+            <div id="see-activity-section" style="display: none;"><?php include 'activity.php'; ?></div>
+            <div id="add-podcast-section" style="display: none;"><?php include 'add_podcast.php'; ?></div>
+            <div id="supp-podcast-section" style="display: none;"><?php include 'supp_podcast.php'; ?></div>
+            <div id="edit-podcast-section" style="display: none;"><?php include 'edit_podcast.php'; ?></div>
+            <div id="see-podcast-section" style="display: none;"><?php include 'podcast.php'; ?></div>
+            <div id="see-reserv-section" style="display: none;"><?php include 'reservation.php'; ?></div>
+            <div id="see-user-section" style="display: none;"><?php include 'user.php'; ?></div>
+
+
+            <div class="dashboard-container" id="dashboard">
+                <div class="dashboard-header">
+                    <h1>Tableau de Bord <span>Administrateur</span></h1>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $total_activites ?></div>
+                        <div class="stat-label">Nombre total d'activités disponinble 🎯</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $total_reservations ?></div>
+                        <div class="stat-label">Nombre total de réservations 🗓️</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $reservations_this_month ?></div>
+                        <div class="stat-label">Réservations ce mois 📅</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $chiffre_affaire ?>€</div>
+                        <div class="stat-label">Chiffre d'affaire total 💰</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $total_users ?></div>
+                        <div class="stat-label">Utilisateurs inscrits 👥</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $max_reserv ?></div>
+                        <div class="stat-label">Activité la plus réservée 🏆</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $user_max_reserv ?></div>
+                        <div class="stat-label">Top réservateur 👑</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $lieu_max_reserv ?></div>
+                        <div class="stat-label">Places réservées 🪑</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number"><?= $total_admins ?></div>
+                        <div class="stat-label">Administrateurs 🔐</div>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <h2>Carte des <span>Activités</span></h2>
+                    <div id="map"></div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number"><?= $total_users ?></div>
-                <div class="stat-label">Utilisateurs inscrits 👤</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number"><?= $total_admins ?></div>
-                <div class="stat-label">Nombre d'administrateurs ✏️</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number"><?= $total_reservations ?></div>
-                <div class="stat-label">Nombre total de reservations 🗓️</div>
-            </div>
-            <!-- <div class="stat-card">
-            <div class="stat-number"><?= $activite_plus_reserv ?></div>
-            <div class="stat-label">à été l'activité la plus réservé 👑</div>
-        </div> -->
-            <div class="stat-card">
-                <div class="stat-number"><?= $user_max_reserv ?></div>
-                <div class="stat-label">est l'utilisateur qui a le plus réservé 🏆</div>
-            </div>
-            <div class="stat-card chart-card">
-                <canvas id="devEvolutionGraph"></canvas>
-                <div class="stat-label">Évolution des activités 👨‍💻</div>
-            </div>
-            <div class="stat-card chart-card">
-                <canvas id="userEvolutionGraph"></canvas>
-                <div class="stat-label">Évolution des utilisateurs 👤</div>
-            </div>
-            <div class="stat-card chart-card">
-                <canvas id="reservationEvolutionGraph"></canvas>
-                <div class="stat-label">Évolution des réservations 🗓️</div>
-            </div>
-        </div>
+
+            <?php
+            if (isset($_GET['erreur']) && $_GET['erreur'] === 'acces_interdit_admin') {
+                echo "<div class='message error'>Vous devez être connecté en tant qu'utilisateur pour accéder à cette page, déconnectez-vous d'abord.</div>";
+            }
+            ?>
+
+            <script>
+                function showSection(sectionId) {
+                    document.querySelectorAll('.dashboard-container, #add-activity-section, #supp-activity-section, #edit-activity-section, #add-fun-fact-section, #see-activity-section, #add-podcast-section, #supp-podcast-section, #edit-podcast-section, #see-podcast-section, #see-reserv-section, #see-user-section, #logout-admin-section')
+                        .forEach(section => section.style.display = 'none');
+                    document.getElementById(sectionId).style.display = 'block';
+                }
+
+                document.querySelectorAll('.sidebar nav a').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href').substring(1);
+                        showSection(targetId);
+                    });
+                });
+            </script>
+        </main>
     </div>
 
-    <?php
-    if (isset($_GET['erreur']) && $_GET['erreur'] === 'acces_interdit_admin') {
-        echo "<div class='message error'>Vous devez être connecté en tant qu'utilisateur pour accéder à cette page, déconnectez-vous d'abord.</div>";
-    }
-    ?>
-
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('.dashboard-container, #add-activity-section, #supp-activity-section, #edit-activity-section, #add-fun-fact-section, #see-activity-section, #add-podcast-section, #supp-podcast-section, #edit-podcast-section, #see-podcast-section, #see-reserv-section, #see-user-section')
-                .forEach(section => section.style.display = 'none');
-            document.getElementById(sectionId).style.display = 'block';
-        }
+        const map = L.map('map').setView([46.6031, 1.8883], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
 
-        // Navigation depuis sidebar         
-        document.getElementById('add-activity-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('add-activity-section');
-        });
-        document.getElementById('supp-activity-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('supp-activity-section');
-        });
-        document.getElementById('edit-activity-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('edit-activity-section');
-        });
-        document.getElementById('add-fun-fact-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('add-fun-fact-section');
-        });
-        document.getElementById('see-activity-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('see-activity-section');
-        });
-        document.getElementById('add-podcast-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('add-podcast-section');
-        });
-        document.getElementById('supp-podcast-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('supp-podcast-section');
-        });
-        document.getElementById('edit-podcast-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('edit-podcast-section');
-        });
-        document.getElementById('see-podcast-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('see-podcast-section');
-        });
-        document.getElementById('see-reserv-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('see-reserv-section');
-        });
-        document.getElementById('manage-user-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            showSection('see-user-section');
-        });
-
-        // Gestion de l'ancre dans l'URL
-        window.addEventListener('DOMContentLoaded', function() {
-            const anchor = window.location.hash;
-            if (anchor && document.querySelector(anchor)) {
-                showSection(anchor.substring(1));
-            }
-        });
-
-        // Configuration des graphiques
-        const createChart = (ctx, labels, data, color) => {
-            return new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Nombre',
-                        data: data,
-                        borderColor: color,
-                        backgroundColor: color + '20',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: color,
-                        pointBorderColor: '#fff',
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0,0,0,0.8)',
-                            titleFont: {
-                                size: 14
-                            },
-                            bodyFont: {
-                                size: 13
-                            },
-                            padding: 10,
-                            cornerRadius: 4
-                        }
-                    }
+        fetch('../algorithme/localise-admin.php')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.length === 0) {
+                    console.log("Aucune activité trouvée.");
+                    return;
                 }
+
+                data.forEach(point => {
+                    const marker = L.marker([point.latitude, point.longitude]).addTo(map);
+                    marker.bindPopup(`
+                        <strong>${point.titre}</strong><br>
+                        <strong>À: </strong>${point.lieu}</br> 
+                        <strong>Le: </strong>${point.date_activite}<br>
+                    `);
+                });
+
+                if (data.length > 0) {
+                    const latLngs = data.map(point => [point.latitude, point.longitude]);
+                    const bounds = L.latLngBounds(latLngs);
+                    map.fitBounds(bounds);
+                }
+            })
+            .catch(error => {
+                console.error("Erreur de chargement des activités:", error);
             });
-        };
-
-        // Données et création des graphiques
-        // Ensure these variables are correctly populated by your PHP code
-        // Currently, they are commented out in the PHP section
-        // const devEvolutionData = <?php // json_encode($dev_evolution) 
-                                    ?>;
-        // const userEvolutionData = <?php // json_encode($user_evolution) 
-                                        ?>;
-        // const reservationEvolutionData = <?php // json_encode($reservation_evolution) 
-                                            ?>;
-
-        // Placeholder data if PHP variables are not available or commented out
-        const devEvolutionData = []; // Replace with actual data from PHP
-        const userEvolutionData = []; // Replace with actual data from PHP
-        const reservationEvolutionData = []; // Replace with actual data from PHP
-
-        const devLabels = devEvolutionData.map(data => data.date);
-        const devCounts = devEvolutionData.map(data => data.count);
-
-        const userLabels = userEvolutionData.map(data => data.date);
-        const userCounts = userEvolutionData.map(data => data.count);
-
-        const reservationLabels = reservationEvolutionData.map(data => data.date);
-        const reservationCounts = reservationEvolutionData.map(data => data.count);
-
-        // Check if canvas elements exist before getting context
-        const devCanvas = document.getElementById('devEvolutionGraph');
-        const userCanvas = document.getElementById('userEvolutionGraph');
-        const reservationCanvas = document.getElementById('reservationEvolutionGraph');
-
-        let devChart, userChart, reservationChart;
-
-        if (devCanvas) {
-            const devCtx = devCanvas.getContext('2d');
-            devChart = createChart(devCtx, devLabels, devCounts, '#2ECC71');
-        }
-
-        if (userCanvas) {
-            const userCtx = userCanvas.getContext('2d');
-            userChart = createChart(userCtx, userLabels, userCounts, '#ff6e6e');
-        }
-
-        if (reservationCanvas) {
-            const reservationCtx = reservationCanvas.getContext('2d');
-            reservationChart = createChart(reservationCtx, reservationLabels, reservationCounts, '#6eff8a');
-        }
-
-        // Gestion du redimensionnement
-        window.addEventListener('resize', function() {
-            if (devChart) devChart.resize();
-            if (userChart) userChart.resize();
-            if (reservationChart) reservationChart.resize();
-        });
-
-        // Initial display based on hash or default
-        // This call is handled by the DOMContentLoaded listener above now
-        // showSection(window.location.hash ? window.location.hash.substring(1) : 'dashboard-container');
     </script>
-
 </body>
 
 </html>

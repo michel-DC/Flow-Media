@@ -1,22 +1,18 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-// Connexion à la base de données
+
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-// Default query to get all podcasts
 $query = "SELECT * FROM podcasts ORDER BY id DESC"; // Added ORDER BY for consistency
 
-// Traitement de la recherche
 if (isset($_POST['search_podcasts'])) {
     $search = mysqli_real_escape_string($link, $_POST['search']);
     $query = "SELECT * FROM podcasts WHERE titre LIKE '%$search%' ";
-    // Adding back the ORDER BY clause after search
     $query .= " ORDER BY id DESC";
 }
 
 if (isset($_POST['see_podcasts'])) {
-    // Reset to default query
     $query = "SELECT * FROM podcasts ORDER BY id DESC";
 }
 
