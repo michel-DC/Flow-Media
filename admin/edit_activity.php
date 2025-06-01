@@ -461,7 +461,7 @@ if (isset($_POST['update_activity'])) {
             <div class="message error"><?= $error_message ?></div>
         <?php endif; ?>
 
-        <h1>Modifier une <span>activité</span></h1>
+        <h1>Modifier une <span>Activité</span></h1>
 
         <div class="activity-select-form">
             <form method="GET" action="dashboard.php#edit-activity-section">
@@ -479,7 +479,7 @@ if (isset($_POST['update_activity'])) {
 
         <?php if (!is_null($activity_data)): ?>
             <div class="edit-activity-form-container">
-                <form method="POST" enctype="multipart/form-data" action="dashboard.php#edit-activity-section">
+                <form action="dashboard.php" method="POST" enctype="multipart/form-data" class="edit-activity-form-container">
                     <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activity_data['id']) ?>">
                     <input type="hidden" name="existing_image" value="<?= htmlspecialchars($activity_data['image_url']) ?>">
                     <input type="hidden" name="existing_image_2" value="<?= htmlspecialchars($activity_data['image_url_2']) ?>">

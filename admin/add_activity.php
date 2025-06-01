@@ -146,20 +146,15 @@ if (isset($_POST['ajt_activite'])) {
         --secondary-color: #25a25a;
         --text-color: #333;
         --light-bg: #f0f0f0;
-        /* Adjusted to match the background */
         --white: #ffffff;
         --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-        /* Less prominent shadow */
         --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-        /* Less prominent shadow */
     }
 
     .add-activity-component .add-activity-container {
         flex: 1;
         max-width: 1000px;
-        /* Increased max-width */
         margin: 40px auto;
-        /* Adjusted margin */
         padding: 20px;
         display: flex;
         flex-direction: column;
@@ -174,7 +169,6 @@ if (isset($_POST['ajt_activite'])) {
         color: #151717;
         position: relative;
         padding-bottom: 10px;
-        /* Adjusted padding */
     }
 
     .add-activity-component .add-activity-container h1 span {
@@ -216,32 +210,24 @@ if (isset($_POST['ajt_activite'])) {
         border-radius: 12px;
         box-shadow: var(--shadow-md);
         padding: 30px 40px;
-        /* Adjusted padding */
         width: 100%;
         max-width: 900px;
-        /* Adjusted max-width */
         margin: 0 auto;
         display: grid;
-        /* Use grid for the form layout */
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        /* Responsive columns */
         gap: 20px 30px;
-        /* Adjusted gap */
     }
 
     .add-activity-component .add-activity-form-group {
         margin-bottom: 0;
-        /* Remove margin-bottom from form-group when using grid */
     }
 
     .add-activity-component label {
         display: block;
         margin-bottom: 8px;
-        /* Adjusted margin */
         color: var(--text-color);
         font-weight: 500;
         font-size: 13px;
-        /* Slightly smaller font size */
     }
 
     .add-activity-component input[type="text"],
@@ -251,13 +237,10 @@ if (isset($_POST['ajt_activite'])) {
     .add-activity-component select {
         width: 100%;
         padding: 10px 12px;
-        /* Adjusted padding */
         border: 1px solid #e5e7eb;
         border-radius: 4px;
-        /* Slightly smaller border radius */
         background-color: white;
         font-size: 0.9rem;
-        /* Slightly smaller font size */
         color: #4b5563;
         font-family: "Poppins", sans-serif;
         transition: all 0.2s ease;
@@ -271,18 +254,14 @@ if (isset($_POST['ajt_activite'])) {
         outline: none;
         border-color: var(--primary-color);
         box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1);
-        /* Adjusted shadow */
     }
 
     .add-activity-component textarea {
         min-height: 100px;
-        /* Adjusted min-height */
         resize: vertical;
         grid-column: span 2 / auto;
-        /* Make textarea span two columns if needed */
     }
 
-    /* Specific style for the file input label and input */
     .add-activity-component .add-activity-form-group input[type="file"] {
         padding: 10px 12px;
         border: 1px solid #e5e7eb;
@@ -301,36 +280,26 @@ if (isset($_POST['ajt_activite'])) {
         background-color: var(--primary-color);
         color: white;
         padding: 12px 24px;
-        /* Adjusted padding */
         border: none;
         border-radius: 4px;
-        /* Slightly smaller border radius */
         cursor: pointer;
         font-size: 0.95rem;
-        /* Adjusted font size */
         font-weight: 600;
         transition: all 0.2s ease;
         width: auto;
-        /* Auto width */
         height: 40px;
-        /* Adjusted height */
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        /* Adjusted gap */
         grid-column: span 2 / auto;
-        /* Make button span two columns */
         margin-top: 15px;
-        /* Add some top margin */
         justify-self: end;
-        /* Align button to the end */
     }
 
     .add-activity-component .btn:hover {
         background-color: var(--secondary-color);
         transform: translateY(-1px);
-        /* Less prominent transform */
         box-shadow: var(--shadow-sm);
     }
 
@@ -340,9 +309,7 @@ if (isset($_POST['ajt_activite'])) {
 
     .message {
         padding: 12px;
-        /* Adjusted padding */
         border-radius: 4px;
-        /* Adjusted border radius */
         margin: 10px auto;
         text-align: center;
         width: 90%;

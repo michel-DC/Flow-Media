@@ -1,22 +1,16 @@
 <?php require_once '../includes/auth.php'; ?>
 
 <?php
-// Connexion à la base de données
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-// Default query to get all activities
-$query = "SELECT * FROM activites ORDER BY id DESC"; // Added ORDER BY for consistency
+$query = "SELECT * FROM activites ORDER BY id DESC";
 
-// Traitement de la recherche
 if (isset($_POST['search_activites'])) {
     $search = mysqli_real_escape_string($link, $_POST['search']);
-    $query = "SELECT * FROM activites WHERE titre LIKE '%$search%' ";
-    // Adding back the ORDER BY clause after search
-    $query .= " ORDER BY id DESC";
+    $query = "SELECT * FROM activites WHERE titre LIKE '%$search%' ORDER BY id DESC";
 }
 
 if (isset($_POST['see_activites'])) {
-    // Reset to default query
     $query = "SELECT * FROM activites ORDER BY id DESC";
 }
 

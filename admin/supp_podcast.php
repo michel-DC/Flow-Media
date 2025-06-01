@@ -257,7 +257,7 @@ if (isset($_POST['delete_podcast'])) {
 
         <!-- Formulaire de sélection du podcast -->
         <div class="podcast-select-form">
-            <form method="GET" action="dashboard.php#delete-podcast-section">
+            <form method="GET" action="dashboard.php#supp-podcast-section">
                 <select name="id" required>
                     <option value="">Sélectionnez un podcast à supprimer</option>
                     <?php foreach ($podcasts as $podcast): ?>
@@ -276,7 +276,7 @@ if (isset($_POST['delete_podcast'])) {
                 <p>Êtes-vous sûr de vouloir supprimer le podcast "<?= htmlspecialchars($podcast_data['titre']) ?>" ?</p>
                 <p>Cette action est irréversible et supprimera également les fichiers audio et images associés.</p>
 
-                <form method="POST" action="dashboard.php#delete-podcast-section">
+                <form method="POST" action="dashboard.php#supp-podcast-section">
                     <input type="hidden" name="podcast_id" value="<?= htmlspecialchars($podcast_data['id']) ?>">
                     <button type="submit" name="delete_podcast" class="btn-danger">
                         Confirmer la suppression
