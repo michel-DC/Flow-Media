@@ -26,14 +26,91 @@
                 <span class="tooltip-text">Le système vous recommande des activités dans un rayon de 30km, en tenant compte de votre âge et de vos centres d'intérêt.</span>
             </div>
         </div>
-        <button id="locate_all" style=" text-decoration: none; color: #a259e6; margin-bottom: 3px;">Voir toutes les activités</button>
+        <button id="locate_all" class="all-button">Voir toutes les activités</button>
         <div id="map"></div>
+
+        <!-- Nouvelle section des recommandations -->
+        <section class="recommendations-section">
+            <div class="recommendations-container">
+                <button class="nav-arrow nav-arrow-left">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+
+                <div class="recommendations-slider">
+                    <div class="recommendation-card">
+                        <div class="card-image">
+                            <img src="https://api.centrepompidou-metz.fr/assets/q70-w1200/b16448a2/architecture_c_jacqueline_trichard_21_centre_pompidou_metz_29072020_2147.jpg" alt="Centre Pompidou de Metz">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">CENTRE POMPIDOU DE METZ</h3>
+                            <p class="card-subtitle">Parvis des Droits de l'Homme, 57020 Metz</p>
+                            <p class="card-distance">à 500m</p>
+                            <button class="card-button">Voir plus</button>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <div class="card-image">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0WF4U6ppSCEyaYsI0I2n7_HH1vK141PP_dg&s" alt="Station Arts et Métiers">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">STATION ARTS ET MÉTIERS</h3>
+                            <p class="card-subtitle">Paris 3e</p>
+                            <p class="card-distance">à 2km</p>
+                            <button class="card-button">Voir plus</button>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <div class="card-image">
+                            <img src="https://www.bordeaux-tourisme.com/sites/bordeaux_tourisme/files/medias/widgets/misc/La%20Cit%C3%A9%20du%20Vin%C2%A9Teddy%20Verneuil%20-%20%40lezbroz.jpg" alt="La Cité du Vin">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">LA CITÉ DU VIN</h3>
+                            <p class="card-subtitle">134 Quai de Bacalan, 33300 Bordeaux</p>
+                            <p class="card-distance">à 5km</p>
+                            <button class="card-button">Voir plus</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="nav-arrow nav-arrow-right">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
     </main>
+    <section class="newsletter-section">
+        <div class="newsletter-container">
+            <div class="newsletter-content">
+                <div class="newsletter-title">Newsletter</div>
+                <form method="POST" action="" class="newsletter-form">
+                    <input type="email" name="newsletter_email" class="newsletter-input" placeholder="Ton e-mail" required>
+                    <button type="submit" name="newsletter_submit" class="newsletter-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
 
     <?php include '../../includes/layout/footer.php'; ?>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+        :root {
+            --primary-color: #3a791f;
+            --secondary-color: #8ac571;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --white: #ffffff;
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.2);
+            --container-padding: clamp(1.25rem, 5vw, 5rem);
+            --section-spacing: clamp(3rem, 8vh, 6rem);
+        }
 
         body {
             font-family: "Poppins", sans-serif;
@@ -105,9 +182,162 @@
             width: 100%;
             height: clamp(50vh, 70vh, 80vh);
             max-width: 1000px;
-            border-radius: 8px;
+            border-radius: 60px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 60px;
+        }
+
+        /* Style for the "Voir toutes les activités" button */
+        .all-button {
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            /* Inherit font styles from parent */
+            cursor: pointer;
+            color: #a259e6;
+            /* Match the desired link color */
+            text-decoration: none;
+            /* No underline */
+            margin-bottom: 30px;
+            /* Keep some space below */
+            text-align: center;
+            display: block;
+            /* Make it a block element to center */
+            width: fit-content;
+            /* Shrink to content width */
+            margin-left: auto;
+            /* Center the block element */
+            margin-right: auto;
+            /* Center the block element */
+            transition: color 0.3s ease;
+        }
+
+        .all-button:hover {
+            color: #7b42b6;
+            /* Slightly darker color on hover */
+        }
+
+        /* Nouvelle section des recommandations */
+        .recommendations-section {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 40px;
+        }
+
+        .recommendations-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .recommendations-slider {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 20px 0;
+            flex: 1;
+        }
+
+        .recommendations-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .recommendation-card {
+            background-color: #E7E3D9;
+            border-radius: 33px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            min-width: 280px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 25px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card-subtitle {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.4;
+        }
+
+        .card-distance {
+            font-size: 14px;
+            color: #3A791F;
+            font-weight: 500;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card-button {
+            background-color: #FF3131;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card-button:hover {
+            background-color: #e02828;
+        }
+
+        .nav-arrow {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-arrow:hover {
+            background-color: #e0e0e0;
+        }
+
+        .nav-arrow i {
+            font-size: 18px;
+            color: #666666;
         }
 
         .info-tooltip {
@@ -163,6 +393,25 @@
             background-color: #0056b3;
         }
 
+        @media (max-width: 768px) {
+            .recommendations-container {
+                flex-direction: column;
+            }
+
+            .nav-arrow {
+                display: none;
+            }
+
+            .recommendations-slider {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .recommendation-card {
+                min-width: 250px;
+            }
+        }
+
         @media (max-width: 480px) {
             .button-container {
                 flex-direction: column;
@@ -178,6 +427,98 @@
                 left: auto;
                 right: 0;
                 transform: none;
+            }
+
+            .recommendation-card {
+                min-width: 220px;
+            }
+        }
+
+        .newsletter-section {
+            background-color: #d4c8b8;
+            padding: clamp(1.5rem, 3vh, 2.5rem) 0;
+            text-align: center;
+        }
+
+        .newsletter-container {
+            max-width: clamp(300px, 50vw, 800px);
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 2vw, 1.25rem);
+        }
+
+        .newsletter-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(1rem, 2vw, 1.875rem);
+            flex-wrap: wrap;
+        }
+
+        .newsletter-title {
+            font-size: clamp(1.25rem, 2vw, 1.8rem);
+            font-weight: 600;
+            color: #444;
+        }
+
+        .newsletter-form {
+            display: flex;
+            align-items: center;
+            background-color: var(--white);
+            border-radius: 1.875rem;
+            padding: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            width: 100%;
+            max-width: clamp(250px, 40vw, 400px);
+        }
+
+        .newsletter-input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            padding: clamp(0.5rem, 1vw, 0.625rem) clamp(1rem, 2vw, 1.25rem);
+            font-size: clamp(0.875rem, 1.2vw, 1rem);
+            border-radius: 1.875rem 0 0 1.875rem;
+        }
+
+        .newsletter-input::placeholder {
+            color: #aaa;
+        }
+
+        .newsletter-button {
+            background-color: #ff5757;
+            border: none;
+            border-radius: 50%;
+            width: clamp(2rem, 3vw, 2.5rem);
+            height: clamp(2rem, 3vw, 2.5rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-button i {
+            color: var(--white);
+            font-size: clamp(0.875rem, 1.2vw, 1.2rem);
+            transform: translateX(1px);
+        }
+
+        .newsletter-button:hover {
+            background-color: #e04a4a;
+        }
+
+        @media (max-width: 600px) {
+            .newsletter-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .newsletter-form {
+                max-width: 300px;
+            }
+
+            .newsletter-title {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -263,6 +604,23 @@
                     alert("Erreur de chargement des activités !");
                     console.error(error);
                 });
+        });
+
+        // Navigation des recommandations
+        document.querySelector('.nav-arrow-left').addEventListener('click', () => {
+            const slider = document.querySelector('.recommendations-slider');
+            slider.scrollBy({
+                left: -300,
+                behavior: 'smooth'
+            });
+        });
+
+        document.querySelector('.nav-arrow-right').addEventListener('click', () => {
+            const slider = document.querySelector('.recommendations-slider');
+            slider.scrollBy({
+                left: 300,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>

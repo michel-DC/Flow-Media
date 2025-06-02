@@ -1,595 +1,583 @@
-<?php
-require_once 'includes/auth.php';
-$link = mysqli_connect("localhost", "micheldjoumessi_pair-prog", "michelchrist", "micheldjoumessi_pair-prog");
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Media | Explorez la culture autrement</title>
-    <link rel="shortcut icon" href="/assets/icons/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/assets/style/index.css">
+    <title>Culture & Patrimoine - Animation d'Entrée</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- gestion des cookies avec -> tarte au citrons (citron js) -->
-    <script src="/node_modules/tarteaucitronjs/tarteaucitron.min.js"></script>
+        body {
+            overflow: hidden;
+            font-family: 'Georgia', serif;
+            background: #000;
+        }
 
-    <script type="text/javascript">
-        tarteaucitron.init({
-            "privacyUrl": "/legal/politique-confidentialite.php",
-            "bodyPosition": "top",
-            "hashtag": "#tarteaucitron",
-            "cookieName": "tarteaucitron",
-            "orientation": "popup",
-            "groupServices": true,
-            "showDetailsOnClick": true,
-            "serviceDefaultState": "wait",
-            "showAlertSmall": false,
-            "cookieslist": false,
-            "closePopup": true,
-            "showIcon": false,
-            "iconPosition": "bottom",
-            "adblocker": false,
-            "DenyAllCta": true,
-            "AcceptAllCta": true,
-            "highPrivacy": true,
-            "handleBrowserDNTRequest": false,
-            "removeCredit": false,
-            "moreInfoLink": true,
-            "useExternalCss": false,
-            "useExternalJs": false,
-            "mandatory": true,
-            "mandatoryCta": false,
-            "googleConsentMode": true,
-            "bingConsentMode": true,
-            "softConsentMode": false,
-            "dataLayer": false,
-            "serverSide": false,
-            "partnersList": true,
-            "cookiesDuration": 365,
-            "cookieDomain": window.location.hostname,
-            "popupPosition": "bottom",
-            "popupBackground": "#fff",
-            "popupTextColor": "#000",
-            "popupLinkColor": "#000",
-            "popupButtonBackground": "#000",
-            "popupButtonTextColor": "#fff",
-            "popupButtonHoverBackground": "#333",
-            "popupButtonHoverTextColor": "#fff"
-        });
+        .entrance-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            background: radial-gradient(ellipse at center, #2c1810, #1a0f0a, #000);
+        }
 
-        tarteaucitron.user.gtagUa = 'G-XXXXXXXXXX';
-        tarteaucitron.user.gtagMore = function() {
-            tarteaucitron.addService('gtag');
-        };
-        (tarteaucitron.job = tarteaucitron.job || []).push('gtag');
-    </script>
+        .stage-frame {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            border: 20px solid #8B4513;
+            border-radius: 10px;
+            box-shadow:
+                inset 0 0 50px rgba(139, 69, 19, 0.8),
+                0 0 100px rgba(0, 0, 0, 0.8),
+                0 0 200px rgba(139, 69, 19, 0.3);
+            background: linear-gradient(135deg, #654321, #8B4513, #654321);
+        }
+
+        .stage-frame::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg,
+                    #DAA520 0%,
+                    #FFD700 25%,
+                    #DAA520 50%,
+                    #B8860B 75%,
+                    #DAA520 100%);
+            border-radius: 15px;
+            z-index: -1;
+        }
+
+        .stage-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+        }
+
+        .curtain-left,
+        .curtain-right {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 10;
+        }
+
+        .curtain-left {
+            left: 0;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%2387CEEB"/><stop offset="100%" style="stop-color:%23E0F6FF"/></linearGradient><radialGradient id="sun" cx="80%" cy="20%"><stop offset="0%" style="stop-color:%23FFD700"/><stop offset="100%" style="stop-color:%23FFA500"/></radialGradient></defs><rect width="400" height="600" fill="url(%23sky)"/><circle cx="320" cy="80" r="30" fill="url(%23sun)"/><rect x="0" y="450" width="400" height="150" fill="%23228B22"/><ellipse cx="60" cy="400" rx="25" ry="40" fill="%2334C759"/><ellipse cx="120" cy="380" rx="30" ry="50" fill="%2334C759"/><ellipse cx="180" cy="390" rx="28" ry="45" fill="%2334C759"/><ellipse cx="240" cy="385" rx="32" ry="48" fill="%2334C759"/><ellipse cx="300" cy="395" rx="26" ry="42" fill="%2334C759"/><ellipse cx="360" cy="400" rx="24" ry="38" fill="%2334C759"/><rect x="55" y="420" width="10" height="30" fill="%23654321"/><rect x="115" y="410" width="12" height="40" fill="%23654321"/><rect x="175" y="415" width="11" height="35" fill="%23654321"/><rect x="235" y="413" width="13" height="37" fill="%23654321"/><rect x="295" y="417" width="10" height="33" fill="%23654321"/><rect x="355" y="420" width="12" height="30" fill="%23654321"/><path d="M50 500 Q150 480 250 500 T400 500" stroke="%2300CED1" stroke-width="8" fill="none"/><path d="M30 520 Q130 500 230 520 T380 520" stroke="%2300CED1" stroke-width="6" fill="none" opacity="0.7"/><rect x="150" y="350" width="100" height="60" fill="%23DEB887" stroke="%23CD853F" stroke-width="2"/><polygon points="150,350 200,320 250,350" fill="%23B22222"/><rect x="175" y="370" width="20" height="30" fill="%23654321"/><rect x="205" y="370" width="15" height="15" fill="%234682B4"/><rect x="225" y="370" width="15" height="15" fill="%234682B4"/><circle cx="60" cy="520" r="8" fill="%23FF69B4"/><circle cx="90" cy="515" r="6" fill="%23FF1493"/><circle cx="120" cy="525" r="7" fill="%23FF69B4"/><circle cx="280" cy="518" r="9" fill="%23FFB6C1"/><circle cx="310" cy="522" r="5" fill="%23FF69B4"/><circle cx="340" cy="516" r="8" fill="%23FF1493"/></svg>');
+            transform-origin: left center;
+        }
+
+        .curtain-right {
+            right: 0;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><defs><linearGradient id="sky2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%2387CEEB"/><stop offset="100%" style="stop-color:%23E0F6FF"/></linearGradient></defs><rect width="400" height="600" fill="url(%23sky2)"/><rect x="50" y="200" width="300" height="250" fill="%23F5DEB3" stroke="%23D2B48C" stroke-width="4"/><rect x="80" y="240" width="50" height="80" fill="%23654321"/><rect x="140" y="240" width="50" height="80" fill="%23654321"/><rect x="200" y="240" width="50" height="80" fill="%23654321"/><rect x="260" y="240" width="50" height="80" fill="%23654321"/><rect x="90" y="255" width="12" height="40" fill="%234682B4"/><rect x="108" y="255" width="12" height="40" fill="%234682B4"/><rect x="150" y="255" width="12" height="40" fill="%234682B4"/><rect x="168" y="255" width="12" height="40" fill="%234682B4"/><rect x="210" y="255" width="12" height="40" fill="%234682B4"/><rect x="228" y="255" width="12" height="40" fill="%234682B4"/><rect x="270" y="255" width="12" height="40" fill="%234682B4"/><rect x="288" y="255" width="12" height="40" fill="%234682B4"/><polygon points="50,200 200,130 350,200" fill="%23708090"/><rect x="80" y="320" width="240" height="12" fill="%23696969"/><rect x="90" y="332" width="220" height="8" fill="%23696969"/><rect x="100" y="340" width="200" height="6" fill="%23696969"/><rect x="170" y="380" width="60" height="70" fill="%23654321"/><rect x="185" y="400" width="30" height="50" fill="%23333"/><circle cx="195" cy="415" r="2" fill="%23FFD700"/><rect x="195" y="435" width="10" height="4" fill="%23C0C0C0"/><rect x="20" y="480" width="40" height="20" fill="%23228B22"/><rect x="340" y="490" width="50" height="15" fill="%23228B22"/><rect x="150" y="500" width="100" height="8" fill="%23696969"/><circle cx="80" cy="150" r="15" fill="%23FFD700" opacity="0.8"/><circle cx="320" cy="120" r="12" fill="%23FFD700" opacity="0.6"/></svg>');
+            transform-origin: right center;
+        }
+
+        .curtain-texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.1) 2px,
+                    rgba(255, 255, 255, 0.1) 4px),
+                repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 8px,
+                    rgba(0, 0, 0, 0.1) 8px,
+                    rgba(0, 0, 0, 0.1) 10px);
+            mix-blend-mode: overlay;
+        }
+
+        .curtain-shadow {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.4));
+            pointer-events: none;
+        }
+
+        .curtain-left .curtain-shadow {
+            left: auto;
+            right: 0;
+        }
+
+        .curtain-right .curtain-shadow {
+            left: 0;
+            right: auto;
+            background: linear-gradient(-90deg, transparent, rgba(0, 0, 0, 0.4));
+        }
+
+        .stage-lights {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 120%;
+            background: linear-gradient(180deg,
+                    rgba(255, 255, 240, 0.6) 0%,
+                    rgba(255, 255, 240, 0.3) 30%,
+                    rgba(255, 255, 240, 0.1) 60%,
+                    transparent 100%);
+            clip-path: polygon(40% 0%, 60% 0%, 80% 100%, 20% 100%);
+            opacity: 0;
+            animation: spotlightOn 2s ease-in-out 1.5s forwards;
+            z-index: 5;
+        }
+
+        .title-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 15;
+            opacity: 0;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: bold;
+            color: #fff;
+            text-shadow:
+                0 0 20px rgba(255, 215, 0, 0.8),
+                0 0 40px rgba(255, 215, 0, 0.6),
+                0 4px 8px rgba(0, 0, 0, 0.8);
+            margin-bottom: 1rem;
+            transform: translateY(50px);
+            animation: titleSlideIn 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3s forwards;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: #f0f0f0;
+            font-style: italic;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            transform: translateY(30px);
+            opacity: 0;
+            animation: subtitleFadeIn 1.2s ease-out 4s forwards;
+            margin-bottom: 2rem;
+        }
+
+        .enter-button {
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, #DAA520, #FFD700, #DAA520);
+            border: 3px solid #B8860B;
+            border-radius: 50px;
+            color: #1a0f0a;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transform: translateY(30px) scale(0.8);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow:
+                0 8px 25px rgba(218, 165, 32, 0.4),
+                inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            animation: buttonAppear 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 5s forwards;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .enter-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow:
+                0 12px 35px rgba(218, 165, 32, 0.6),
+                inset 0 2px 4px rgba(255, 255, 255, 0.4);
+            background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+            border-color: #DAA520;
+        }
+
+        .decorative-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            animation: decorationsAppear 1.5s ease-in-out 4.5s forwards;
+            z-index: 12;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #FFD700, transparent);
+            border-radius: 50%;
+            animation: sparkleAnimation 3s ease-in-out infinite;
+        }
+
+        .sparkle:nth-child(1) {
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .sparkle:nth-child(2) {
+            top: 30%;
+            right: 25%;
+            animation-delay: 0.5s;
+        }
+
+        .sparkle:nth-child(3) {
+            top: 70%;
+            left: 15%;
+            animation-delay: 1s;
+        }
+
+        .sparkle:nth-child(4) {
+            top: 60%;
+            right: 20%;
+            animation-delay: 1.5s;
+        }
+
+        .sparkle:nth-child(5) {
+            top: 40%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+
+        .sparkle:nth-child(6) {
+            top: 80%;
+            right: 30%;
+            animation-delay: 2.5s;
+        }
+
+        .golden-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            animation: particlesReveal 2s ease-in-out 3.5s forwards;
+            z-index: 8;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: particleDrift 6s linear infinite;
+        }
+
+        /* Animations */
+        .curtain-left.open {
+            transform: translateX(-100%);
+        }
+
+        .curtain-right.open {
+            transform: translateX(100%);
+        }
+
+        @keyframes spotlightOn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scaleY(0.3);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scaleY(1);
+            }
+        }
+
+        @keyframes titleSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes subtitleFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.8);
+            }
+
+            60% {
+                transform: translateY(-5px) scale(1.05);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes decorationsAppear {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes sparkleAnimation {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        @keyframes particlesReveal {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes particleDrift {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-50px) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .fade-out-animation {
+            animation: fadeOutComplete 1.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeOutComplete {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stage-frame {
+                top: 2%;
+                left: 2%;
+                width: 96%;
+                height: 96%;
+                border-width: 15px;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .enter-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Background Decorations -->
-    <div class="bg-decoration">
-        <div class="floating-shape shape-1"></div>
-        <div class="floating-shape shape-2"></div>
-        <div class="floating-shape shape-3"></div>
-    </div>
+    <div class="entrance-container" id="entranceContainer">
+        <div class="stage-frame">
+            <div class="stage-content">
+                <!-- Éclairage de scène -->
+                <div class="stage-lights"></div>
 
-    <div id="body">
-        <div class="container">
+                <!-- Rideau gauche (Jardins) -->
+                <div class="curtain-left" id="curtainLeft">
+                    <div class="curtain-texture"></div>
+                    <div class="curtain-shadow"></div>
+                </div>
 
-            <!-- Header Navigation -->
-            <?php include 'includes/layout/navbar-rc.php'; ?>
+                <!-- Rideau droit (Architecture) -->
+                <div class="curtain-right" id="curtainRight">
+                    <div class="curtain-texture"></div>
+                    <div class="curtain-shadow"></div>
+                </div>
 
-            <!-- Hero Section -->
-            <section class="hero-section">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <h1 class="hero-title">
-                            <span class="gradient-text">Explorez la culture</span>
-                            <span class="hero-subtitle">autrement</span>
-                        </h1>
-                        <p class="hero-description">
-                            Découvrez les trésors cachés de votre ville à travers l'architecture et les jardins.
-                            Une aventure culturelle unique vous attend !
-                        </p>
-                        <div class="hero-buttons">
-                            <a href="/connexion/register.php" class="btn btn-primary">
-                                <i class="fas fa-rocket"></i>
-                                Commencer l'aventure
-                            </a>
-                            <a href="/pages/activites/" class="btn btn-secondary">
-                                <i class="fas fa-compass"></i>
-                                Découvrir
-                            </a>
-                        </div>
-                    </div>
-                    <div class="hero-visual">
-                        <div class="hero-mascots">
-                            <div class="mascot mascot-jardy">
-                                <img src="assets/images/vert.png" alt="Jardi">
-                                <div class="mascot-bubble">
-                                    <p>Salut ! Je suis <strong>Jardi</strong> 🌿</p>
-                                </div>
-                            </div>
-                            <div class="mascot mascot-archy">
-                                <img src="assets/images/rouge.png" alt="Archy">
-                                <div class="mascot-bubble">
-                                    <p>Hey ! Je suis <strong>Archy</strong> 🏛️</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Contenu principal -->
+                <div class="title-container">
+                    <h1 class="main-title">Culture & Patrimoine</h1>
+                    <p class="subtitle">Architecture & Jardins de France</p>
+                    <button class="enter-button" id="enterButton">Découvrir</button>
                 </div>
-            </section>
 
-            <!-- Features Section -->
-            <section class="features-section">
-                <div class="section-header">
-                    <h2 class="section-title">Nos Spécialités</h2>
-                    <p class="section-subtitle">Deux univers passionnants à explorer</p>
+                <!-- Éléments décoratifs -->
+                <div class="decorative-elements">
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
+                    <div class="sparkle"></div>
                 </div>
-                <div class="features-grid">
-                    <div class="feature-card architecture-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Architecture</h3>
-                            <p>L'art et la technique de concevoir des bâtiments qui racontent l'histoire de nos villes</p>
-                            <div class="feature-stats">
-                                <span class="stat">500+ monuments</span>
-                                <span class="stat">25 villes</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="feature-card gardens-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-leaf"></i>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Jardins</h3>
-                            <p>Des espaces verts exceptionnels où la nature rencontre l'art du paysage</p>
-                            <div class="feature-stats">
-                                <span class="stat">200+ jardins</span>
-                                <span class="stat">15 régions</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Discovery Section -->
-            <section class="discovery-section">
-                <div class="section-header">
-                    <h2 class="section-title">Les Lieux Incontournables</h2>
-                    <p class="section-subtitle">Sélectionnés par notre communauté</p>
-                </div>
-                <div class="discovery-carousel">
-                    <div class="carousel-container">
-                        <button class="carousel-nav prev" data-direction="prev">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <div class="carousel-track">
-                            <div class="discovery-card active">
-                                <div class="card-image">
-                                    <img src="/assets/images/1.png" alt="Architecture">
-                                    <div class="card-overlay">
-                                        <div class="card-category">Architecture</div>
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <h3>Trésors Architecturaux</h3>
-                                    <p>Explorez les joyaux qui ont façonné notre patrimoine</p>
-                                    <a href="/pages/activites/" class="card-link">
-                                        Découvrir <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="discovery-card">
-                                <div class="card-image">
-                                    <img src="/assets/images/2.png" alt="Patrimoine">
-                                    <div class="card-overlay">
-                                        <div class="card-category">Histoire</div>
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <h3>Patrimoine Historique</h3>
-                                    <p>Des histoires insolites au coin de votre rue</p>
-                                    <a href="/pages/activites/" class="card-link">
-                                        Découvrir <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="discovery-card">
-                                <div class="card-image">
-                                    <img src="/assets/images/3.png" alt="Jardins">
-                                    <div class="card-overlay">
-                                        <div class="card-category">Jardins</div>
-                                    </div>
-                                </div>
-                                <div class="card-content">
-                                    <h3>Jardins Remarquables</h3>
-                                    <p>Les plus beaux jardins français et leurs secrets</p>
-                                    <a href="/pages/activites/" class="card-link">
-                                        Découvrir <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-nav next" data-direction="next">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                    <div class="carousel-indicators">
-                        <button class="indicator active" data-slide="0"></button>
-                        <button class="indicator" data-slide="1"></button>
-                        <button class="indicator" data-slide="2"></button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Nearby Places Section -->
-            <section class="nearby-section">
-                <div class="section-header">
-                    <h2 class="section-title">Près de Chez Vous</h2>
-                    <a href="/pages/maps/" class="geolocation-btn">
-                        <i class="fas fa-location-dot"></i>
-                        Me géolocaliser
-                    </a>
-                </div>
-                <div class="nearby-grid">
-                    <div class="nearby-card featured">
-                        <div class="card-image">
-                            <img src="https://domaine-de-sceaux.hauts-de-seine.fr/fileadmin/_processed_/6/3/csm_chateauWilly_6e1650a2ea.jpg" alt="Château de Sceaux">
-                            <button class="favorite-btn">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="card-info">
-                            <h3>Château de Sceaux</h3>
-                            <div class="rating">
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <span class="rating-text">5.0</span>
-                            </div>
-                            <p class="location">92330, Sceaux</p>
-                            <a href="/pages/maps" class="btn btn-outline">En savoir plus</a>
-                        </div>
-                    </div>
-                    <div class="nearby-card">
-                        <div class="card-image">
-                            <img src="https://offloadmedia.feverup.com/parissecret.com/wp-content/uploads/2021/04/17054435/shutterstock_455256892-1-scaled.jpg" alt="Jardin Albert Khan">
-                            <button class="favorite-btn">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="card-info">
-                            <h3>Jardin Albert Khan</h3>
-                            <p class="location">Boulogne-Billancourt</p>
-                        </div>
-                    </div>
-                    <div class="nearby-card">
-                        <div class="card-image">
-                            <img src="https://www.hauts-de-seine.fr/fileadmin/_processed_/3/f/csm_saintcloud1_1005999dec.jpg" alt="Domaine de St Cloud">
-                            <button class="favorite-btn">
-                                <i class="far fa-heart"></i>
-                            </button>
-                        </div>
-                        <div class="card-info">
-                            <h3>Domaine de St Cloud</h3>
-                            <p class="location">Saint-Cloud</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Fun Facts Section -->
-            <section class="fun-facts-section">
-                <div class="section-header">
-                    <h2 class="section-title">Le Saviez-Vous ?</h2>
-                    <p class="section-subtitle">Des anecdotes fascinantes sur notre patrimoine</p>
-                </div>
-                <div class="fun-facts-grid">
-                    <div class="fact-card" data-fact="0">
-                        <div class="fact-image">
-                            <img src="https://q-xx.bstatic.com/xdata/images/landmark/608x352/275344.webp?k=fe69f9d21286dc64e62d67386eedac822585742d8f177300060292e8365e6ea4&o=" alt="Cathédrale de Strasbourg">
-                        </div>
-                        <div class="fact-content">
-                            <h3>Cathédrale de Strasbourg</h3>
-                            <p>Sa flèche gothique culmine à 142 mètres, et son horloge astronomique date de la Renaissance.</p>
-                            <a href="/pages/fun-fact/" class="fact-link">En savoir plus</a>
-                        </div>
-                    </div>
-                    <div class="fact-card" data-fact="1">
-                        <div class="fact-image">
-                            <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/d2/95/f7/photo5jpg.jpg?w=800&h=500&s=1" alt="Grande Mosquée de Paris">
-                        </div>
-                        <div class="fact-content">
-                            <h3>Grande Mosquée de Paris</h3>
-                            <p>Construite en 1926, c'est la plus ancienne mosquée de France métropolitaine.</p>
-                            <a href="/pages/fun-fact/" class="fact-link">En savoir plus</a>
-                        </div>
-                    </div>
-                    <div class="fact-card" data-fact="2">
-                        <div class="fact-image">
-                            <img src="https://api.centrepompidou-metz.fr/assets/q70-w1200/b16448a2/architecture_c_jacqueline_trichard_21_centre_pompidou_metz_29072020_2147.jpg" alt="Centre Pompidou Metz">
-                        </div>
-                        <div class="fact-content">
-                            <h3>Centre Pompidou Metz</h3>
-                            <p>Son toit inspiré d'un panama couvre 8000m² sans aucun pilier central.</p>
-                            <a href="/pages/fun-fact/" class="fact-link">En savoir plus</a>
-                        </div>
-                    </div>
-                    <div class="fact-card" data-fact="3">
-                        <div class="fact-image">
-                            <img src="https://woody.cloudly.space/app/uploads/porte-dromardeche/2021/07/thumbs/palais00-1920x960-crop-1642494192.jpg" alt="Palais Idéal">
-                        </div>
-                        <div class="fact-content">
-                            <h3>Palais Idéal du Facteur Cheval</h3>
-                            <p>33 ans de construction par un seul homme, pierre par pierre, durant sa tournée de facteur.</p>
-                            <a href="/pages/fun-fact/" class="fact-link">En savoir plus</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Testimonials Section -->
-            <section class="testimonials-section">
-                <div class="section-header">
-                    <h2 class="section-title">Ils Nous Font Confiance</h2>
-                    <p class="section-subtitle">L'avis de notre communauté</p>
-                </div>
-                <div class="testimonials-slider">
-                    <div class="testimonials-track">
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <div class="quote-icon">
-                                    <i class="fas fa-quote-left"></i>
-                                </div>
-                                <p>"Une expérience incroyable ! J'ai découvert des lieux magnifiques que je ne connaissais pas dans ma propre ville."</p>
-                                <div class="testimonial-author">
-                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Marie L.">
-                                    <div class="author-info">
-                                        <h4>Marie L.</h4>
-                                        <span>Paris</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <div class="quote-icon">
-                                    <i class="fas fa-quote-left"></i>
-                                </div>
-                                <p>"Les défis sont vraiment amusants et m'ont permis d'en apprendre beaucoup sur l'architecture de ma ville."</p>
-                                <div class="testimonial-author">
-                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Thomas D.">
-                                    <div class="author-info">
-                                        <h4>Thomas D.</h4>
-                                        <span>Lyon</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <div class="quote-icon">
-                                    <i class="fas fa-quote-left"></i>
-                                </div>
-                                <p>"Une application qui rend la découverte culturelle accessible et ludique. Je recommande !"</p>
-                                <div class="testimonial-author">
-                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Sophie M.">
-                                    <div class="author-info">
-                                        <h4>Sophie M.</h4>
-                                        <span>Bordeaux</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Partners Section -->
-            <section class="partners-section">
-                <div class="section-header">
-                    <h2 class="section-title">Nos Partenaires</h2>
-                    <p class="section-subtitle">Ils nous font confiance</p>
-                </div>
-                <div class="partners-carousel">
-                    <div class="partners-track">
-                        <div class="partner-logo">
-                            <img src="https://aufildudedale.fr/storage/2024/02/logo-pass-culture-1-png-16162.png" alt="Pass Culture">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://image.over-blog.com/lWzrS-cab4LuWDJkxy_Dvxh62Ks=/filters:no_upscale()/image%2F6834552%2F20220421%2Fob_8b255d_81-5fc6581a822f9-orig-1.png" alt="Ministère de la Culture">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Logo-amf-bas.png" alt="AMF">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvt-rUaFQJuiskfXDgYZ08Nf-yBTSHMXodIg&s" alt="Région Île-de-France">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://www.arte.tv/sites/corporate/files/arte-logo_1920x1080-6-470x270.jpg" alt="Arte">
-                        </div>
-                        <div class="partner-logo">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQICLj-Kd5YYTgiSCAQFy9L6Wds2OUjWv8taQ&s" alt="Région Aquitaine">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Newsletter Section -->
-            <section class="newsletter-section">
-                <div class="newsletter-container">
-                    <div class="newsletter-content">
-                        <div class="newsletter-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <h3>Restez Informé</h3>
-                        <p>Recevez nos dernières découvertes et actualités culturelles</p>
-                        <form method="POST" action="" class="newsletter-form">
-                            <div class="form-group">
-                                <input type="email" name="newsletter_email" placeholder="Votre adresse email" required>
-                                <button type="submit" name="newsletter_submit">
-                                    <i class="fas fa-paper-plane"></i>
-                                    S'abonner
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-
+                <!-- Particules dorées -->
+                <div class="golden-particles" id="particles"></div>
+            </div>
         </div>
     </div>
 
-    <?php include 'includes/layout/footer.php'; ?>
-
-    <!-- Scroll to Top Button -->
-    <button id="scrollToTop" class="scroll-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-
-    <!-- JavaScript -->
     <script>
-        // Carousel Discovery Section
-        const carouselTrack = document.querySelector('.carousel-track');
-        const carouselCards = document.querySelectorAll('.discovery-card');
-        const prevBtn = document.querySelector('.carousel-nav.prev');
-        const nextBtn = document.querySelector('.carousel-nav.next');
-        const indicators = document.querySelectorAll('.indicator');
-        let currentSlide = 0;
+        let animationStarted = false;
 
-        function updateCarousel() {
-            carouselCards.forEach((card, index) => {
-                card.classList.toggle('active', index === currentSlide);
-            });
-            indicators.forEach((indicator, index) => {
-                indicator.classList.toggle('active', index === currentSlide);
-            });
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 25;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+                particlesContainer.appendChild(particle);
+            }
         }
 
-        nextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % carouselCards.length;
-            updateCarousel();
+        function startCurtainAnimation() {
+            if (animationStarted) return;
+            animationStarted = true;
+
+            const curtainLeft = document.getElementById('curtainLeft');
+            const curtainRight = document.getElementById('curtainRight');
+
+            // Ouvrir les rideaux après 2 secondes
+            setTimeout(() => {
+                curtainLeft.classList.add('open');
+                curtainRight.classList.add('open');
+            }, 2000);
+        }
+
+        function finishAnimation() {
+            const container = document.getElementById('entranceContainer');
+            container.classList.add('fade-out-animation');
+
+            setTimeout(() => {
+                container.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                // Ici vous pouvez afficher le contenu principal de votre site
+                console.log('Animation terminée - Site principal visible');
+            }, 1500);
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+
+            // Démarrer l'animation automatiquement
+            setTimeout(startCurtainAnimation, 800);
+
+            // Bouton pour continuer
+            document.getElementById('enterButton').addEventListener('click', finishAnimation);
+
+            // Auto-progression après 10 secondes
+            setTimeout(() => {
+                if (document.getElementById('entranceContainer').style.display !== 'none') {
+                    finishAnimation();
+                }
+            }, 10000);
         });
 
-        prevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + carouselCards.length) % carouselCards.length;
-            updateCarousel();
-        });
+        // Effet de scintillement sur le titre au survol
+        document.addEventListener('mousemove', (e) => {
+            const title = document.querySelector('.main-title');
+            if (title) {
+                const rect = title.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
 
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                currentSlide = index;
-                updateCarousel();
-            });
-        });
-
-        // Auto-rotate carousel
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % carouselCards.length;
-            updateCarousel();
-        }, 5000);
-
-        // Favorite buttons
-        document.querySelectorAll('.favorite-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const icon = this.querySelector('i');
-                icon.classList.toggle('far');
-                icon.classList.toggle('fas');
-                this.classList.toggle('active');
-            });
-        });
-
-        // Scroll to top
-        const scrollToTopBtn = document.getElementById('scrollToTop');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollToTopBtn.classList.add('show');
-            } else {
-                scrollToTopBtn.classList.remove('show');
+                if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                    title.style.textShadow = `
+                        0 0 20px rgba(255, 215, 0, 1),
+                        0 0 40px rgba(255, 215, 0, 0.8),
+                        0 0 60px rgba(255, 215, 0, 0.6),
+                        0 4px 8px rgba(0, 0, 0, 0.8)
+                    `;
+                } else {
+                    title.style.textShadow = `
+                        0 0 20px rgba(255, 215, 0, 0.8),
+                        0 0 40px rgba(255, 215, 0, 0.6),
+                        0 4px 8px rgba(0, 0, 0, 0.8)
+                    `;
+                }
             }
         });
-
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        // Floating animations
-        function animateFloatingShapes() {
-            const shapes = document.querySelectorAll('.floating-shape');
-            shapes.forEach((shape, index) => {
-                const delay = index * 2000;
-                setTimeout(() => {
-                    shape.style.animation = `float ${4 + index}s ease-in-out infinite`;
-                }, delay);
-            });
-        }
-
-        // Initialize animations
-        document.addEventListener('DOMContentLoaded', () => {
-            animateFloatingShapes();
-        });
-
-        // Testimonials auto-scroll
-        let testimonialIndex = 0;
-        const testimonialTrack = document.querySelector('.testimonials-track');
-        const testimonialCards = document.querySelectorAll('.testimonial-card');
-
-        function rotateTestimonials() {
-            testimonialIndex = (testimonialIndex + 1) % testimonialCards.length;
-            testimonialTrack.style.transform = `translateX(-${testimonialIndex * 100}%)`;
-        }
-
-        setInterval(rotateTestimonials, 4000);
-
-        // Mascot bubble animations
-        setTimeout(() => {
-            document.querySelectorAll('.mascot-bubble').forEach((bubble, index) => {
-                setTimeout(() => {
-                    bubble.classList.add('show');
-                }, index * 500);
-            });
-        }, 1000);
     </script>
-
-    <?php
-    if (isset($_POST['newsletter_submit'])) {
-        $email = filter_var($_POST['newsletter_email'], FILTER_SANITIZE_EMAIL);
-        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $success = "Merci pour votre inscription à la newsletter !";
-        } else {
-            $error = "Veuillez entrer une adresse email valide.";
-        }
-    }
-
-    if (isset($error)):
-        echo "<div class='message error'>$error</div>";
-    endif;
-
-    if (isset($success)):
-        echo "<div class='message success'>$success</div>";
-    endif;
-
-    if (isset($_GET['erreur']) && $_GET['erreur'] === 'deja_connecte_user') {
-        echo "<div class='message error'>Vous êtes déja connecté, rendez-vous sur la page de reservation !</div>";
-    }
-    ?>
 </body>
 
 </html>
