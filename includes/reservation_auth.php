@@ -32,7 +32,7 @@ function checkReservationAuth($user_id)
             }
             break;
 
-        case 2: // Abonnement gold
+        case 2: // Abonnement standard
             if ($reservations_count >= 5) {
                 return [
                     'authorized' => false,
@@ -42,7 +42,7 @@ function checkReservationAuth($user_id)
             }
             break;
 
-        case 3: // Abonnement platine
+        case 3: // Abonnement premium
             return [
                 'authorized' => true,
                 'message' => ''

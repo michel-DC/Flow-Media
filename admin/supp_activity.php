@@ -305,6 +305,7 @@ $result = mysqli_query($link, $query);
                             <p class="activity-description"><?= htmlspecialchars($activite['description']) ?></p>
 
                         </div>
+                        <!-- Delete button outside activity-content but inside card -->
                         <div class="delete-form">
                             <form method="POST" action="dashboard.php#supp-activity-section" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?');">
                                 <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activite['id']) ?>">

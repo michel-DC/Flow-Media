@@ -1,5 +1,22 @@
 <?php
 require_once '../../includes/auth.php';
+
+if (!isset($_GET['id'])) {
+    header('Location: index.php');
+    exit;
+}
+
+$link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
+
+$query = "SELECT * FROM activites WHERE id = " . $_GET['id'];
+$result = mysqli_query($link, $query);
+$activity = mysqli_fetch_assoc($result);
+
+if (!$activity) {
+    header('Location: index.php');
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +25,7 @@ require_once '../../includes/auth.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowMadia | Mini-jeux</title>
+    <title>Flow Media | Mini-jeux</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="shortcut icon" href="../../assets/icons/logo.png" type="image/x-icon">
@@ -39,26 +56,46 @@ require_once '../../includes/auth.php';
             margin: 0;
         }
 
+        .navbar {
+            margin-bottom: 120px;
+        }
+
         /* Section mini-jeux */
         .minigames-section {
+            width: 100%;
+            margin: 80px 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .minigames-card {
+            background-color: var(--white);
+            padding: 0;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
             max-width: 1200px;
-            margin: 80px auto 0;
-            margin-top: 80px;
-            padding: 0 40px;
+            width: 90%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .hero-banner {
-            background-image: url('https://media.licdn.com/dms/image/sync/v2/D4E27AQHJl0G_npYoeg/articleshare-shrink_800/articleshare-shrink_800/0/1729090846676?e=2147483647&v=beta&t=vS9Dk6e6sofgp8-wY7X0U1pKx3rMKm2HfXJADXadGTg');
+            background-image: url('https://c.wallhere.com/photos/26/c6/3840x2160_px_Aerial_View_Labyrinth_Maze-1341609.jpg!d');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             height: 300px;
-            border-radius: 40px 40px 0 0;
+            border-radius: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
+            padding: 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
 
         .hero-banner::before {
@@ -69,49 +106,77 @@ require_once '../../includes/auth.php';
             right: 0;
             bottom: 0;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 40px 40px 0 0;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
 
         .hero-text {
-            color: white;
-            font-size: 28px;
-            font-weight: 600;
-            text-align: center;
-            max-width: 600px;
-            line-height: 1.3;
             position: relative;
             z-index: 2;
-            padding: 0 20px;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            max-width: 80%;
+            margin: 0 auto;
+            line-height: 1.2;
             font-family: 'Poppins', sans-serif;
         }
 
         .content-section {
-            background-color: white;
-            padding: 60px 50px;
-            border-radius: 0 0 40px 40px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            background-color: transparent;
+            padding: 40px var(--container-padding);
+            border-radius: 0;
+            box-shadow: none;
         }
 
         .content-wrapper {
+            max-width: 100%;
+            margin: 0 auto 40px;
             display: flex;
             align-items: center;
             gap: 60px;
-            margin-bottom: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .text-content {
             flex: 1;
+            min-width: 200px;
+            position: relative;
+            background-color: #F9F9F9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-right: 25px;
+        }
+
+        .text-content::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            transform: translateY(-50%) rotate(45deg);
+            width: 20px;
+            height: 20px;
+            background-color: #F9F9F9;
+            box-shadow: 3px -3px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1;
         }
 
         .description-text {
-            font-size: 20px;
+            font-size: 1rem;
             color: #000000;
             line-height: 1.6;
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
-            background-color: #F9F9F9;
-            padding: 20px;
-            border-radius: 10px;
+            background-color: transparent;
+            padding: 0;
+            text-align: left;
+        }
+
+        .content-wrapper img {
+            width: 200px;
+            height: auto;
         }
 
         .buttons-container {
@@ -119,6 +184,7 @@ require_once '../../includes/auth.php';
             gap: 30px;
             justify-content: center;
             flex-wrap: wrap;
+            margin-top: 20px;
         }
 
         .btn {
@@ -158,27 +224,51 @@ require_once '../../includes/auth.php';
 
         @media (max-width: 768px) {
             .minigames-section {
-                padding: 0 20px;
+                padding: 0;
+                margin-top: 80px;
+            }
+
+            .minigames-card {
+                padding: 0;
+                width: 95%;
             }
 
             .hero-banner {
-                height: 250px;
-                border-radius: 30px 30px 0 0;
+                height: 200px;
+                padding: 15px;
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+            }
+
+            .hero-banner::before {
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
             }
 
             .hero-text {
-                font-size: 24px;
+                font-size: 1.5rem;
             }
 
             .content-section {
-                padding: 40px 30px;
-                border-radius: 0 0 30px 30px;
+                padding: 30px 20px;
             }
 
             .content-wrapper {
                 flex-direction: column;
-                gap: 40px;
+                gap: 30px;
                 text-align: center;
+                align-items: center;
+            }
+
+            .text-content {
+                margin-right: 0;
+                margin-bottom: 20px;
+                min-width: unset;
+                text-align: center;
+            }
+
+            .text-content::after {
+                content: none;
             }
 
             .buttons-container {
@@ -194,21 +284,27 @@ require_once '../../includes/auth.php';
 
         @media (max-width: 480px) {
             .hero-banner {
-                height: 200px;
-                border-radius: 20px 20px 0 0;
+                height: 150px;
+                padding: 10px;
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+            }
+
+            .hero-banner::before {
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
             }
 
             .hero-text {
-                font-size: 20px;
+                font-size: 1.2rem;
             }
 
             .content-section {
-                padding: 30px 20px;
-                border-radius: 0 0 20px 20px;
+                padding: 20px 15px;
             }
 
             .description-text {
-                font-size: 16px;
+                font-size: 0.9rem;
             }
 
             .btn {
@@ -295,35 +391,85 @@ require_once '../../includes/auth.php';
         footer {
             margin-top: 0;
         }
+
+        .reward-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reward-popup-content {
+            background: #fff;
+            padding: 40px 30px 30px 30px;
+            border-radius: 18px;
+            max-width: 98vw;
+            width: 600px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+            position: relative;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .reward-popup-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 2rem;
+            color: #333;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .reward-popup-content h2 {
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+            color: #3a791f;
+        }
+
+        .reward-popup-content p {
+            font-size: 1rem;
+            color: #222;
+        }
     </style>
 </head>
 
 <body>
-    <?php include '../../includes/layout/navbar.php' ?>
+    <div class="navbar">
+        <?php include '../../includes/layout/navbar.php' ?>
+    </div>
     <!-- Section mini-jeux -->
     <section class="minigames-section">
-        <!-- Bannière hero avec image de fond -->
-        <div class="hero-banner">
-            <h2 class="hero-text">
-                Gagne des activités gratuites en accumulant des badges grâce aux mini-jeux.
-            </h2>
-        </div>
-
-        <!-- Section de contenu -->
-        <div class="content-section">
-            <div class="content-wrapper">
-                <div class="text-content">
-                    <p class="description-text">
-                        Pour gagner des badges et des récompenses, il faut gagner le mini jeux après avoir visité attentivement le Palais Idéal du Facteur Cheval !
-                    </p>
-                </div>
-
-                <img src="../../assets/images/corridor/vert.svg" alt="Illustration" style="width: 200px; height: auto;">
+        <div class="minigames-card">
+            <!-- Bannière hero avec image de fond -->
+            <div class="hero-banner">
+                <h2 class="hero-text">
+                    Gagne des activités gratuites en accumulant des badges grâce aux mini-jeux.
+                </h2>
             </div>
 
-            <div class="buttons-container">
-                <a href="#" class="btn btn-purple">Jouer dès maintenant</a>
-                <a href="#" class="btn btn-red">Comment j'obtiens une récompense ?</a>
+            <!-- Section de contenu -->
+            <div class="content-section">
+                <div class="content-wrapper">
+                    <div class="text-content">
+                        <p class="description-text">
+                            Pour gagner des badges et des récompenses, il faut gagner le mini jeux après avoir visité attentivement le Palais Idéal du Facteur Cheval !
+                        </p>
+                    </div>
+
+                    <img src="../../assets/images/corridor/vert.svg" alt="Illustration" style="width: 200px; height: auto;">
+                </div>
+
+                <div class="buttons-container">
+                    <a href="quizz.php?id=<?php echo $activity['id']; ?>" class="btn btn-purple">Jouer dès maintenant</a>
+                    <a href="quizz.php" class="btn btn-red">Comment j'obtiens une récompense ?</a>
+                </div>
             </div>
         </div>
     </section>
@@ -342,6 +488,31 @@ require_once '../../includes/auth.php';
         </div>
     </section>
     <?php include '../../includes/layout/footer.php' ?>
+
+    <div id="reward-popup" class="reward-popup-overlay" style="display:none;">
+        <div class="reward-popup-content">
+            <span class="reward-popup-close" onclick="closeRewardPopup()">&times;</span>
+            <h2>Comment obtenir une récompense ?</h2>
+            <p>
+                Pour obtenir une récompense, il te suffit de participer aux mini-jeux après avoir visité le lieu.
+                Scanne le QR code sur place, réponds correctement aux questions, et accumule des badges.
+                Plus tu as de badges, plus tu as de chances de gagner des activités gratuites !
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.btn-red').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('reward-popup').style.display = 'flex';
+            });
+        });
+
+        function closeRewardPopup() {
+            document.getElementById('reward-popup').style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>

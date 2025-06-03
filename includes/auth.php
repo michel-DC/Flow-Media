@@ -21,6 +21,9 @@ if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true) {
     } else if (strpos($chemin, '/pages/podcast') !== false) {
         header('Location: ../../connexion/login.php?erreur=non_connecte');
         exit();
+    } else if (strpos($chemin, '/pages/activite') !== false) {
+        header('Location: ../../connexion/login.php?erreur=non_connecte');
+        exit();
     }
 }
 

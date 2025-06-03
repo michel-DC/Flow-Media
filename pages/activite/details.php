@@ -1,5 +1,22 @@
 <?php
 require_once '../../includes/auth.php';
+
+if (!isset($_GET['id'])) {
+    header('Location: index.php');
+    exit;
+}
+
+$link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
+
+$query = "SELECT * FROM activites WHERE id = " . $_GET['id'];
+$result = mysqli_query($link, $query);
+$activity = mysqli_fetch_assoc($result);
+
+if (!$activity) {
+    header('Location: index.php');
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +25,7 @@ require_once '../../includes/auth.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>jsp en vrai</title>
+    <title>Flow Media | Détails de l'activité</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="shortcut icon" href="../../assets/icons/logo.png" type="image/x-icon">
@@ -42,7 +59,7 @@ require_once '../../includes/auth.php';
         .main-section {
             max-width: 1400px;
             margin: 0 auto;
-            margin-top: 120px;
+            margin-top: 180px;
             margin-bottom: 80px;
             padding: 0 20px;
         }
@@ -57,7 +74,7 @@ require_once '../../includes/auth.php';
         .palace-image {
             width: 520px;
             height: 380px;
-            border-radius: 80px;
+            border-radius: 30px;
             object-fit: cover;
             flex-shrink: 0;
         }
@@ -764,6 +781,52 @@ require_once '../../includes/auth.php';
                 height: 35px;
             }
         }
+
+        .reward-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reward-popup-content {
+            background: #fff;
+            padding: 40px 30px 30px 30px;
+            border-radius: 18px;
+            max-width: 98vw;
+            width: 600px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+            position: relative;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .reward-popup-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 2rem;
+            color: #333;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .reward-popup-content h2 {
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+            color: #3a791f;
+        }
+
+        .reward-popup-content p {
+            font-size: 1rem;
+            color: #222;
+        }
     </style>
 </head>
 
@@ -772,38 +835,41 @@ require_once '../../includes/auth.php';
     <!-- Section principale -->
     <section class="main-section">
         <div class="top-content">
-            <img src="https://woody.cloudly.space/app/uploads/porte-dromardeche/2021/07/thumbs/palais00-640x640.jpg" alt="Le Palais Idéal du Facteur Cheval" class="palace-image">
+            <?php if (!empty($activity['image_url'])): ?>
+                <img src="../../<?php echo htmlspecialchars($activity['image_url']); ?>?t=<?php echo time(); ?>" alt="Image 1 - <?php echo htmlspecialchars($activity['titre']); ?>" class="palace-image">
+            <?php endif; ?>
             <div class="title-and-buttons">
-                <h1 class="title">Le Palais Idéal du Facteur Cheval</h1>
+                <h1 class="title"><?php echo htmlspecialchars($activity['titre']); ?></h1>
 
                 <div class="place-info">
                     <div class="info-item">
                         <span class="info-label">Architecte :</span>
-                        <span class="info-value">Ferdinand Cheval</span>
+                        <span class="info-value">Piouf </span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Adresse :</span>
-                        <span class="info-value">8 Rue du Palais, 26390 Hauterives</span>
+                        <span class="info-value">Piouf</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Période :</span>
-                        <span class="info-value">1879-1912</span>
+                        <span class="info-value">piouf</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Style :</span>
-                        <span class="info-value">Architecture naïve</span>
+                        <span class="info-value">piouf</span>
                     </div>
                 </div>
 
                 <div class="buttons-container">
                     <a href="#" class="btn btn-green">Visiter le site web</a>
-                    <a href="#" class="btn btn-red">Réserver les billets</a>
+                    <a href="reservation.php?id=<?php echo $activity['id']; ?>" class="btn btn-red">Réserver les billets</a>
                 </div>
             </div>
         </div>
 
-        <p class="description" data-full-text="Palais construit de ses propres mains par un facteur rural, mêlant avec poésie des inspirations hindoues, des motifs orientaux et des éléments de la nature. Cette œuvre unique au monde, classée Monument Historique, témoigne de l'extraordinaire imagination et de la persévérance de Ferdinand Cheval. Pendant 33 ans, le facteur Cheval a ramassé des pierres lors de ses tournées quotidiennes pour construire ce palais de rêve. L'édifice, haut de 12 mètres et long de 26 mètres, présente une architecture fantastique où se mêlent des influences de différentes cultures et époques. Les façades sont ornées de sculptures représentant des animaux, des personnages mythologiques et des éléments naturels. Chaque détail raconte une histoire, chaque pierre porte la marque de l'imagination débordante de son créateur. Le Palais Idéal est aujourd'hui considéré comme un chef-d'œuvre de l'art brut et attire des visiteurs du monde entier, fascinés par cette construction unique qui défie les conventions architecturales traditionnelles.">
-            Palais construit de ses propres mains par un facteur rural, mêlant avec poésie des inspirations hindoues, des motifs orientaux et des éléments de la nature. Cette œuvre unique au monde, classée Monument Historique, témoigne de l'extraordinaire imagination et de la persévérance de Ferdinand Cheval. Pendant 33 ans, le facteur Cheval a ramassé des pierres lors de ses tournées quotidiennes pour construire ce palais de rêve. L'édifice, haut de 12 mètres et long de 26 mètres, présente une architecture fantastique où se mêlent des influences de différentes cultures et époques. Les façades sont ornées de sculptures représentant des animaux, des personnages mythologiques et des éléments naturels. Chaque détail raconte une histoire, chaque pierre porte la marque de l'imagination débordante de son créateur. Le Palais Idéal est aujourd'hui considéré comme un chef-d'œuvre de l'art brut et attire des visiteurs du monde entier, fascinés par cette construction unique qui défie les conventions architecturales traditionnelles.
+        <h3 style="font-weight: bold;">Description:</h3>
+        <p class="description" data-full-text="<?php echo nl2br(htmlspecialchars($activity['description'])); ?>">
+            <?php echo nl2br(htmlspecialchars($activity['description'])); ?>
             <a href="#" class="voir-plus" onclick="toggleDescription(event)">Voir plus</a>
         </p>
     </section>
@@ -823,11 +889,11 @@ require_once '../../includes/auth.php';
             </div>
 
             <!-- Carte Scannez le QR Code -->
-            <div class="card">
+            <div class="card" data-qrcard="1">
                 <div class="card-content">
                     <h3 class="card-title">Scannez le QR Code</h3>
                 </div>
-                <img src="../../assets/images/details-page/cam.svg"" alt=" QR Code icon" class="card-image">
+                <img src="../../assets/images/details-page/cam.svg" alt=" QR Code icon" class="card-image">
                 <div class="card-blur"></div>
                 <div class="question-mark">
                     ?
@@ -836,16 +902,18 @@ require_once '../../includes/auth.php';
             </div>
 
             <!-- Carte Obtenir un badge -->
-            <div class="card">
-                <div class="card-content">
-                    <h3 class="card-title">Obtenir un badge</h3>
+            <a href="corridor.php?id=<?php echo $activity['id']; ?>">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Obtenir un badge</h3>
+                    </div>
+                    <img src="../../assets/images/details-page/loupe.svg"" alt=" Badge icon" class="card-image">
+                    <div class="card-blur"></div>
+                    <div class="question-mark">?
+                        <span class="tooltip-text">Répondez correctement aux questions du mini-jeu après avoir scanné le QR code pour débloquer des badges exclusifs.</span>
+                    </div>
                 </div>
-                <img src="../../assets/images/details-page/loupe.svg"" alt=" Badge icon" class="card-image">
-                <div class="card-blur"></div>
-                <div class="question-mark">?
-                    <span class="tooltip-text">Répondez correctement aux questions du mini-jeu après avoir scanné le QR code pour débloquer des badges exclusifs.</span>
-                </div>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -925,6 +993,27 @@ require_once '../../includes/auth.php';
 
     <?php include '../../includes/layout/footer.php' ?>
 
+    <div id="qr-popup" class="reward-popup-overlay" style="display:none;">
+        <div class="reward-popup-content">
+            <span class="reward-popup-close" onclick="closeQrPopup()">&times;</span>
+            <h2>Scanne le QR Code</h2>
+            <img src="https://cdnb.artstation.com/p/assets/video_clips/images/056/860/377/large/dawid-bochno-thumb.jpg?1670269389" alt="QR Code" style="width:220px;max-width:90%;margin:20px auto;display:block;">
+            <p>
+                Scanne ce QR code sur place pour accéder au mini-jeu et tenter de gagner des badges !
+            </p>
+        </div>
+    </div>
+
+    <div id="funfact-popup" class="reward-popup-overlay" style="display:none;">
+        <div class="reward-popup-content">
+            <span class="reward-popup-close" onclick="closeFunFactPopup()">&times;</span>
+            <h2>Le Fun Fact</h2>
+            <p style="font-size: 1.1rem; line-height: 1.6; margin: 20px 0;">
+                <?php echo htmlspecialchars($activity['fun_fact'] ?? 'Saviez-vous que ce lieu historique a été construit en seulement 3 ans ? Un véritable exploit architectural pour l\'époque !'); ?>
+            </p>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const description = document.querySelector('.description');
@@ -936,6 +1025,26 @@ require_once '../../includes/auth.php';
                 description.textContent = fullText.substring(0, charLimit) + '...';
                 voirPlus.style.display = 'inline';
                 description.appendChild(voirPlus);
+            }
+
+            // Cible la carte QR code (2e card)
+            var qrCard = document.querySelector('.card[data-qrcard="1"]');
+            if (qrCard) {
+                qrCard.style.cursor = 'pointer';
+                qrCard.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('qr-popup').style.display = 'flex';
+                });
+            }
+
+            // Cible la carte Fun Fact (1ère card)
+            var funFactCard = document.querySelector('.card:first-child');
+            if (funFactCard) {
+                funFactCard.style.cursor = 'pointer';
+                funFactCard.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.getElementById('funfact-popup').style.display = 'flex';
+                });
             }
         });
 
@@ -953,6 +1062,14 @@ require_once '../../includes/auth.php';
                 link.textContent = 'Voir plus';
             }
             description.appendChild(link);
+        }
+
+        function closeQrPopup() {
+            document.getElementById('qr-popup').style.display = 'none';
+        }
+
+        function closeFunFactPopup() {
+            document.getElementById('funfact-popup').style.display = 'none';
         }
     </script>
 </body>

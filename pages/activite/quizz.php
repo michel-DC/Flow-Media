@@ -1,5 +1,35 @@
 <?php
 require_once '../../includes/auth.php';
+
+if (!isset($_GET['id'])) {
+    header('Location: index.php');
+    exit;
+}
+
+$link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
+
+$query = "SELECT * FROM activites WHERE id = " . $_GET['id'];
+$result = mysqli_query($link, $query);
+$activity = mysqli_fetch_assoc($result);
+
+if (!$activity) {
+    header('Location: index.php');
+    exit;
+}
+
+// Vérifier si l'utilisateur a déjà fait ce quiz
+$user_id = $_SESSION['user_id'];
+$check_query = "SELECT * FROM point_user WHERE user_id = $user_id AND activite_id = " . $_GET['id'];
+$check_result = mysqli_query($link, $check_query);
+
+if (mysqli_num_rows($check_result) > 0) {
+    // L'utilisateur a déjà fait ce quiz
+    $points = mysqli_fetch_assoc($check_result)['nombre_point'];
+    $quiz_completed = true;
+} else {
+    $quiz_completed = false;
+    $points = 0;
+}
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +38,7 @@ require_once '../../includes/auth.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowMedia | Quiz</title>
+    <title>Flow Media | Quiz</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="shortcut icon" href="../../assets/icons/logo.png" type="image/x-icon">
@@ -302,6 +332,86 @@ require_once '../../includes/auth.php';
         footer {
             margin-top: auto;
         }
+
+        .message {
+            padding: 12px;
+            border-radius: 4px;
+            margin: 10px auto;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: fadeOut 5s forwards;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                display: none;
+            }
+        }
+
+        .quit-button {
+            background-color: #FF3131;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            margin: 20px auto 0 auto;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .quit-button:hover {
+            background-color: #e02828;
+            transform: translateY(-2px);
+        }
+
+        .quit-button i {
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .quit-button {
+                padding: 12px 25px;
+                font-size: 15px;
+                margin: 0 auto 10px auto;
+            }
+        }
     </style>
 </head>
 
@@ -309,6 +419,7 @@ require_once '../../includes/auth.php';
     <div class="navbar">
         <?php include '../../includes/layout/navbar.php' ?>
     </div>
+
     <!-- Section quiz -->
     <section class="quiz-section">
         <div class="quiz-container">
@@ -339,61 +450,200 @@ require_once '../../includes/auth.php';
 
             <!-- Barre de progression -->
             <div class="progress-container">
-                <div class="progress-step active">
+                <div class="progress-step inactive" id="step-1">
                     <img src="../../assets/images/quizz/loupe.svg" alt="Step 1">
                 </div>
-                <div class="progress-line completed"></div>
-                <div class="progress-step inactive">
+                <div class="progress-line" id="line-1"></div>
+                <div class="progress-step inactive" id="step-2">
                     <img src="../../assets/images/quizz/boussole.svg" alt="Step 2">
                 </div>
-                <div class="progress-line"></div>
-                <div class="progress-step inactive">
+                <div class="progress-line" id="line-2"></div>
+                <div class="progress-step inactive" id="step-3">
                     <img src="../../assets/images/quizz/bouclier.svg" alt="Step 3">
                 </div>
             </div>
         </div>
+        <a href="details.php?id=<?php echo $_GET['id']; ?>" class="quit-button">
+            <i class="fas fa-times"></i>
+            Quitter le jeu
+        </a>
     </section>
 
     <?php include '../../components/newsletter.php' ?>
 
     <?php include '../../includes/layout/footer.php' ?>
 
+    <div id="quiz-error" class="message error" style="display:none;"></div>
+
     <script>
-        function selectAnswer(answerNumber) {
-            // Retirer la sélection précédente
-            document.querySelectorAll('.answer-button').forEach(btn => {
-                btn.style.transform = '';
-                btn.style.boxShadow = '';
+        // Questions du quiz
+        const questions = [{
+                title: "LE MINI JEU : Le Palais Idéal du Facteur Cheval",
+                question: "Avec quoi ramassait-il les pierres pour son palais ?",
+                answers: [
+                    "Un camion benne turbo",
+                    "Une brouette, tout simplement",
+                    "Son chapeau",
+                    "Une licorne magique"
+                ],
+                correct: 2
+            },
+            {
+                title: "Question 2",
+                question: "Combien d'années a-t-il fallu pour construire le Palais Idéal ?",
+                answers: [
+                    "5 ans",
+                    "10 ans",
+                    "33 ans",
+                    "50 ans"
+                ],
+                correct: 3
+            },
+            {
+                title: "Question 3",
+                question: "Quel est le style architectural du Palais Idéal ?",
+                answers: [
+                    "Baroque",
+                    "Architecture naïve",
+                    "Gothique",
+                    "Renaissance"
+                ],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let points = 0;
+        let steps = [
+            document.getElementById('step-1'),
+            document.getElementById('step-2'),
+            document.getElementById('step-3')
+        ];
+        let lines = [
+            document.getElementById('line-1'),
+            document.getElementById('line-2')
+        ];
+
+        <?php if ($quiz_completed): ?>
+            // Si le quiz est déjà complété, afficher les points
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('.quiz-title').textContent = 'Quiz déjà complété';
+                document.querySelector('.quiz-question').textContent = `Vous avez obtenu ${<?php echo $points; ?>} points sur ${questions.length}`;
+                document.querySelector('.quiz-content').style.display = 'none';
+                document.querySelector('.progress-container').style.display = 'none';
             });
+        <?php else: ?>
 
-            // Ajouter l'effet de sélection
-            const selectedButton = document.querySelector(`.answer-${answerNumber}`);
-            selectedButton.style.transform = 'translateY(-3px) scale(1.05)';
-            selectedButton.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
-
-            // Simulation de passage à la question suivante après 1.5s
-            setTimeout(() => {
-                alert(`Réponse ${answerNumber} sélectionnée ! Passage à la question suivante...`);
-                // Ici tu peux ajouter la logique pour passer à la question suivante
-
-                // Example: Update progress bar (basic simulation)
-                const currentActive = document.querySelector('.progress-step.active');
-                if (currentActive) {
-                    currentActive.classList.remove('active');
-                    currentActive.classList.add('completed');
-                    const nextStep = currentActive.nextElementSibling.nextElementSibling;
-                    if (nextStep && nextStep.classList.contains('inactive')) {
-                        nextStep.classList.remove('inactive');
-                        nextStep.classList.add('active');
-                        const prevLine = currentActive.nextElementSibling;
-                        if (prevLine && prevLine.classList.contains('progress-line')) {
-                            prevLine.classList.add('completed');
-                        }
+            function showQuestion(index) {
+                // Met à jour le titre et la question
+                document.querySelector('.quiz-title').textContent = questions[index].title;
+                document.querySelector('.quiz-question').textContent = questions[index].question;
+                // Met à jour les réponses
+                const answers = document.querySelectorAll('.answer-button');
+                answers.forEach((btn, i) => {
+                    btn.textContent = questions[index].answers[i];
+                    btn.disabled = false;
+                    btn.style.transform = '';
+                    btn.style.boxShadow = '';
+                });
+                // Efface l'erreur
+                document.getElementById('quiz-error').style.display = 'none';
+                // Met à jour les steps
+                steps.forEach((step, i) => {
+                    if (step.classList.contains('completed')) return;
+                    step.classList.remove('active', 'inactive');
+                    if (i === index) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.add('inactive');
                     }
-                }
+                });
+            }
 
-            }, 1500);
-        }
+            function selectAnswer(answerNumber) {
+                const q = questions[currentQuestion];
+                if (answerNumber === q.correct) {
+                    // Bonne réponse
+                    points++;
+                    steps[currentQuestion].classList.remove('inactive', 'active');
+                    steps[currentQuestion].classList.add('completed');
+                    if (currentQuestion > 0) {
+                        lines[currentQuestion - 1].classList.add('completed');
+                    }
+                    // Désactive les boutons
+                    document.querySelectorAll('.answer-button').forEach(btn => btn.disabled = true);
+                    setTimeout(() => {
+                        currentQuestion++;
+                        if (currentQuestion < questions.length) {
+                            showQuestion(currentQuestion);
+                        } else {
+                            // Quiz terminé
+                            steps.forEach((step) => step.classList.remove('active'));
+                            document.querySelector('.quiz-title').textContent = 'Quiz terminé !';
+                            document.querySelector('.quiz-question').textContent = `Vous avez obtenu ${points} points sur ${questions.length}`;
+                            document.querySelector('.quiz-content').style.display = 'none';
+                            document.getElementById('quiz-error').style.display = 'none';
+
+                            // Envoyer les points au serveur
+                            fetch('save_points.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: `points=${points}&activite_id=<?php echo $_GET['id']; ?>`
+                            });
+                        }
+                    }, 900);
+                } else {
+                    // Mauvaise réponse
+                    const error = document.getElementById('quiz-error');
+                    error.textContent = '❌ Mauvaise réponse, vous ne pouvez pas réessayer cette question.';
+                    error.style.display = 'block';
+                    error.style.animation = 'none';
+                    error.offsetHeight; // Force reflow
+                    error.style.animation = 'fadeOut 5s forwards';
+
+                    // Désactive les boutons
+                    document.querySelectorAll('.answer-button').forEach(btn => btn.disabled = true);
+
+                    // Passe à la question suivante après un délai
+                    setTimeout(() => {
+                        currentQuestion++;
+                        if (currentQuestion < questions.length) {
+                            showQuestion(currentQuestion);
+                        } else {
+                            // Quiz terminé
+                            steps.forEach((step) => step.classList.remove('active'));
+                            document.querySelector('.quiz-title').textContent = 'Quiz terminé !';
+                            document.querySelector('.quiz-question').textContent = `Vous avez obtenu ${points} points sur ${questions.length}`;
+                            document.querySelector('.quiz-content').style.display = 'none';
+                            document.getElementById('quiz-error').style.display = 'none';
+
+                            // Envoyer les points au serveur
+                            fetch('save_points.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: `points=${points}&activite_id=<?php echo $_GET['id']; ?>`
+                            });
+                        }
+                    }, 2000);
+                }
+            }
+
+            // Initialisation
+            document.addEventListener('DOMContentLoaded', function() {
+                // Ajoute les events sur les boutons
+                document.querySelectorAll('.answer-button').forEach((btn, i) => {
+                    btn.onclick = function() {
+                        selectAnswer(i + 1);
+                    };
+                });
+                // Affiche la première question
+                showQuestion(0);
+            });
+        <?php endif; ?>
     </script>
 </body>
 

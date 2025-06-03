@@ -11,7 +11,17 @@ $query = "SELECT r.*, a.titre, a.date_activite, a.lieu, a.prix, a.image_url
           ORDER BY r.date_reservation DESC";
 $result = mysqli_query($link, $query);
 
-
+// Traitement de l'annulation
+if (isset($_POST['cancel_reservation'])) {
+    $reservation_id = $_POST['reservation_id'];
+    $delete_query = "DELETE FROM reservations WHERE id = " . $reservation_id . " AND user_id = " . $_SESSION['user_id'];
+    if (mysqli_query($link, $delete_query)) {
+        header('Location: index.php?success=1');
+        exit;
+    } else {
+        $error = "Une erreur est survenue lors de l'annulation de la réservation.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
