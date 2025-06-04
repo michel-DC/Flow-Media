@@ -3,15 +3,15 @@
 <?php
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-$query = "SELECT * FROM activites ORDER BY id DESC";
+$query = "SELECT * FROM all_activites";
 
 if (isset($_POST['search_activites'])) {
     $search = mysqli_real_escape_string($link, $_POST['search']);
-    $query = "SELECT * FROM activites WHERE titre LIKE '%$search%' ORDER BY id DESC";
+    $query = "SELECT * FROM all_activites WHERE titre LIKE '%$search%' OR nom_lieu LIKE '%$search%' OR region LIKE '%$search%'";
 }
 
 if (isset($_POST['see_activites'])) {
-    $query = "SELECT * FROM activites ORDER BY id DESC";
+    $query = "SELECT * FROM all_activites";
 }
 
 $result = mysqli_query($link, $query);
@@ -213,32 +213,33 @@ $result = mysqli_query($link, $query);
         <div class="activities-grid">
             <?php
             if (mysqli_num_rows($result) > 0) {
-                while ($activite = mysqli_fetch_assoc($result)): ?>
-                    <div class="activity-card">
-                        <img src="<?= htmlspecialchars($activite['image_url']) ?>" alt="<?= htmlspecialchars($activite['titre']) ?>" class="activity-image">
+                while ($activity = mysqli_fetch_assoc($result)): ?>
+                    <div class="activity-card"
+                        data-location="<?php echo strtolower($activity['nom_lieu']); ?>"
+                        data-region="<?php echo strtolower($activity['region']); ?>"
+                        data-architecture="<?php echo strtolower($activity['type_architecture']); ?>"
+                        data-type-lieu="<?php echo strtolower($activity['type_lieu']); ?>">
+                        <img src="../<?php echo htmlspecialchars($activity['image']); ?>"
+                            alt="<?php echo htmlspecialchars($activity['titre']); ?>"
+                            class="activity-image">
                         <div class="activity-content">
-                            <h2 class="activity-title"><?= htmlspecialchars($activite['titre']) ?></h2>
-
+                            <h3 class="activity-title" style="text-align: center;"><?php echo htmlspecialchars($activity['titre']); ?></h3>
+                            <p style="text-align: center;"><?php echo htmlspecialchars($activity['adresse']); ?></p>
+                            <div class="activity-location">
+                                <?php echo htmlspecialchars($activity['region']); ?>
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
                             <div class="activity-info">
                                 <div class="info-item">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span><?= htmlspecialchars($activite['lieu']) ?></span>
+                                    <i class="fas fa-building"></i>
+                                    <span><?php echo htmlspecialchars($activity['type_architecture']); ?></span>
                                 </div>
                                 <div class="info-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>Âge: <?= htmlspecialchars($activite['age_min']) ?> - <?= htmlspecialchars($activite['age_max']) ?> ans</span>
-                                </div>
-                                <div class="info-item">
-                                    <i class="fas fa-clock"></i>
-                                    <span>Le: <?= htmlspecialchars($activite['date_activite']) ?></span>
+                                    <i class="fas fa-map"></i>
+                                    <span><?php echo htmlspecialchars($activity['type_lieu']); ?></span>
                                 </div>
                             </div>
-
-                            <p class="activity-description"><?= htmlspecialchars($activite['description']) ?></p>
-
-                            <div class="activity-price">
-                                <?= number_format(htmlspecialchars($activite['prix']), 2) ?> €
-                            </div>
+                            <p class="activity-description"><?php echo htmlspecialchars($activity['description']); ?></p>
                         </div>
                     </div>
             <?php endwhile;
@@ -249,3 +250,16 @@ $result = mysqli_query($link, $query);
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const colors = ['#FF3131', '#3A791F', '#9D9581', '#853FD4'];
+        const activityLinks = document.querySelectorAll('.activity-link');
+
+        activityLinks.forEach(link => {
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            link.style.backgroundColor = randomColor;
+            link.style.borderColor = randomColor;
+        });
+    });
+</script>

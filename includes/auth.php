@@ -42,7 +42,12 @@ if (strpos($chemin, '/admin') !== false && isset($_SESSION['role']) && $_SESSION
 }
 
 if (strpos($chemin, '/connexion/login-admin.php') !== false && isset($_SESSION['role']) && $_SESSION['role'] !== 'admin') {
-    header('Location: ../pages/user/profile.php?erreur=acces_refuse_user');
+    header('Location: ../pages/user/me.php?erreur=acces_refuse_user');
+    exit();
+}
+
+if (strpos($chemin, 'login-admin.php') !== false && isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] === 'user') {
+    header('Location: ../pages/user/me.php?erreur=acces_refuse_user');
     exit();
 }
 

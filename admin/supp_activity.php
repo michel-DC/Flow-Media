@@ -7,13 +7,12 @@ $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", 
 if (isset($_POST['delete_activity'])) {
     $activity_id = mysqli_real_escape_string($link, $_POST['activity_id']);
 
-    $image_query = "SELECT image_url FROM activites WHERE id = '$activity_id'";
+    $image_query = "SELECT image FROM all_activites WHERE id = '$activity_id'";
     $image_result = mysqli_query($link, $image_query);
     $image_data = mysqli_fetch_assoc($image_result);
-    $image_to_delete = $image_data['image_url'] ?? null;
+    $image_to_delete = $image_data['image'] ?? null;
 
-
-    $delete_query = "DELETE FROM activites WHERE id = '$activity_id'";
+    $delete_query = "DELETE FROM all_activites WHERE id = '$activity_id'";
     if (mysqli_query($link, $delete_query)) {
         if ($image_to_delete && file_exists($image_to_delete)) {
             unlink($image_to_delete);
@@ -24,7 +23,7 @@ if (isset($_POST['delete_activity'])) {
     }
 }
 
-$query = "SELECT * FROM activites ORDER BY id DESC";
+$query = "SELECT * FROM all_activites ORDER BY id DESC";
 $result = mysqli_query($link, $query);
 ?>
 
@@ -283,29 +282,27 @@ $result = mysqli_query($link, $query);
             if (mysqli_num_rows($result) > 0) {
                 while ($activite = mysqli_fetch_assoc($result)): ?>
                     <div class="activity-card">
-                        <img src="<?= htmlspecialchars($activite['image_url']) ?>" alt="<?= htmlspecialchars($activite['titre']) ?>" class="activity-image">
+                        <img src="../<?= htmlspecialchars($activite['image']) ?>" alt="<?= htmlspecialchars($activite['titre']) ?>" class="activity-image">
                         <div class="activity-content">
                             <h2 class="activity-title"><?= htmlspecialchars($activite['titre']) ?></h2>
 
                             <div class="activity-info">
                                 <div class="info-item">
                                     <i class="fas fa-map-marker-alt"></i>
-                                    <span><?= htmlspecialchars($activite['lieu']) ?></span>
+                                    <span><?= htmlspecialchars($activite['nom_lieu']) ?></span>
                                 </div>
                                 <div class="info-item">
-                                    <i class="fas fa-users"></i>
-                                    <span>Âge: <?= htmlspecialchars($activite['age_min']) ?> - <?= htmlspecialchars($activite['age_max']) ?> ans</span>
+                                    <i class="fas fa-building"></i>
+                                    <span><?= htmlspecialchars($activite['type_architecture']) ?></span>
                                 </div>
                                 <div class="info-item">
-                                    <i class="fas fa-clock"></i>
-                                    <span>Le: <?= htmlspecialchars($activite['date_activite']) ?></span>
+                                    <i class="fas fa-map"></i>
+                                    <span><?= htmlspecialchars($activite['region']) ?></span>
                                 </div>
                             </div>
 
                             <p class="activity-description"><?= htmlspecialchars($activite['description']) ?></p>
-
                         </div>
-                        <!-- Delete button outside activity-content but inside card -->
                         <div class="delete-form">
                             <form method="POST" action="dashboard.php#supp-activity-section" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?');">
                                 <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activite['id']) ?>">

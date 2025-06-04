@@ -5,7 +5,7 @@ $_SESSION['connecté'] = true;
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
 // Récupérer le nombre d'activités
-$query = "SELECT COUNT(*) as total FROM activites";
+$query = "SELECT COUNT(*) as total FROM all_activites";
 $result = mysqli_query($link, $query);
 $total_activites = mysqli_fetch_assoc($result)['total'];
 
@@ -26,17 +26,17 @@ $result_ca = mysqli_query($link, $query_ca);
 $chiffre_affaire = mysqli_fetch_assoc($result_ca)['chiffre_affaire'];
 
 $query_max_reserv = "SELECT a.titre, COUNT(r.id) as reservation_count 
-                        FROM activites a 
-                        JOIN reservations r ON a.id = r.activite_id 
-                        GROUP BY a.id 
-                        ORDER BY reservation_count DESC 
-                        LIMIT 1";
+                    FROM all_activites a 
+                    JOIN reservations r ON a.id = r.activite_id 
+                    GROUP BY a.id 
+                    ORDER BY reservation_count DESC 
+                    LIMIT 1";
 $result_max_reserv = mysqli_query($link, $query_max_reserv);
-$max_reserv = mysqli_fetch_assoc($result_max_reserv)['titre'];
+$max_reserv = mysqli_fetch_assoc($result_max_reserv)['titre'] ?? 'Aucune réservation';
 
 $query_lieu = "SELECT SUM(places) as total_places FROM reservations";
 $result_lieu = mysqli_query($link, $query_lieu);
-$lieu_max_reserv = mysqli_fetch_assoc($result_lieu)['total_places'];
+$lieu_max_reserv = mysqli_fetch_assoc($result_lieu)['total_places'] ?? 0;
 
 
 
@@ -587,8 +587,9 @@ $total_admins = mysqli_fetch_assoc($result6)['total'];
                     const marker = L.marker([point.latitude, point.longitude]).addTo(map);
                     marker.bindPopup(`
                         <strong>${point.titre}</strong><br>
-                        <strong>À: </strong>${point.lieu}</br> 
-                        <strong>Le: </strong>${point.date_activite}<br>
+                        <strong>Lieu: </strong>${point.nom_lieu}</br> 
+                        <strong>Adresse: </strong>${point.adresse}<br>
+                        <a href="edit_activity.php?id=${point.id}" class="btn">Modifier</a>
                     `);
                 });
 

@@ -12,7 +12,7 @@ $success_message = null;
 $error_message = null;
 
 // Récupérer toutes les activités pour le select
-$query_all = "SELECT id, titre FROM activites ORDER BY titre ASC";
+$query_all = "SELECT id, titre FROM all_activites ORDER BY titre ASC";
 $result_all = mysqli_query($link, $query_all);
 $activities = [];
 while ($row = mysqli_fetch_assoc($result_all)) {
@@ -30,7 +30,7 @@ while ($row = mysqli_fetch_assoc($all_interests_result)) {
 
 if (isset($_GET['id'])) {
     $activity_id = mysqli_real_escape_string($link, $_GET['id']);
-    $query = "SELECT * FROM activites WHERE id = '$activity_id'";
+    $query = "SELECT * FROM all_activites WHERE id = '$activity_id'";
     $result = mysqli_query($link, $query);
     if ($result && mysqli_num_rows($result) > 0) {
         $activity_data = mysqli_fetch_assoc($result);
@@ -52,30 +52,31 @@ if (isset($_POST['update_activity'])) {
     $activity_id = mysqli_real_escape_string($link, $_POST['activity_id']);
     $titre = mysqli_real_escape_string($link, $_POST['titre']);
     $description = mysqli_real_escape_string($link, $_POST['description']);
-    $date_activite = mysqli_real_escape_string($link, $_POST['date_activite']);
-    $ville = mysqli_real_escape_string($link, $_POST['ville']);
+    $nom_lieu = mysqli_real_escape_string($link, $_POST['nom_lieu']);
+    $type_lieu = mysqli_real_escape_string($link, $_POST['type_lieu']);
+    $type_architecture = mysqli_real_escape_string($link, $_POST['type_architecture']);
+    $region = mysqli_real_escape_string($link, $_POST['region']);
+    $adresse = mysqli_real_escape_string($link, $_POST['adresse']);
+    $architecte = mysqli_real_escape_string($link, $_POST['architecte']);
+    $lien_plus = mysqli_real_escape_string($link, $_POST['lien_plus']);
+    $fun_fact = mysqli_real_escape_string($link, $_POST['fun_fact']);
     $age_min = mysqli_real_escape_string($link, $_POST['age_min']);
     $age_max = mysqli_real_escape_string($link, $_POST['age_max']);
-    $prix = mysqli_real_escape_string($link, $_POST['prix']);
-    $abonnement_id = mysqli_real_escape_string($link, $_POST['abonnement_id']);
-    $lien_video = mysqli_real_escape_string($link, $_POST['video']);
-    $lien_podcast = mysqli_real_escape_string($link, $_POST['podcast']);
 
     $latitude = null;
     $longitude = null;
 
-    $existing_query = "SELECT lieu, latitude, longitude FROM activites WHERE id = '$activity_id'";
+    $existing_query = "SELECT region, latitude, longitude FROM all_activites WHERE id = '$activity_id'";
     $existing_result = mysqli_query($link, $existing_query);
     $existing_data = mysqli_fetch_assoc($existing_result);
 
-    if ($ville !== $existing_data['lieu'] || empty($existing_data['latitude']) || empty($existing_data['longitude'])) {
-        $geocode_result = geocodeCity($_POST['ville']);
+    if ($region !== $existing_data['region'] || empty($existing_data['latitude']) || empty($existing_data['longitude'])) {
+        $geocode_result = geocodeCity($_POST['region']);
         if ($geocode_result && isset($geocode_result['latitude']) && isset($geocode_result['longitude'])) {
             $latitude = mysqli_real_escape_string($link, $geocode_result['latitude']);
             $longitude = mysqli_real_escape_string($link, $geocode_result['longitude']);
         } else {
-            $error_message = "Impossible de géolocaliser la nouvelle ville. L'activité sera mise à jour avec les anciennes coordonnées si disponibles.";
-
+            $error_message = "Impossible de géolocaliser la ville. L'activité sera mise à jour avec les anciennes coordonnées si disponibles.";
             $latitude = mysqli_real_escape_string($link, $existing_data['latitude']);
             $longitude = mysqli_real_escape_string($link, $existing_data['longitude']);
         }
@@ -85,68 +86,39 @@ if (isset($_POST['update_activity'])) {
     }
 
     $image_url = mysqli_real_escape_string($link, $_POST['existing_image']);
-    $image_url_2 = mysqli_real_escape_string($link, $_POST['existing_image_2'] ?? null);
-    $image_url_3 = mysqli_real_escape_string($link, $_POST['existing_image_3'] ?? null);
 
     $upload_dir = '../assets/uploads/activities/';
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0755, true);
     }
 
-    function processImage($file, $upload_dir, $existing_url)
-    {
-        if (isset($file) && $file['error'] === 0) {
-            $filename = basename($file['name']);
-            $filename = preg_replace("/[^a-zA-Z0-9.-]/", "_", $filename);
-            $destination = $upload_dir . uniqid() . '_' . $filename;
-            $file_type = mime_content_type($file['tmp_name']);
-            $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-
-            if (in_array($file_type, $allowed_types)) {
-                if (move_uploaded_file($file['tmp_name'], $destination)) {
-                    // Delete old image if it exists
-                    if ($existing_url && file_exists($existing_url)) {
-                        unlink($existing_url);
-                    }
-                    return $destination;
-                }
-            }
-        }
-        return $existing_url;
-    }
-
-    // Process main image
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-        $image_url = processImage($_FILES['image'], $upload_dir, $image_url);
+        $filename = basename($_FILES['image']['name']);
+        $destination = $upload_dir . uniqid() . '_' . $filename;
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
+            if ($image_url && file_exists($image_url)) {
+                unlink($image_url);
+            }
+            $image_url = $destination;
+        }
     }
 
-    // Process second image
-    if (isset($_FILES['image_2']) && $_FILES['image_2']['error'] === 0) {
-        $image_url_2 = processImage($_FILES['image_2'], $upload_dir, $image_url_2);
-    }
-
-    // Process third image
-    if (isset($_FILES['image_3']) && $_FILES['image_3']['error'] === 0) {
-        $image_url_3 = processImage($_FILES['image_3'], $upload_dir, $image_url_3);
-    }
-
-    // Using direct mysqli_query with escaped variables
-    $query = "UPDATE activites SET
-                abonnement_id = '$abonnement_id',
+    $query = "UPDATE all_activites SET
                 titre = '$titre',
                 description = '$description',
-                date_activite = '$date_activite',
-                lieu = '$ville',
+                nom_lieu = '$nom_lieu',
+                type_lieu = '$type_lieu',
+                type_architecture = '$type_architecture',
+                region = '$region',
+                adresse = '$adresse',
+                architecte = '$architecte',
+                lien_plus = '$lien_plus',
+                fun_fact = '$fun_fact',
                 latitude = " . ($latitude !== null ? "'$latitude'" : "NULL") . ",
                 longitude = " . ($longitude !== null ? "'$longitude'" : "NULL") . ",
                 age_min = '$age_min',
                 age_max = '$age_max',
-                prix = '$prix',
-                image_url = " . ($image_url !== null ? "'$image_url'" : "NULL") . ",
-                image_url_2 = " . ($image_url_2 !== null ? "'$image_url_2'" : "NULL") . ",
-                image_url_3 = " . ($image_url_3 !== null ? "'$image_url_3'" : "NULL") . ",
-                video_url = '$lien_video',
-                podcast_url = '$lien_podcast'
+                image = " . ($image_url !== null ? "'$image_url'" : "NULL") . "
               WHERE id = '$activity_id'";
 
     if (mysqli_query($link, $query)) {
@@ -166,7 +138,7 @@ if (isset($_POST['update_activity'])) {
         }
 
         $success_message = "Activité mise à jour avec succès !";
-        $query_updated = "SELECT * FROM activites WHERE id = '$activity_id'";
+        $query_updated = "SELECT * FROM all_activites WHERE id = '$activity_id'";
         $result_updated = mysqli_query($link, $query_updated);
         if ($result_updated && mysqli_num_rows($result_updated) > 0) {
             $activity_data = mysqli_fetch_assoc($result_updated);
@@ -180,26 +152,24 @@ if (isset($_POST['update_activity'])) {
 ?>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    :root {
-        --primary-color: #2ECC71;
-        --secondary-color: #25a25a;
-        --text-color: #333;
-        --light-bg: #f0f0f0;
-        --white: #ffffff;
-        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f5f5;
+        padding: 80px 0;
     }
 
     .edit-activity-component .edit-activity-container {
-        flex: 1;
-        max-width: 1000px;
-        margin: 40px auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 0 40px;
     }
 
     .edit-activity-component .edit-activity-container h1 {
@@ -213,7 +183,7 @@ if (isset($_POST['update_activity'])) {
     }
 
     .edit-activity-component .edit-activity-container h1 span {
-        color: var(--primary-color);
+        color: #FF3131;
         position: relative;
     }
 
@@ -224,112 +194,196 @@ if (isset($_POST['update_activity'])) {
         left: 0;
         width: 100%;
         height: 3px;
-        background-color: var(--primary-color);
+        background-color: #FF3131;
         border-radius: 3px;
     }
 
-    .edit-activity-component .edit-activity-form-container {
-        background: var(--white);
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        padding: 30px 40px;
-        width: 100%;
-        max-width: 900px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px 30px;
+    .edit-activity-component .activity-select-form {
+        background-color: #ffffff;
+        border-radius: 30px;
+        padding: 50px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
     }
 
-    .edit-activity-component .edit-activity-form-group {
-        margin-bottom: 0;
+    .edit-activity-component .activity-select-form select {
+        width: 100%;
+        padding: 18px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: #F0F0F0;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        color: #000000;
+        transition: background-color 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .edit-activity-component .activity-select-form select:focus {
+        outline: none;
+        background-color: #E8E8E8;
+    }
+
+    .edit-activity-component .activity-select-form button {
+        background-color: #FF3131;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 18px 40px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        width: 100%;
+    }
+
+    .edit-activity-component .activity-select-form button:hover {
+        background-color: #e02828;
+        transform: translateY(-2px);
+    }
+
+    .edit-activity-component .edit-activity-form-container {
+        background-color: #ffffff;
+        border-radius: 30px;
+        padding: 50px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-activity-component .form-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .edit-activity-component .form-group {
+        display: flex;
+        flex-direction: column;
     }
 
     .edit-activity-component label {
         display: block;
         margin-bottom: 8px;
-        color: var(--text-color);
+        color: #333;
         font-weight: 500;
         font-size: 13px;
     }
 
     .edit-activity-component input[type="text"],
     .edit-activity-component input[type="number"],
-    .edit-activity-component input[type="datetime-local"],
+    .edit-activity-component input[type="url"],
     .edit-activity-component textarea,
     .edit-activity-component select {
+        padding: 18px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: #F0F0F0;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        color: #000000;
+        transition: background-color 0.3s ease;
         width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        background-color: white;
-        font-size: 0.9rem;
-        color: #4b5563;
-        font-family: "Poppins", sans-serif;
-        transition: all 0.2s ease;
+    }
+
+    .edit-activity-component input[type="text"]:focus,
+    .edit-activity-component input[type="number"]:focus,
+    .edit-activity-component input[type="url"]:focus,
+    .edit-activity-component textarea:focus,
+    .edit-activity-component select:focus {
+        outline: none;
+        background-color: #E8E8E8;
     }
 
     .edit-activity-component textarea {
         min-height: 100px;
         resize: vertical;
-        grid-column: span 2 / auto;
     }
 
-
-    .edit-activity-component input[type="text"]:focus,
-    .edit-activity-component input[type="number"]:focus,
-    .edit-activity-component input[type="datetime-local"]:focus,
-    .edit-activity-component textarea:focus,
-    .edit-activity-component select:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1);
-    }
-
-
-    .edit-activity-component .edit-activity-form-group input[type="file"] {
-        padding: 10px 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        background-color: white;
+    .edit-activity-component input[type="file"] {
+        padding: 18px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: #F0F0F0;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        color: #000000;
+        transition: background-color 0.3s ease;
+        width: 100%;
         cursor: pointer;
-        transition: all 0.2s ease;
     }
 
-    .edit-activity-component .edit-activity-form-group input[type="file"]:hover {
-        border-color: var(--primary-color);
-        background-color: rgba(46, 204, 113, 0.05);
+    .edit-activity-component input[type="file"]:hover {
+        background-color: #E8E8E8;
     }
 
     .edit-activity-component .btn {
-        background-color: var(--primary-color);
+        background-color: #FF3131;
         color: white;
-        padding: 12px 24px;
         border: none;
-        border-radius: 4px;
+        border-radius: 25px;
+        padding: 18px 40px;
+        font-size: 16px;
+        font-weight: 500;
         cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        width: auto;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        grid-column: span 2 / auto;
-        margin-top: 15px;
-        justify-self: end;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        margin-top: 20px;
+        width: 100%;
     }
 
     .edit-activity-component .btn:hover {
-        background-color: var(--secondary-color);
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-sm);
+        background-color: #e02828;
+        transform: translateY(-2px);
     }
 
-    .edit-activity-component .btn:active {
-        transform: translateY(0);
+    .edit-activity-component .interests-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .edit-activity-component .interest-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 16px;
+        background: #F0F0F0;
+        border-radius: 15px;
+        transition: background-color 0.3s ease;
+    }
+
+    .edit-activity-component .interest-item:hover {
+        background: #E8E8E8;
+    }
+
+    .edit-activity-component .interest-item input[type="checkbox"] {
+        margin-right: 8px;
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        border: 2px solid #FF3131;
+        appearance: none;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .edit-activity-component .interest-item input[type="checkbox"]:checked {
+        background-color: #FF3131;
+    }
+
+    .edit-activity-component .interest-item input[type="checkbox"]:checked::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 12px;
+    }
+
+    .edit-activity-component .interest-item label {
+        margin: 0;
+        cursor: pointer;
     }
 
     .message {
@@ -346,7 +400,7 @@ if (isset($_POST['update_activity'])) {
         animation: fadeOut 5s forwards;
         font-size: 14px;
         z-index: 10;
-        box-shadow: var(--shadow-sm);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .error {
@@ -378,14 +432,13 @@ if (isset($_POST['update_activity'])) {
 
     @media (max-width: 768px) {
         .edit-activity-component .edit-activity-container {
-            padding: 15px;
-            margin: 10px auto;
+            padding: 0 20px;
         }
 
-        .edit-activity-component .edit-activity-form-container {
-            padding: 20px;
-            grid-template-columns: 1fr;
-            gap: 15px;
+        .edit-activity-component .edit-activity-form-container,
+        .edit-activity-component .activity-select-form {
+            padding: 30px;
+            border-radius: 20px;
         }
 
         .edit-activity-component .edit-activity-container h1 {
@@ -393,61 +446,21 @@ if (isset($_POST['update_activity'])) {
             margin-bottom: 30px;
         }
 
-        .edit-activity-component textarea {
-            grid-column: auto;
-        }
-
-
-        .edit-activity-component .btn {
-            grid-column: auto;
-            width: 100%;
-            justify-self: stretch;
-        }
-
         .edit-activity-component input[type="text"],
         .edit-activity-component input[type="number"],
-        .edit-activity-component input[type="datetime-local"],
+        .edit-activity-component input[type="url"],
         .edit-activity-component textarea,
         .edit-activity-component select,
         .edit-activity-component input[type="file"] {
-            padding: 10px;
+            padding: 15px 18px;
+            font-size: 14px;
         }
-    }
 
-    .edit-activity-component .activity-select-form {
-        background: var(--white);
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        padding: 30px 40px;
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto 40px auto;
-    }
-
-    .edit-activity-component .activity-select-form select {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        font-size: 1rem;
-        margin-bottom: 20px;
-    }
-
-    .edit-activity-component .activity-select-form button {
-        background-color: var(--primary-color);
-        color: white;
-        padding: 12px 24px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        width: 100%;
-    }
-
-    .edit-activity-component .activity-select-form button:hover {
-        background-color: var(--secondary-color);
+        .edit-activity-component .btn,
+        .edit-activity-component .activity-select-form button {
+            padding: 15px 30px;
+            font-size: 14px;
+        }
     }
 </style>
 
@@ -479,104 +492,90 @@ if (isset($_POST['update_activity'])) {
 
         <?php if (!is_null($activity_data)): ?>
             <div class="edit-activity-form-container">
-                <form action="dashboard.php" method="POST" enctype="multipart/form-data" class="edit-activity-form-container">
+                <form action="dashboard.php" method="POST" enctype="multipart/form-data" class="form-section">
                     <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activity_data['id']) ?>">
-                    <input type="hidden" name="existing_image" value="<?= htmlspecialchars($activity_data['image_url']) ?>">
-                    <input type="hidden" name="existing_image_2" value="<?= htmlspecialchars($activity_data['image_url_2']) ?>">
-                    <input type="hidden" name="existing_image_3" value="<?= htmlspecialchars($activity_data['image_url_3']) ?>">
+                    <input type="hidden" name="existing_image" value="<?= htmlspecialchars($activity_data['image']) ?>">
 
-                    <div class="edit-activity-form-group">
-                        <label for="titre">Titre de l'activité</label>
-                        <input type="text" id="titre" name="titre" placeholder="Entrez le titre de l'activité" value="<?= htmlspecialchars($activity_data['titre']) ?>" required>
+                    <div class="form-group">
+                        <label for="titre">Titre</label>
+                        <input type="text" id="titre" name="titre" value="<?= htmlspecialchars($activity_data['titre']) ?>" required>
                     </div>
 
-                    <div class="edit-activity-form-group">
+                    <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" placeholder="Décrivez l'activité en détail" required><?= htmlspecialchars($activity_data['description']) ?></textarea>
+                        <textarea id="description" name="description" required><?= htmlspecialchars($activity_data['description']) ?></textarea>
                     </div>
 
-                    <div class="edit-activity-form-group">
-                        <label for="date_activite">Date et heure de l'activité</label>
-                        <input type="datetime-local" id="date_activite" name="date_activite" value="<?= htmlspecialchars(date('Y-m-d\TH:i', strtotime($activity_data['date_activite']))) ?>" required>
+                    <div class="form-group">
+                        <label for="nom_lieu">Nom du lieu</label>
+                        <input type="text" id="nom_lieu" name="nom_lieu" value="<?= htmlspecialchars($activity_data['nom_lieu']) ?>" required>
                     </div>
 
-                    <div class="edit-activity-form-group">
-                        <label for="ville">Ville</label>
-                        <input type="text" id="ville" name="ville" placeholder="Entrez la ville" autocomplete="off" list="ville-list" value="<?= htmlspecialchars($activity_data['lieu']) ?>" required>
+                    <div class="form-group">
+                        <label for="type_lieu">Type de lieu</label>
+                        <input type="text" id="type_lieu" name="type_lieu" value="<?= htmlspecialchars($activity_data['type_lieu']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type_architecture">Type d'architecture</label>
+                        <input type="text" id="type_architecture" name="type_architecture" value="<?= htmlspecialchars($activity_data['type_architecture']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="region">Ville</label>
+                        <input type="text" id="region" name="region" autocomplete="off" list="ville-list" value="<?= htmlspecialchars($activity_data['region']) ?>" required>
                         <datalist id="ville-list"></datalist>
                     </div>
 
-                    <div class="edit-activity-form-group">
+                    <div class="form-group">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" id="adresse" name="adresse" value="<?= htmlspecialchars($activity_data['adresse']) ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="architecte">Architecte</label>
+                        <input type="text" id="architecte" name="architecte" value="<?= htmlspecialchars($activity_data['architecte']) ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lien_plus">Lien pour plus d'informations</label>
+                        <input type="url" id="lien_plus" name="lien_plus" value="<?= htmlspecialchars($activity_data['lien_plus']) ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fun_fact">Fun fact</label>
+                        <textarea id="fun_fact" name="fun_fact"><?= htmlspecialchars($activity_data['fun_fact']) ?></textarea>
+                    </div>
+
+                    <div class="form-group">
                         <label for="age_min">Âge minimum</label>
-                        <input type="number" id="age_min" name="age_min" min="0" placeholder="Âge minimum requis" value="<?= htmlspecialchars($activity_data['age_min']) ?>" required>
+                        <input type="number" id="age_min" name="age_min" value="<?= htmlspecialchars($activity_data['age_min']) ?>">
                     </div>
 
-                    <div class="edit-activity-form-group">
+                    <div class="form-group">
                         <label for="age_max">Âge maximum</label>
-                        <input type="number" id="age_max" name="age_max" min="0" placeholder="Âge maximum requis" value="<?= htmlspecialchars($activity_data['age_max']) ?>" required>
+                        <input type="number" id="age_max" name="age_max" value="<?= htmlspecialchars($activity_data['age_max']) ?>">
                     </div>
 
-                    <div class="edit-activity-form-group">
-                        <label for="prix">Prix (€)</label>
-                        <input type="number" id="prix" name="prix" step="0.01" min="0" placeholder="Prix de l'activité" value="<?= htmlspecialchars($activity_data['prix']) ?>" required>
-                    </div>
-
-                    <div class="edit-activity-form-group">
-                        <label for="abonnement_id">Abonnement requis</label>
-                        <select id="abonnement_id" name="abonnement_id" required>
-                            <option value="">Sélectionnez un abonnement</option>
-                            <option value="1" <?= $activity_data['abonnement_id'] == 1 ? 'selected' : '' ?>>Standard</option>
-                            <option value="2" <?= $activity_data['abonnement_id'] == 2 ? 'selected' : '' ?>>Gold</option>
-                            <option value="3" <?= $activity_data['abonnement_id'] == 3 ? 'selected' : '' ?>>Platine</option>
-                        </select>
-                    </div>
-
-                    <div class="edit-activity-form-group">
-                        <label for="image">Image de l'activité</label>
+                    <div class="form-group">
+                        <label for="image">Image</label>
                         <input type="file" id="image" name="image" accept="image/*">
-                        <?php if (!empty($activity_data['image_url'])): ?>
-                            <p>Image actuelle: <img src="<?= htmlspecialchars($activity_data['image_url']) ?>" alt="Current Image" style="max-width: 100px; vertical-align: middle; margin-left: 10px;"></p>
+                        <?php if (!empty($activity_data['image'])): ?>
+                            <p>Image actuelle: <img src="../<?= htmlspecialchars($activity_data['image']) ?>" alt="Current Image" style="max-width: 100px; vertical-align: middle; margin-left: 10px;"></p>
                         <?php endif; ?>
                     </div>
 
-                    <div class="edit-activity-form-group">
-                        <label for="image_2">Image 2 de l'activité</label>
-                        <input type="file" id="image_2" name="image_2" accept="image/*">
-                        <?php if (!empty($activity_data['image_url_2'])): ?>
-                            <p>Image 2 actuelle: <img src="<?= htmlspecialchars($activity_data['image_url_2']) ?>" alt="Current Image 2" style="max-width: 100px; vertical-align: middle; margin-left: 10px;"></p>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="edit-activity-form-group">
-                        <label for="image_3">Image 3 de l'activité</label>
-                        <input type="file" id="image_3" name="image_3" accept="image/*">
-                        <?php if (!empty($activity_data['image_url_3'])): ?>
-                            <p>Image 3 actuelle: <img src="<?= htmlspecialchars($activity_data['image_url_3']) ?>" alt="Current Image 3" style="max-width: 100px; vertical-align: middle; margin-left: 10px;"></p>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="edit-activity-form-group">
-                        <label for="titre">Lien vidéo</label>
-                        <input type="text" id="video" name="video" placeholder="Entrez le lien vers la vidéo" value="<?= htmlspecialchars($activity_data['video_url']) ?>">
-                    </div>
-
-                    <div class="edit-activity-form-group">
-                        <label for="titre">Lien podcast</label>
-                        <input type="text" id="podcast" name="podcast" placeholder="Entrez le lien vers le podcast" value="<?= htmlspecialchars($activity_data['podcast_url']) ?>">
-                    </div>
-
-                    <div class="edit-activity-form-group" style="grid-column: span 2;">
+                    <div class="form-group">
                         <label>Centres d'intérêt</label>
-                        <div class="interests-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                        <div class="interests-container">
                             <?php foreach ($all_interests as $id => $nom): ?>
-                                <div class="interest-item" style="display: flex; align-items: center; padding: 8px 16px; background: #f1f5f9; border-radius: 6px;">
+                                <div class="interest-item">
                                     <input type="checkbox"
                                         id="interest-<?php echo $id; ?>"
                                         name="interests[]"
                                         value="<?php echo $id; ?>"
-                                        <?php echo in_array($id, $current_interests) ? 'checked' : ''; ?>
-                                        style="margin-right: 8px;">
-                                    <label for="interest-<?php echo $id; ?>" style="margin: 0;"><?php echo htmlspecialchars($nom); ?></label>
+                                        <?php echo in_array($id, $current_interests) ? 'checked' : ''; ?>>
+                                    <label for="interest-<?php echo $id; ?>"><?php echo htmlspecialchars($nom); ?></label>
                                 </div>
                             <?php endforeach; ?>
                         </div>
