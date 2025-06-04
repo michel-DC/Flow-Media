@@ -6,7 +6,7 @@ if (isset($_SESSION['user_id'])) {
     $query = "SELECT photo_profil FROM users WHERE id='$user_id'";
     $result = mysqli_query($link, $query);
     $photo_profil = mysqli_fetch_assoc($result);
-    $user = $photo_profil;
+    $avatar = str_replace('.svg', '', $photo_profil['photo_profil']);
 }
 ?>
 
@@ -58,7 +58,11 @@ if (isset($_SESSION['user_id'])) {
             <?php if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] == 'user'): ?>
                 <div class="nav-dropdown">
                     <button class="nav-dropbtn">
-                        <img src="./assets/uploads/profiles/<?php echo $photo_profil['photo_profil']; ?>" alt="Photo de profil">
+                        <?php if (!empty($avatar) && ($avatar == 'jardi' || $avatar == 'archi')): ?>
+                            <img src="../../assets/images/mascottes/<?php echo $avatar; ?>.svg" alt="<?php echo ucfirst($avatar); ?>">
+                        <?php else: ?>
+                            <img src="../../assets/images/mascottes/jardi.svg" alt="Jardi">
+                        <?php endif; ?>
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="nav-dropdown-content">

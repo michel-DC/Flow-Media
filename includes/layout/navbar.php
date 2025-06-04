@@ -5,13 +5,10 @@ $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", 
 // Check if user is logged in before trying to access user_id
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    // CORRECTION: Utiliser des noms de variables uniques pour éviter les conflits
     $query_navbar = "SELECT photo_profil FROM users WHERE id='$user_id'";
     $result_navbar = mysqli_query($link, $query_navbar);
-    $photo_profil = mysqli_fetch_assoc($result_navbar);
-    $user_nav = $photo_profil;
-} else {
-    $photo_profil = ['photo_profil' => 'default.jpg']; // Set default profile picture
+    $user_nav = mysqli_fetch_assoc($result_navbar);
+    $avatar = str_replace('.svg', '', $user_nav['photo_profil']);
 }
 
 ?>
@@ -68,7 +65,11 @@ if (isset($_SESSION['user_id'])) {
             <?php if (isset($_SESSION['connecté']) && $_SESSION['connecté'] === true && $_SESSION['role'] == 'user'): ?>
                 <div class="nav-dropdown">
                     <button class="nav-dropbtn">
-                        <img src="../../assets/uploads/profiles/<?php echo $photo_profil['photo_profil']; ?>" alt="Photo de profil">
+                        <?php if (!empty($avatar) && ($avatar == 'jardi' || $avatar == 'archi')): ?>
+                            <img src="../../assets/images/mascottes/<?php echo $avatar; ?>.svg" alt="<?php echo ucfirst($avatar); ?>">
+                        <?php else: ?>
+                            <img src="../../assets/images/mascottes/jardi.svg" alt="Jardi">
+                        <?php endif; ?>
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="nav-dropdown-content">
