@@ -279,7 +279,7 @@ if (isset($_POST['ajt_podcast'])) {
                 <div class="message error"><?= $error ?></div>
             <?php endif; ?>
 
-            <form method="POST" enctype="multipart/form-data" action="dashboard.php#add-podcast-section" class="form-section">
+            <form method="POST" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="form-section">
                 <div class="form-group">
                     <label for="titre">Titre du podcast</label>
                     <input type="text" id="titre" name="titre" placeholder="Entrez le titre du podcast" required>

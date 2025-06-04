@@ -382,15 +382,18 @@ if (isset($_POST['edit_podcast'])) {
 
         <div class="podcast-select-form">
             <form method="GET" action="dashboard.php#edit-podcast-section">
-                <select name="id" required>
-                    <option value="">Sélectionnez un podcast à modifier</option>
-                    <?php foreach ($podcasts as $podcast): ?>
-                        <option value="<?= htmlspecialchars($podcast['id']) ?>" <?= (isset($_GET['id']) && $_GET['id'] == $podcast['id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($podcast['titre']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <button type="submit">Modifier ce podcast</button>
+                <div class="form-group">
+                    <label for="podcast">Sélectionner un podcast :</label>
+                    <select name="id" id="podcast" required>
+                        <option value="">Choisir un podcast</option>
+                        <?php foreach ($podcasts as $podcast): ?>
+                            <option value="<?= $podcast['id'] ?>" <?= (isset($_GET['id']) && $_GET['id'] == $podcast['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($podcast['titre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button type="submit" class="select-button">Sélectionner</button>
             </form>
         </div>
 

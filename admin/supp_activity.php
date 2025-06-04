@@ -303,10 +303,10 @@ $result = mysqli_query($link, $query);
 
                             <p class="activity-description"><?= htmlspecialchars($activite['description']) ?></p>
                         </div>
-                        <div class="delete-form">
+                        <div class="select-form">
                             <form method="POST" action="dashboard.php#supp-activity-section" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?');">
                                 <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activite['id']) ?>">
-                                <button type="submit" name="delete_activity" class="delete-button">Supprimer</button>
+                                <button type="submit" class="select-button">Supprimer</button>
                             </form>
                         </div>
                     </div>
@@ -316,5 +316,5 @@ $result = mysqli_query($link, $query);
             }
             ?>
         </div>
-    </div>
+    </div>4444
 </div>

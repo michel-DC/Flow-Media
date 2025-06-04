@@ -478,21 +478,24 @@ if (isset($_POST['update_activity'])) {
 
         <div class="activity-select-form">
             <form method="GET" action="dashboard.php#edit-activity-section">
-                <select name="id" required>
-                    <option value="">Sélectionnez une activité à modifier</option>
-                    <?php foreach ($activities as $activity): ?>
-                        <option value="<?= htmlspecialchars($activity['id']) ?>" <?= (isset($_GET['id']) && $_GET['id'] == $activity['id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($activity['titre']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <button type="submit">Modifier cette activité</button>
+                <div class="form-group">
+                    <label for="activity">Sélectionner une activité :</label>
+                    <select name="id" id="activity" required>
+                        <option value="">Choisir une activité</option>
+                        <?php foreach ($activities as $activity): ?>
+                            <option value="<?= $activity['id'] ?>" <?= (isset($_GET['id']) && $_GET['id'] == $activity['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($activity['titre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button type="submit" class="select-button">Sélectionner</button>
             </form>
         </div>
 
         <?php if (!is_null($activity_data)): ?>
             <div class="edit-activity-form-container">
-                <form action="dashboard.php" method="POST" enctype="multipart/form-data" class="form-section">
+                <form action="dashboard.php#edit-activity-section" method="POST" enctype="multipart/form-data" class="form-section">
                     <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activity_data['id']) ?>">
                     <input type="hidden" name="existing_image" value="<?= htmlspecialchars($activity_data['image']) ?>">
 
