@@ -66,7 +66,7 @@ if (isset($_SESSION['user_id'])) {
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="nav-dropdown-content">
-                        <a href="../../pages/user/profile.php">Mon profil</a>
+                        <a href="../../pages/user/me.php">Mon profil</a>
                         <a href="../../pages/reservations">Mes réservations</a>
                         <a href="/connexion/logout-user.php"><i class="fas fa-sign-out-alt"></i> Me deconnecter</a>
                     </div>

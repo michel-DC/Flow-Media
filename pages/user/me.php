@@ -418,6 +418,9 @@ $user = mysqli_fetch_assoc($result);
 
                 <?php include '../../components/profile.php' ?>
 
+                <!-- section niveau de l'utilisateur  -->
+                <?php include '../../components/niveau.php' ?>
+
                 <script>
                     function showSection(sectionId) {
                         document.querySelectorAll('.dashboard-container, #info-section, #interest-section, #position-section, #abonnement-section')

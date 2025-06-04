@@ -240,6 +240,12 @@ $result = mysqli_query($link, $query);
             margin-right: 20px;
         }
 
+        @media (max-width: 1800px) {
+            .bottom-illustration {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
             .bottom-illustrations {
                 display: none;
@@ -335,8 +341,8 @@ $result = mysqli_query($link, $query);
     </div>
 
     <div class="bottom-illustrations">
-        <img src="../../assets/images/svg/family-1-12.svg" alt="Family illustration" class="bottom-illustration left">
-        <img src="../../assets/images/svg/adventure-95.svg" alt="Adventure illustration" class="bottom-illustration right">
+        <img src="../../assets/images/agenda/vert.svg" alt="Family illustration" class="bottom-illustration left">
+        <img src="../../assets/images/agenda/rouge.svg" alt="Adventure illustration" class="bottom-illustration right">
     </div>
 
     <?php include '../../includes/layout/footer.php'; ?>

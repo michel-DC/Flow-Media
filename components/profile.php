@@ -8,6 +8,10 @@ if (isset($_SESSION['user_id'])) {
     $user = mysqli_fetch_assoc($result);
     $avatar = str_replace('.svg', '', $user['photo_profil']);
 }
+
+$points_query = "SELECT SUM(nombre_point) AS total_points FROM point_user WHERE user_id = $user_id";
+$points_result = mysqli_query($link, $points_query);
+$total_points = mysqli_fetch_assoc($points_result)['total_points'] ?? 0;
 ?>
 
 <!DOCTYPE html>
@@ -439,7 +443,7 @@ if (isset($_SESSION['user_id'])) {
 
             <!-- Total des points -->
             <div class="total-points">
-                Nombre total de points : <span class="points-highlight">17 points</span>
+                Nombre total de points : <span class="points-highlight"><?php echo $total_points; ?></span>
             </div>
 
             <!-- Message pas de récompense -->
