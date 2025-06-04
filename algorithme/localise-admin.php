@@ -9,6 +9,7 @@ if (mysqli_connect_errno()) {
 }
 
 $query = "SELECT a.*, 
+          a.nom_lieu
           FROM all_activites a ";
 
 $result = mysqli_query($link, $query);
@@ -20,7 +21,8 @@ while ($row = mysqli_fetch_assoc($result)) {
         'titre' => $row['titre'],
         'adresse' => $row['adresse'],
         'latitude' => $row['latitude'],
-        'longitude' => $row['longitude']
+        'longitude' => $row['longitude'],
+        'nom_lieu' => $row['nom_lieu']
     ];
 }
 

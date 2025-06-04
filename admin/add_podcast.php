@@ -61,26 +61,24 @@ if (isset($_POST['ajt_podcast'])) {
 ?>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    :root {
-        --primary-color: #2ECC71;
-        --secondary-color: #25a25a;
-        --text-color: #333;
-        --light-bg: #f0f0f0;
-        --white: #ffffff;
-        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f5f5;
+        padding: 80px 0;
     }
 
     .add-podcast-component .add-podcast-container {
-        flex: 1;
-        max-width: 1000px;
-        margin: 40px auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 0 40px;
     }
 
     .add-podcast-component .add-podcast-container h1 {
@@ -94,7 +92,7 @@ if (isset($_POST['ajt_podcast'])) {
     }
 
     .add-podcast-component .add-podcast-container h1 span {
-        color: var(--primary-color);
+        color: #FF3131;
         position: relative;
     }
 
@@ -105,104 +103,95 @@ if (isset($_POST['ajt_podcast'])) {
         left: 0;
         width: 100%;
         height: 3px;
-        background-color: var(--primary-color);
+        background-color: #FF3131;
         border-radius: 3px;
     }
 
     .add-podcast-component .add-podcast-form-container {
-        background: var(--white);
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        padding: 30px 40px;
-        width: 100%;
-        max-width: 900px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px 30px;
+        background-color: #ffffff;
+        border-radius: 30px;
+        padding: 50px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     }
 
-    .add-podcast-component .add-podcast-form-group {
-        margin-bottom: 0;
+    .add-podcast-component .form-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .add-podcast-component .form-group {
+        display: flex;
+        flex-direction: column;
     }
 
     .add-podcast-component label {
         display: block;
         margin-bottom: 8px;
-        color: var(--text-color);
+        color: #333;
         font-weight: 500;
         font-size: 13px;
     }
 
     .add-podcast-component input[type="text"],
     .add-podcast-component textarea {
+        padding: 18px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: #F0F0F0;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        color: #000000;
+        transition: background-color 0.3s ease;
         width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        background-color: white;
-        font-size: 0.9rem;
-        color: #4b5563;
-        font-family: "Poppins", sans-serif;
-        transition: all 0.2s ease;
     }
 
     .add-podcast-component input[type="text"]:focus,
     .add-podcast-component textarea:focus {
         outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1);
+        background-color: #E8E8E8;
     }
 
     .add-podcast-component textarea {
         min-height: 100px;
         resize: vertical;
-        grid-column: span 2 / auto;
     }
 
-    .add-podcast-component .add-podcast-form-group input[type="file"] {
-        padding: 10px 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        background-color: white;
+    .add-podcast-component input[type="file"] {
+        padding: 18px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: #F0F0F0;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        color: #000000;
+        transition: background-color 0.3s ease;
+        width: 100%;
         cursor: pointer;
-        transition: all 0.2s ease;
     }
 
-    .add-podcast-component .add-podcast-form-group input[type="file"]:hover {
-        border-color: var(--primary-color);
-        background-color: rgba(46, 204, 113, 0.05);
+    .add-podcast-component input[type="file"]:hover {
+        background-color: #E8E8E8;
     }
 
     .add-podcast-component .btn {
-        background-color: var(--primary-color);
+        background-color: #FF3131;
         color: white;
-        padding: 12px 24px;
         border: none;
-        border-radius: 4px;
+        border-radius: 25px;
+        padding: 18px 40px;
+        font-size: 16px;
+        font-weight: 500;
         cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        width: auto;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        grid-column: span 2 / auto;
-        margin-top: 15px;
-        justify-self: end;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        margin-top: 20px;
+        width: 100%;
     }
 
     .add-podcast-component .btn:hover {
-        background-color: var(--secondary-color);
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-sm);
-    }
-
-    .add-podcast-component .btn:active {
-        transform: translateY(0);
+        background-color: #e02828;
+        transform: translateY(-2px);
     }
 
     .message {
@@ -219,7 +208,7 @@ if (isset($_POST['ajt_podcast'])) {
         animation: fadeOut 5s forwards;
         font-size: 14px;
         z-index: 10;
-        box-shadow: var(--shadow-sm);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .error {
@@ -251,14 +240,12 @@ if (isset($_POST['ajt_podcast'])) {
 
     @media (max-width: 768px) {
         .add-podcast-component .add-podcast-container {
-            padding: 15px;
-            margin: 10px auto;
+            padding: 0 20px;
         }
 
         .add-podcast-component .add-podcast-form-container {
-            padding: 20px;
-            grid-template-columns: 1fr;
-            gap: 15px;
+            padding: 30px;
+            border-radius: 20px;
         }
 
         .add-podcast-component .add-podcast-container h1 {
@@ -266,14 +253,16 @@ if (isset($_POST['ajt_podcast'])) {
             margin-bottom: 30px;
         }
 
-        .add-podcast-component textarea {
-            grid-column: auto;
+        .add-podcast-component input[type="text"],
+        .add-podcast-component textarea,
+        .add-podcast-component input[type="file"] {
+            padding: 15px 18px;
+            font-size: 14px;
         }
 
         .add-podcast-component .btn {
-            grid-column: auto;
-            width: 100%;
-            justify-self: stretch;
+            padding: 15px 30px;
+            font-size: 14px;
         }
     }
 </style>
@@ -290,23 +279,23 @@ if (isset($_POST['ajt_podcast'])) {
                 <div class="message error"><?= $error ?></div>
             <?php endif; ?>
 
-            <form method="POST" enctype="multipart/form-data" action="dashboard.php#add-podcast-section">
-                <div class="add-podcast-form-group">
+            <form method="POST" enctype="multipart/form-data" action="dashboard.php#add-podcast-section" class="form-section">
+                <div class="form-group">
                     <label for="titre">Titre du podcast</label>
                     <input type="text" id="titre" name="titre" placeholder="Entrez le titre du podcast" required>
                 </div>
 
-                <div class="add-podcast-form-group">
+                <div class="form-group">
                     <label for="description">Description</label>
                     <textarea id="description" name="description" placeholder="Décrivez le podcast en détail" required></textarea>
                 </div>
 
-                <div class="add-podcast-form-group">
+                <div class="form-group">
                     <label for="image">Image du podcast</label>
                     <input type="file" id="image" name="image" accept="image/*" required>
                 </div>
 
-                <div class="add-podcast-form-group">
+                <div class="form-group">
                     <label for="youtube_url">Lien YouTube</label>
                     <input type="text" id="youtube_url" name="youtube_url" placeholder="Entrez le lien YouTube du podcast" required>
                 </div>

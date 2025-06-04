@@ -467,7 +467,6 @@ $total_admins = mysqli_fetch_assoc($result6)['total'];
                 <a href="#add-activity-section">Ajouter une activité</a>
                 <a href="#supp-activity-section">Supprimer une activité</a>
                 <a href="#edit-activity-section">Modifier une activité</a>
-                <a href="#add-fun-fact-section">Ajouter un fun fact</a>
                 <a href="#add-podcast-section">Ajouter un podcast</a>
                 <a href="#supp-podcast-section">Supprimer un podcast</a>
                 <a href="#edit-podcast-section">Modifier un podcast</a>
@@ -483,7 +482,6 @@ $total_admins = mysqli_fetch_assoc($result6)['total'];
             <div id="add-activity-section" style="display: none;"><?php include 'add_activity.php'; ?></div>
             <div id="supp-activity-section" style="display: none;"><?php include 'supp_activity.php'; ?></div>
             <div id="edit-activity-section" style="display: none;"><?php include 'edit_activity.php'; ?></div>
-            <div id="add-fun-fact-section" style="display: none;"><?php include 'add_fun_fact.php'; ?></div>
             <div id="see-activity-section" style="display: none;"><?php include 'activity.php'; ?></div>
             <div id="add-podcast-section" style="display: none;"><?php include 'add_podcast.php'; ?></div>
             <div id="supp-podcast-section" style="display: none;"><?php include 'supp_podcast.php'; ?></div>

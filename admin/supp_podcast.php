@@ -10,7 +10,7 @@ $success_message = null;
 $error_message = null;
 
 // Récupérer tous les podcasts pour le select
-$query_all = "SELECT id, titre FROM podcasts ORDER BY titre ASC";
+$query_all = "SELECT * FROM podcasts ORDER BY titre ASC";
 $result_all = mysqli_query($link, $query_all);
 $podcasts = [];
 while ($row = mysqli_fetch_assoc($result_all)) {
@@ -57,28 +57,24 @@ if (isset($_POST['delete_podcast'])) {
 ?>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    :root {
-        --primary-color: #2ECC71;
-        --secondary-color: #25a25a;
-        --danger-color: #e74c3c;
-        --danger-hover: #c0392b;
-        --text-color: #333;
-        --light-bg: #f0f0f0;
-        --white: #ffffff;
-        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f5f5;
+        padding: 80px 0;
     }
 
     .delete-podcast-component .delete-podcast-container {
-        flex: 1;
-        max-width: 1000px;
-        margin: 40px auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 0 40px;
     }
 
     .delete-podcast-component .delete-podcast-container h1 {
@@ -92,7 +88,7 @@ if (isset($_POST['delete_podcast'])) {
     }
 
     .delete-podcast-component .delete-podcast-container h1 span {
-        color: var(--danger-color);
+        color: #FF3131;
         position: relative;
     }
 
@@ -103,82 +99,111 @@ if (isset($_POST['delete_podcast'])) {
         left: 0;
         width: 100%;
         height: 3px;
-        background-color: var(--danger-color);
+        background-color: #FF3131;
         border-radius: 3px;
     }
 
-    .delete-podcast-component .podcast-select-form {
-        background: var(--white);
+    .delete-podcast-component .podcasts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        padding: 20px 0;
+    }
+
+    .delete-podcast-component .podcast-card {
+        background: #ffffff;
         border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        padding: 30px 40px;
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto 40px auto;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
-    .delete-podcast-component .podcast-select-form select {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        font-size: 1rem;
-        margin-bottom: 20px;
+    .delete-podcast-component .podcast-card:hover {
+        transform: translateY(-5px);
     }
 
-    .delete-podcast-component .podcast-select-form button {
-        background-color: var(--primary-color);
+    .delete-podcast-component .podcast-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .delete-podcast-component .podcast-content {
+        padding: 20px;
+        flex-grow: 1;
+    }
+
+    .delete-podcast-component .podcast-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 10px;
+    }
+
+    .delete-podcast-component .podcast-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .delete-podcast-component .info-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #4b5563;
+        font-size: 0.9rem;
+    }
+
+    .delete-podcast-component .info-item i {
+        color: #FF3131;
+    }
+
+    .delete-podcast-component .podcast-description {
+        color: #6b7280;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 15px 0;
+        max-height: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+
+    .delete-podcast-component .select-form {
+        padding: 0 20px 20px;
+    }
+
+    .delete-podcast-component .select-button {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        background-color: #FF3131;
         color: white;
-        padding: 12px 24px;
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        width: 100%;
-    }
-
-    .delete-podcast-component .podcast-select-form button:hover {
-        background-color: var(--secondary-color);
-    }
-
-    .delete-podcast-component .confirmation-container {
-        background: var(--white);
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        padding: 30px 40px;
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
         text-align: center;
     }
 
-    .delete-podcast-component .confirmation-container h2 {
-        color: var(--danger-color);
-        margin-bottom: 20px;
+    .delete-podcast-component .select-button:hover {
+        background-color: #e02828;
     }
 
-    .delete-podcast-component .confirmation-container p {
-        margin-bottom: 30px;
-        color: var(--text-color);
-    }
-
-    .delete-podcast-component .btn-danger {
-        background-color: var(--danger-color);
-        color: white;
-        padding: 12px 24px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-        transition: all 0.2s ease;
+    .delete-podcast-component .no-podcast-message {
+        text-align: center;
+        font-size: 1.1rem;
+        color: #333;
         width: 100%;
-    }
-
-    .delete-podcast-component .btn-danger:hover {
-        background-color: var(--danger-hover);
+        grid-column: 1 / -1;
     }
 
     .message {
@@ -195,7 +220,7 @@ if (isset($_POST['delete_podcast'])) {
         animation: fadeOut 5s forwards;
         font-size: 14px;
         z-index: 10;
-        box-shadow: var(--shadow-sm);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .error {
@@ -227,18 +252,23 @@ if (isset($_POST['delete_podcast'])) {
 
     @media (max-width: 768px) {
         .delete-podcast-component .delete-podcast-container {
-            padding: 15px;
-            margin: 10px auto;
-        }
-
-        .delete-podcast-component .podcast-select-form,
-        .delete-podcast-component .confirmation-container {
-            padding: 20px;
+            padding: 0 20px;
         }
 
         .delete-podcast-component .delete-podcast-container h1 {
             font-size: 28px;
-            margin-bottom: 30px;
+        }
+
+        .delete-podcast-component .podcast-card {
+            padding: 0 0 15px 0;
+        }
+
+        .delete-podcast-component .podcast-content {
+            padding: 15px;
+        }
+
+        .delete-podcast-component .select-form {
+            padding: 0 15px 0 15px;
         }
     }
 </style>
@@ -255,34 +285,41 @@ if (isset($_POST['delete_podcast'])) {
 
         <h1>Supprimer un <span>podcast</span></h1>
 
-        <!-- Formulaire de sélection du podcast -->
-        <div class="podcast-select-form">
-            <form method="GET" action="dashboard.php#supp-podcast-section">
-                <select name="id" required>
-                    <option value="">Sélectionnez un podcast à supprimer</option>
-                    <?php foreach ($podcasts as $podcast): ?>
-                        <option value="<?= htmlspecialchars($podcast['id']) ?>" <?= (isset($_GET['id']) && $_GET['id'] == $podcast['id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($podcast['titre']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <button type="submit">Sélectionner ce podcast</button>
-            </form>
+        <div class="podcasts-grid">
+            <?php
+            if (!empty($podcasts)) {
+                foreach ($podcasts as $podcast): ?>
+                    <div class="podcast-card">
+                        <img src="<?= htmlspecialchars($podcast['image_url']) ?>" alt="<?= htmlspecialchars($podcast['titre']) ?>" class="podcast-image">
+                        <div class="podcast-content">
+                            <h2 class="podcast-title"><?= htmlspecialchars($podcast['titre']) ?></h2>
+
+                            <div class="podcast-info">
+                                <div class="info-item">
+                                    <i class="fas fa-headphones"></i>
+                                    <span><?= basename($podcast['fichier_audio_url']) ?></span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fab fa-youtube"></i>
+                                    <span><?= htmlspecialchars($podcast['youtube_url']) ?></span>
+                                </div>
+                            </div>
+
+                            <p class="podcast-description"><?= htmlspecialchars($podcast['description']) ?></p>
+                        </div>
+                        <div class="select-form">
+                            <form method="POST" action="dashboard.php#supp-podcast-section" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce podcast ?');">
+                                <input type="hidden" name="podcast_id" value="<?= htmlspecialchars($podcast['id']) ?>">
+                                <button type="submit" name="delete_podcast" class="select-button">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+            <?php endforeach;
+            } else {
+                echo "<p class='no-podcast-message'>Aucun podcast trouvé.</p>";
+            }
+            ?>
         </div>
 
-        <?php if (!is_null($podcast_data)): ?>
-            <div class="confirmation-container">
-                <h2>Confirmer la suppression</h2>
-                <p>Êtes-vous sûr de vouloir supprimer le podcast "<?= htmlspecialchars($podcast_data['titre']) ?>" ?</p>
-                <p>Cette action est irréversible et supprimera également les fichiers audio et images associés.</p>
-
-                <form method="POST" action="dashboard.php#supp-podcast-section">
-                    <input type="hidden" name="podcast_id" value="<?= htmlspecialchars($podcast_data['id']) ?>">
-                    <button type="submit" name="delete_podcast" class="btn-danger">
-                        Confirmer la suppression
-                    </button>
-                </form>
-            </div>
-        <?php endif; ?>
     </div>
 </div>

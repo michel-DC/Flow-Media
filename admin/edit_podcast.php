@@ -109,26 +109,24 @@ if (isset($_POST['edit_podcast'])) {
 ?>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-    :root {
-        --primary-color: #2ECC71;
-        --secondary-color: #25a25a;
-        --text-color: #333;
-        --light-bg: #f0f0f0;
-        --white: #ffffff;
-        --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f5f5;
+        padding: 80px 0;
     }
 
     .edit-podcast-component .edit-podcast-container {
-        flex: 1;
-        max-width: 1000px;
-        margin: 40px auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 0 40px;
     }
 
     .edit-podcast-component .edit-podcast-container h1 {
@@ -142,7 +140,7 @@ if (isset($_POST['edit_podcast'])) {
     }
 
     .edit-podcast-component .edit-podcast-container h1 span {
-        color: var(--primary-color);
+        color: #FF3131;
         position: relative;
     }
 
@@ -153,104 +151,140 @@ if (isset($_POST['edit_podcast'])) {
         left: 0;
         width: 100%;
         height: 3px;
-        background-color: var(--primary-color);
+        background-color: #FF3131;
         border-radius: 3px;
     }
 
-    .edit-podcast-component .edit-podcast-form-container {
-        background: var(--white);
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        padding: 30px 40px;
-        width: 100%;
-        max-width: 900px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px 30px;
+    .edit-podcast-component .podcast-select-form {
+        background-color: #ffffff;
+        border-radius: 30px;
+        padding: 50px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        margin-bottom: 40px;
     }
 
-    .edit-podcast-component .edit-podcast-form-group {
-        margin-bottom: 0;
+    .edit-podcast-component .podcast-select-form select {
+        width: 100%;
+        padding: 18px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: #F0F0F0;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        color: #000000;
+        transition: background-color 0.3s ease;
+        margin-bottom: 20px;
+    }
+
+    .edit-podcast-component .podcast-select-form select:focus {
+        outline: none;
+        background-color: #E8E8E8;
+    }
+
+    .edit-podcast-component .podcast-select-form button {
+        background-color: #FF3131;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 18px 40px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        width: 100%;
+    }
+
+    .edit-podcast-component .podcast-select-form button:hover {
+        background-color: #e02828;
+        transform: translateY(-2px);
+    }
+
+    .edit-podcast-component .edit-podcast-form-container {
+        background-color: #ffffff;
+        border-radius: 30px;
+        padding: 50px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-podcast-component .form-section {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .edit-podcast-component .form-group {
+        display: flex;
+        flex-direction: column;
     }
 
     .edit-podcast-component label {
         display: block;
         margin-bottom: 8px;
-        color: var(--text-color);
+        color: #333;
         font-weight: 500;
         font-size: 13px;
     }
 
     .edit-podcast-component input[type="text"],
     .edit-podcast-component textarea {
+        padding: 18px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: #F0F0F0;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        color: #000000;
+        transition: background-color 0.3s ease;
         width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        background-color: white;
-        font-size: 0.9rem;
-        color: #4b5563;
-        font-family: "Poppins", sans-serif;
-        transition: all 0.2s ease;
     }
 
     .edit-podcast-component input[type="text"]:focus,
     .edit-podcast-component textarea:focus {
         outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1);
+        background-color: #E8E8E8;
     }
 
     .edit-podcast-component textarea {
         min-height: 100px;
         resize: vertical;
-        grid-column: span 2 / auto;
     }
 
-    .edit-podcast-component .edit-podcast-form-group input[type="file"] {
-        padding: 10px 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        background-color: white;
+    .edit-podcast-component input[type="file"] {
+        padding: 18px 20px;
+        border: none;
+        border-radius: 15px;
+        background-color: #F0F0F0;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+        color: #000000;
+        transition: background-color 0.3s ease;
+        width: 100%;
         cursor: pointer;
-        transition: all 0.2s ease;
     }
 
-    .edit-podcast-component .edit-podcast-form-group input[type="file"]:hover {
-        border-color: var(--primary-color);
-        background-color: rgba(46, 204, 113, 0.05);
+    .edit-podcast-component input[type="file"]:hover {
+        background-color: #E8E8E8;
     }
 
     .edit-podcast-component .btn {
-        background-color: var(--primary-color);
+        background-color: #FF3131;
         color: white;
-        padding: 12px 24px;
         border: none;
-        border-radius: 4px;
+        border-radius: 25px;
+        padding: 18px 40px;
+        font-size: 16px;
+        font-weight: 500;
         cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        width: auto;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        grid-column: span 2 / auto;
-        margin-top: 15px;
-        justify-self: end;
+        transition: all 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+        margin-top: 20px;
+        width: 100%;
     }
 
     .edit-podcast-component .btn:hover {
-        background-color: var(--secondary-color);
-        transform: translateY(-1px);
-        box-shadow: var(--shadow-sm);
-    }
-
-    .edit-podcast-component .btn:active {
-        transform: translateY(0);
+        background-color: #e02828;
+        transform: translateY(-2px);
     }
 
     .message {
@@ -267,7 +301,7 @@ if (isset($_POST['edit_podcast'])) {
         animation: fadeOut 5s forwards;
         font-size: 14px;
         z-index: 10;
-        box-shadow: var(--shadow-sm);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .error {
@@ -283,45 +317,9 @@ if (isset($_POST['edit_podcast'])) {
     }
 
     .current-file {
-        font-size: 0.9rem;
+        font-size: 14px;
         color: #666;
-        margin-top: 5px;
-    }
-
-    .edit-podcast-component .podcast-select-form {
-        background: var(--white);
-        border-radius: 12px;
-        box-shadow: var(--shadow-md);
-        padding: 30px 40px;
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto 40px auto;
-    }
-
-    .edit-podcast-component .podcast-select-form select {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #e5e7eb;
-        border-radius: 4px;
-        font-size: 1rem;
-        margin-bottom: 20px;
-    }
-
-    .edit-podcast-component .podcast-select-form button {
-        background-color: var(--primary-color);
-        color: white;
-        padding: 12px 24px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        width: 100%;
-    }
-
-    .edit-podcast-component .podcast-select-form button:hover {
-        background-color: var(--secondary-color);
+        margin-top: 8px;
     }
 
     @keyframes fadeOut {
@@ -341,14 +339,13 @@ if (isset($_POST['edit_podcast'])) {
 
     @media (max-width: 768px) {
         .edit-podcast-component .edit-podcast-container {
-            padding: 15px;
-            margin: 10px auto;
+            padding: 0 20px;
         }
 
-        .edit-podcast-component .edit-podcast-form-container {
-            padding: 20px;
-            grid-template-columns: 1fr;
-            gap: 15px;
+        .edit-podcast-component .edit-podcast-form-container,
+        .edit-podcast-component .podcast-select-form {
+            padding: 30px;
+            border-radius: 20px;
         }
 
         .edit-podcast-component .edit-podcast-container h1 {
@@ -356,14 +353,17 @@ if (isset($_POST['edit_podcast'])) {
             margin-bottom: 30px;
         }
 
-        .edit-podcast-component textarea {
-            grid-column: auto;
+        .edit-podcast-component input[type="text"],
+        .edit-podcast-component textarea,
+        .edit-podcast-component input[type="file"] {
+            padding: 15px 18px;
+            font-size: 14px;
         }
 
-        .edit-podcast-component .btn {
-            grid-column: auto;
-            width: 100%;
-            justify-self: stretch;
+        .edit-podcast-component .btn,
+        .edit-podcast-component .podcast-select-form button {
+            padding: 15px 30px;
+            font-size: 14px;
         }
     }
 </style>
@@ -380,7 +380,6 @@ if (isset($_POST['edit_podcast'])) {
 
         <h1>Modifier un <span>podcast</span></h1>
 
-        <!-- Formulaire de sélection du podcast -->
         <div class="podcast-select-form">
             <form method="GET" action="dashboard.php#edit-podcast-section">
                 <select name="id" required>
@@ -397,20 +396,20 @@ if (isset($_POST['edit_podcast'])) {
 
         <?php if (!is_null($podcast_data)): ?>
             <div class="edit-podcast-form-container">
-                <form method="POST" enctype="multipart/form-data" action="dashboard.php#edit-podcast-section">
+                <form method="POST" enctype="multipart/form-data" action="dashboard.php#edit-podcast-section" class="form-section">
                     <input type="hidden" name="podcast_id" value="<?= htmlspecialchars($podcast_data['id']) ?>">
 
-                    <div class="edit-podcast-form-group">
+                    <div class="form-group">
                         <label for="titre">Titre du podcast</label>
                         <input type="text" id="titre" name="titre" value="<?= htmlspecialchars($podcast_data['titre']) ?>" required>
                     </div>
 
-                    <div class="edit-podcast-form-group">
+                    <div class="form-group">
                         <label for="description">Description</label>
                         <textarea id="description" name="description" required><?= htmlspecialchars($podcast_data['description']) ?></textarea>
                     </div>
 
-                    <div class="edit-podcast-form-group">
+                    <div class="form-group">
                         <label for="audio">Fichier audio</label>
                         <input type="file" id="audio" name="audio" accept="audio/*">
                         <?php if ($podcast_data['fichier_audio_url']): ?>
@@ -418,7 +417,7 @@ if (isset($_POST['edit_podcast'])) {
                         <?php endif; ?>
                     </div>
 
-                    <div class="edit-podcast-form-group">
+                    <div class="form-group">
                         <label for="image">Image du podcast</label>
                         <input type="file" id="image" name="image" accept="image/*">
                         <?php if ($podcast_data['image_url']): ?>
@@ -428,7 +427,7 @@ if (isset($_POST['edit_podcast'])) {
                         <?php endif; ?>
                     </div>
 
-                    <div class="edit-podcast-form-group">
+                    <div class="form-group">
                         <label for="youtube_url">Lien YouTube</label>
                         <input type="text" id="youtube_url" name="youtube_url" value="<?= htmlspecialchars($podcast_data['youtube_url']) ?>" placeholder="Entrez le lien YouTube du podcast">
                     </div>
