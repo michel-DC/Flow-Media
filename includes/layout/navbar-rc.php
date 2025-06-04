@@ -43,7 +43,6 @@ if (isset($_SESSION['user_id'])) {
                 </div>
                 <div class="nav-dropdown-content">
                     <a href="/pages/agenda"><i class="fas fa-calendar-alt"></i> Agenda culturel</a>
-                    <a href="/pages/fun-fact"><i class="fas fa-lightbulb"></i> Fun Facts</a>
                     <a href="/pages/activites"><i class="fas fa-running"></i> Activités</a>
                     <a href="/pages/podcast"><i class="fas fa-podcast"></i> Podcasts</a>
                 </div>

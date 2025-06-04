@@ -12,10 +12,14 @@ $query = "SELECT * FROM activites WHERE id = " . $_GET['id'];
 $result = mysqli_query($link, $query);
 $activity = mysqli_fetch_assoc($result);
 
-if (!$activity) {
-    header('Location: index.php');
-    exit;
-}
+// Récupérer les questions du quiz pour cette activité
+$quiz_query = "SELECT * FROM activite_quizz WHERE activite_id = " . $_GET['id'];
+$quiz_result = mysqli_query($link, $quiz_query);
+$quiz_data = mysqli_fetch_assoc($quiz_result);
+
+$nom_query = "SELECT titre FROM all_activites WHERE id=" . $_GET['id'];
+$nom_result = mysqli_query($link, $nom_query);
+$nom_data = mysqli_fetch_assoc($nom_result);
 
 // Vérifier si l'utilisateur a déjà fait ce quiz
 $user_id = $_SESSION['user_id'];
@@ -38,7 +42,7 @@ if (mysqli_num_rows($check_result) > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flow Media | Quiz</title>
+    <title>FlowMedia | Quiz</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="shortcut icon" href="../../assets/icons/logo.png" type="image/x-icon">
@@ -423,9 +427,9 @@ if (mysqli_num_rows($check_result) > 0) {
     <!-- Section quiz -->
     <section class="quiz-section">
         <div class="quiz-container">
-            <h1 class="quiz-title">LE MINI JEU : Le Palais Idéal du Facteur Cheval</h1>
+            <h1 class="quiz-title">LE MINI JEU : <?php echo $nom_data['titre']; ?></h1>
 
-            <h2 class="quiz-question">Avec quoi ramassait-il les pierres pour son palais ?</h2>
+            <h2 class="quiz-question" id="current-question"><?php echo $quiz_data['question_1']; ?></h2>
 
             <div class="quiz-content">
                 <div class="character-container">
@@ -434,23 +438,23 @@ if (mysqli_num_rows($check_result) > 0) {
 
                 <div class="answers-grid">
                     <button class="answer-button answer-1" onclick="selectAnswer(1)">
-                        Un camion benne turbo
+                        <?php echo $quiz_data['q1_choix_1']; ?>
                     </button>
                     <button class="answer-button answer-2" onclick="selectAnswer(2)">
-                        Une brouette, tout simplement
+                        <?php echo $quiz_data['q1_choix_2']; ?>
                     </button>
                     <button class="answer-button answer-3" onclick="selectAnswer(3)">
-                        Son chapeau
+                        <?php echo $quiz_data['q1_choix_3']; ?>
                     </button>
                     <button class="answer-button answer-4" onclick="selectAnswer(4)">
-                        Une licorne magique
+                        <?php echo $quiz_data['q1_choix_4']; ?>
                     </button>
                 </div>
             </div>
 
             <!-- Barre de progression -->
             <div class="progress-container">
-                <div class="progress-step inactive" id="step-1">
+                <div class="progress-step active" id="step-1">
                     <img src="../../assets/images/quizz/loupe.svg" alt="Step 1">
                 </div>
                 <div class="progress-line" id="line-1"></div>
@@ -478,37 +482,37 @@ if (mysqli_num_rows($check_result) > 0) {
     <script>
         // Questions du quiz
         const questions = [{
-                title: "LE MINI JEU : Le Palais Idéal du Facteur Cheval",
-                question: "Avec quoi ramassait-il les pierres pour son palais ?",
+                title: "<?php echo $nom_data['titre']; ?>",
+                question: "<?php echo $quiz_data['question_1']; ?>",
                 answers: [
-                    "Un camion benne turbo",
-                    "Une brouette, tout simplement",
-                    "Son chapeau",
-                    "Une licorne magique"
+                    "<?php echo $quiz_data['q1_choix_1']; ?>",
+                    "<?php echo $quiz_data['q1_choix_2']; ?>",
+                    "<?php echo $quiz_data['q1_choix_3']; ?>",
+                    "<?php echo $quiz_data['q1_choix_4']; ?>"
                 ],
-                correct: 2
+                correct: <?php echo array_search($quiz_data['reponse_1'], [$quiz_data['q1_choix_1'], $quiz_data['q1_choix_2'], $quiz_data['q1_choix_3'], $quiz_data['q1_choix_4']]) + 1; ?>
             },
             {
-                title: "Question 2",
-                question: "Combien d'années a-t-il fallu pour construire le Palais Idéal ?",
+                title: "<?php echo $nom_data['titre']; ?>",
+                question: "<?php echo $quiz_data['question_2']; ?>",
                 answers: [
-                    "5 ans",
-                    "10 ans",
-                    "33 ans",
-                    "50 ans"
+                    "<?php echo $quiz_data['q2_choix_1']; ?>",
+                    "<?php echo $quiz_data['q2_choix_2']; ?>",
+                    "<?php echo $quiz_data['q2_choix_3']; ?>",
+                    "<?php echo $quiz_data['q2_choix_4']; ?>"
                 ],
-                correct: 3
+                correct: <?php echo array_search($quiz_data['reponse_2'], [$quiz_data['q2_choix_1'], $quiz_data['q2_choix_2'], $quiz_data['q2_choix_3'], $quiz_data['q2_choix_4']]) + 1; ?>
             },
             {
-                title: "Question 3",
-                question: "Quel est le style architectural du Palais Idéal ?",
+                title: "<?php echo $nom_data['titre']; ?>",
+                question: "<?php echo $quiz_data['question_3']; ?>",
                 answers: [
-                    "Baroque",
-                    "Architecture naïve",
-                    "Gothique",
-                    "Renaissance"
+                    "<?php echo $quiz_data['q3_choix_1']; ?>",
+                    "<?php echo $quiz_data['q3_choix_2']; ?>",
+                    "<?php echo $quiz_data['q3_choix_3']; ?>",
+                    "<?php echo $quiz_data['q3_choix_4']; ?>"
                 ],
-                correct: 2
+                correct: <?php echo array_search($quiz_data['reponse_3'], [$quiz_data['q3_choix_1'], $quiz_data['q3_choix_2'], $quiz_data['q3_choix_3'], $quiz_data['q3_choix_4']]) + 1; ?>
             }
         ];
 
@@ -585,13 +589,25 @@ if (mysqli_num_rows($check_result) > 0) {
                             document.getElementById('quiz-error').style.display = 'none';
 
                             // Envoyer les points au serveur
+                            const formData = new FormData();
+                            formData.append('points', points);
+                            formData.append('activite_id', '<?php echo $_GET['id']; ?>');
+
                             fetch('save_points.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: `points=${points}&activite_id=<?php echo $_GET['id']; ?>`
-                            });
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        console.log('Points enregistrés avec succès');
+                                    } else {
+                                        console.error('Erreur lors de l\'enregistrement des points');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Erreur:', error);
+                                });
                         }
                     }, 900);
                 } else {
@@ -620,13 +636,25 @@ if (mysqli_num_rows($check_result) > 0) {
                             document.getElementById('quiz-error').style.display = 'none';
 
                             // Envoyer les points au serveur
+                            const formData = new FormData();
+                            formData.append('points', points);
+                            formData.append('activite_id', '<?php echo $_GET['id']; ?>');
+
                             fetch('save_points.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: `points=${points}&activite_id=<?php echo $_GET['id']; ?>`
-                            });
+                                    method: 'POST',
+                                    body: formData
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.success) {
+                                        console.log('Points enregistrés avec succès');
+                                    } else {
+                                        console.error('Erreur lors de l\'enregistrement des points');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Erreur:', error);
+                                });
                         }
                     }, 2000);
                 }
@@ -634,13 +662,6 @@ if (mysqli_num_rows($check_result) > 0) {
 
             // Initialisation
             document.addEventListener('DOMContentLoaded', function() {
-                // Ajoute les events sur les boutons
-                document.querySelectorAll('.answer-button').forEach((btn, i) => {
-                    btn.onclick = function() {
-                        selectAnswer(i + 1);
-                    };
-                });
-                // Affiche la première question
                 showQuestion(0);
             });
         <?php endif; ?>

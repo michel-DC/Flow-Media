@@ -550,9 +550,10 @@
                         const marker = L.marker([point.latitude, point.longitude]).addTo(map);
                         marker.bindPopup(`
                             <strong>${point.titre}</strong><br>
-                            <strong>À: </strong>${point.lieu}</br> 
-                            <strong>Le: </strong>${point.date_activite}<br>
-                            <a href="/pages/activites/details.php?id=${point.id}" class="btn">Réserver</a>
+                            <strong>Type de lieu: </strong>${point.type_lieu}</br> 
+                            <strong>Fait par: </strong>${point.architecte}</br>  
+                            <strong>Adresse: </strong>${point.adresse}<br>
+                            <a href="/pages/activites/details.php?id=${point.id}" class="btn">Y aller</a>
                         `);
                     });
 
@@ -588,8 +589,7 @@
                         const marker = L.marker([point.latitude, point.longitude]).addTo(map);
                         marker.bindPopup(`
                             <strong>${point.titre}</strong><br>
-                            <strong>À: </strong>${point.lieu}</br> 
-                            <strong>Le: </strong>${point.date_activite}<br>
+                            <strong>À: </strong>${point.adresse}</br> 
                             <a href="/pages/activites/details.php?id=${point.id}" class="btn">Réserver</a>
                         `);
                     });

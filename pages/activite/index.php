@@ -3,7 +3,7 @@ require_once '../../includes/auth.php';
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-$query = "SELECT * FROM activites ORDER BY date_activite DESC";
+$query = "SELECT * FROM all_activites";
 $result = mysqli_query($link, $query);
 ?>
 
@@ -120,6 +120,7 @@ $result = mysqli_query($link, $query);
         }
 
         .activity-title {
+            text-align: center;
             font-size: 1.2rem;
             font-weight: 600;
             margin-bottom: 10px;
@@ -135,6 +136,11 @@ $result = mysqli_query($link, $query);
             gap: 5px;
             justify-content: center;
             flex-grow: 1;
+        }
+
+        .activity-adresse {
+            text-align: center;
+            font-size: 1rem;
         }
 
         .activity-description {
@@ -482,35 +488,42 @@ $result = mysqli_query($link, $query);
     <div class="filters-container">
         <div class="filters">
             <div class="filter-group">
-                <label for="date-filter">Date</label>
-                <select id="date-filter">
-                    <option value="all">Toutes les dates</option>
-                    <option value="this-month">Ce mois</option>
-                    <option value="next-month">Mois prochain</option>
-                    <option value="next-3-months">3 prochains mois</option>
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="location-filter">Lieu</label>
-                <select id="location-filter">
-                    <option value="all">Tous les lieux</option>
+                <label for="region-filter">Région</label>
+                <select id="region-filter">
+                    <option value="all">Toutes les régions</option>
                     <?php
-                    $locations_query = "SELECT DISTINCT lieu FROM activites ORDER BY lieu";
-                    $locations_result = mysqli_query($link, $locations_query);
-                    while ($location = mysqli_fetch_assoc($locations_result)) {
-                        echo '<option value="' . strtolower($location['lieu']) . '">' . htmlspecialchars($location['lieu']) . '</option>';
+                    $regions_query = "SELECT DISTINCT region FROM all_activites ORDER BY region";
+                    $regions_result = mysqli_query($link, $regions_query);
+                    while ($region = mysqli_fetch_assoc($regions_result)) {
+                        echo '<option value="' . strtolower($region['region']) . '">' . htmlspecialchars($region['region']) . '</option>';
                     }
                     ?>
                 </select>
             </div>
             <div class="filter-group">
-                <label for="price-filter">Prix</label>
-                <select id="price-filter">
-                    <option value="all">Tous les prix</option>
-                    <option value="0-20">0-20€</option>
-                    <option value="20-50">20-50€</option>
-                    <option value="50-100">50-100€</option>
-                    <option value="100+">100€ et plus</option>
+                <label for="architecture-filter">Type d'architecture</label>
+                <select id="architecture-filter">
+                    <option value="all">Tous les types</option>
+                    <?php
+                    $architecture_query = "SELECT DISTINCT type_architecture FROM all_activites ORDER BY type_architecture";
+                    $architecture_result = mysqli_query($link, $architecture_query);
+                    while ($architecture = mysqli_fetch_assoc($architecture_result)) {
+                        echo '<option value="' . strtolower($architecture['type_architecture']) . '">' . htmlspecialchars($architecture['type_architecture']) . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="type-lieu-filter">Type de lieu</label>
+                <select id="type-lieu-filter">
+                    <option value="all">Tous les types</option>
+                    <?php
+                    $type_lieu_query = "SELECT DISTINCT type_lieu FROM all_activites ORDER BY type_lieu";
+                    $type_lieu_result = mysqli_query($link, $type_lieu_query);
+                    while ($type_lieu = mysqli_fetch_assoc($type_lieu_result)) {
+                        echo '<option value="' . strtolower($type_lieu['type_lieu']) . '">' . htmlspecialchars($type_lieu['type_lieu']) . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
         </div>
@@ -519,18 +532,20 @@ $result = mysqli_query($link, $query);
     <div class="activities-container">
         <?php while ($activity = mysqli_fetch_assoc($result)): ?>
             <div class="activity-card"
-                data-date="<?php echo $activity['date_activite']; ?>"
-                data-location="<?php echo strtolower($activity['lieu']); ?>"
-                data-price="<?php echo $activity['prix']; ?>">
-                <img src="../<?php echo htmlspecialchars($activity['image_url']); ?>"
+                data-location="<?php echo strtolower($activity['nom_lieu']); ?>"
+                data-region="<?php echo strtolower($activity['region']); ?>"
+                data-architecture="<?php echo strtolower($activity['type_architecture']); ?>"
+                data-type-lieu="<?php echo strtolower($activity['type_lieu']); ?>">
+                <img src="../<?php echo htmlspecialchars($activity['image']); ?>"
                     alt="<?php echo htmlspecialchars($activity['titre']); ?>"
                     class="activity-image">
                 <div class="activity-content">
 
-                    <h3 class="activity-title"><?php echo htmlspecialchars($activity['titre']); ?></h3>
+                    <h3 class="activity-title" style="text-align: center;"><?php echo htmlspecialchars($activity['titre']); ?></h3>
+                    <p style="text-align: center;"><?php echo htmlspecialchars($activity['adresse']); ?></p>
                     <div class="activity-location">
 
-                        <?php echo htmlspecialchars($activity['lieu']); ?>
+                        <?php echo htmlspecialchars($activity['region']); ?>
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
 
@@ -547,14 +562,10 @@ $result = mysqli_query($link, $query);
         <div class="swipe-card">
             <img src="" alt="" class="swipe-image">
             <div class="swipe-content">
-                <div class="activity-date"></div>
                 <h3 class="activity-title"></h3>
                 <div class="activity-location"></div>
+                <p class="activity-adresse"></p>
                 <p class="activity-description"></p>
-                <div class="activity-details">
-                    <div class="activity-detail age-range"></div>
-                    <div class="activity-detail activity-price"></div>
-                </div>
             </div>
         </div>
         <div class="swipe-actions">
@@ -588,26 +599,17 @@ $result = mysqli_query($link, $query);
                 }
 
                 const activity = activities[currentIndex];
-                swipeImage.src = "../" + activity.image_url;
+                swipeImage.src = "../" + activity.image;
                 swipeImage.alt = activity.titre;
-                swipeContent.querySelector('.activity-date').innerHTML = `
-                    <i class="far fa-calendar"></i>
-                    ${new Date(activity.date_activite).toLocaleDateString()}
-                `;
                 swipeContent.querySelector('.activity-title').textContent = activity.titre;
                 swipeContent.querySelector('.activity-location').innerHTML = `
                     <i class="fas fa-map-marker-alt"></i>
-                    ${activity.lieu}
+                    ${activity.region}
+                `;
+                swipeContent.querySelector('.activity-adresse').innerHTML = `
+                    ${activity.adresse}
                 `;
                 swipeContent.querySelector('.activity-description').textContent = activity.description;
-                swipeContent.querySelector('.age-range').innerHTML = `
-                    <i class="fas fa-user"></i>
-                    ${activity.age_min}-${activity.age_max} ans
-                `;
-                swipeContent.querySelector('.activity-price').innerHTML = `
-                    <i class="fas fa-euro-sign"></i>
-                    ${parseFloat(activity.prix).toFixed(2)}
-                `;
             }
 
             function nextCard() {
@@ -617,7 +619,7 @@ $result = mysqli_query($link, $query);
 
             function handleSwipe(direction) {
                 if (direction === 'right') {
-                    window.location.href = `reservation.php?id=${activities[currentIndex].id}`;
+                    window.location.href = `details.php?id=${activities[currentIndex].id}`;
                 } else {
                     nextCard();
                 }
@@ -633,64 +635,42 @@ $result = mysqli_query($link, $query);
 
             updateSwipeCard();
 
-            const dateFilter = document.getElementById('date-filter');
-            const locationFilter = document.getElementById('location-filter');
-            const priceFilter = document.getElementById('price-filter');
+            const regionFilter = document.getElementById('region-filter');
+            const architectureFilter = document.getElementById('architecture-filter');
+            const typeLieuFilter = document.getElementById('type-lieu-filter');
             const activityCards = document.querySelectorAll('.activity-card');
 
             function filterActivities() {
-                const selectedDate = dateFilter.value;
-                const selectedLocation = locationFilter.value;
-                const selectedPrice = priceFilter.value;
+                const selectedRegion = regionFilter.value;
+                const selectedArchitecture = architectureFilter.value;
+                const selectedTypeLieu = typeLieuFilter.value;
 
                 activityCards.forEach(card => {
-                    const cardDate = new Date(card.dataset.date);
-                    const cardLocation = card.dataset.location;
-                    const cardPrice = parseFloat(card.dataset.price);
+                    const cardRegion = card.dataset.region;
+                    const cardArchitecture = card.dataset.architecture;
+                    const cardTypeLieu = card.dataset.typeLieu;
                     let showCard = true;
 
-                    if (selectedDate !== 'all') {
-                        const today = new Date();
-                        const threeMonthsFromNow = new Date();
-                        threeMonthsFromNow.setMonth(today.getMonth() + 3);
 
-                        switch (selectedDate) {
-                            case 'this-month':
-                                showCard = cardDate.getMonth() === today.getMonth() &&
-                                    cardDate.getFullYear() === today.getFullYear();
-                                break;
-                            case 'next-month':
-                                const nextMonth = new Date(today);
-                                nextMonth.setMonth(today.getMonth() + 1);
-                                showCard = cardDate.getMonth() === nextMonth.getMonth() &&
-                                    cardDate.getFullYear() === nextMonth.getFullYear();
-                                break;
-                            case 'next-3-months':
-                                showCard = cardDate >= today && cardDate <= threeMonthsFromNow;
-                                break;
-                        }
+                    if (selectedRegion !== 'all' && showCard) {
+                        showCard = showCard && cardRegion === selectedRegion;
                     }
 
-                    if (selectedLocation !== 'all' && showCard) {
-                        showCard = cardLocation === selectedLocation;
+                    if (selectedArchitecture !== 'all' && showCard) {
+                        showCard = showCard && cardArchitecture === selectedArchitecture;
                     }
 
-                    if (selectedPrice !== 'all' && showCard) {
-                        const [min, max] = selectedPrice.split('-').map(Number);
-                        if (max) {
-                            showCard = cardPrice >= min && cardPrice <= max;
-                        } else {
-                            showCard = cardPrice >= min;
-                        }
+                    if (selectedTypeLieu !== 'all' && showCard) {
+                        showCard = showCard && cardTypeLieu === selectedTypeLieu;
                     }
 
                     card.style.display = showCard ? 'block' : 'none';
                 });
             }
 
-            dateFilter.addEventListener('change', filterActivities);
-            locationFilter.addEventListener('change', filterActivities);
-            priceFilter.addEventListener('change', filterActivities);
+            regionFilter.addEventListener('change', filterActivities);
+            architectureFilter.addEventListener('change', filterActivities);
+            typeLieuFilter.addEventListener('change', filterActivities);
         });
 
         document.addEventListener('DOMContentLoaded', function() {

@@ -415,7 +415,7 @@ $total_points = mysqli_fetch_assoc($points_result)['total_points'] ?? 0;
                 </div>
                 <div class="badge-info">
                     <div class="badge-name">Badge Curieux</div>
-                    <div class="badge-stats">Nombre : 5 &nbsp;&nbsp; Points : 5</div>
+                    <div class="badge-stats">Nombre : 1 &nbsp;&nbsp; Points : Undefined</div>
                 </div>
             </div>
 
@@ -426,7 +426,7 @@ $total_points = mysqli_fetch_assoc($points_result)['total_points'] ?? 0;
                 </div>
                 <div class="badge-info">
                     <div class="badge-name">Badge Explorateur</div>
-                    <div class="badge-stats">Nombre : 1 &nbsp;&nbsp; Points : 2</div>
+                    <div class="badge-stats">Nombre : 2 &nbsp;&nbsp; Points : Undefined</div>
                 </div>
             </div>
 
@@ -437,7 +437,7 @@ $total_points = mysqli_fetch_assoc($points_result)['total_points'] ?? 0;
                 </div>
                 <div class="badge-info">
                     <div class="badge-name">Badge Architecte</div>
-                    <div class="badge-stats">Nombre : 3 &nbsp;&nbsp; Points : 9</div>
+                    <div class="badge-stats">Nombre : 1 &nbsp;&nbsp; Points : Undefined</div>
                 </div>
             </div>
 

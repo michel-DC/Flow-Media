@@ -9,9 +9,7 @@ if (mysqli_connect_errno()) {
 }
 
 $query = "SELECT a.*, 
-          DATE_FORMAT(a.date_activite, '%d/%m/%Y %H:%i') as date_activite 
-          FROM activites a 
-          ORDER BY a.date_activite DESC";
+          FROM all_activites a ";
 
 $result = mysqli_query($link, $query);
 $activities = [];
@@ -20,8 +18,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $activities[] = [
         'id' => $row['id'],
         'titre' => $row['titre'],
-        'lieu' => $row['lieu'],
-        'date_activite' => $row['date_activite'],
+        'adresse' => $row['adresse'],
         'latitude' => $row['latitude'],
         'longitude' => $row['longitude']
     ];

@@ -13,7 +13,7 @@
     <div class="footer-secondary">
       <div class="footer-legal">
         <a href="/legal/politique-confidentialite.php">Politique de confidentialité</a>
-        <a href="/legal/cookies.php">Cookies</a>
+        <a href="/legal/mentions-legales.php">Mentions légales</a>
       </div>
       <div class="footer-socials-new">
         <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>

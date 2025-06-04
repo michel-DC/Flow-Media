@@ -9,7 +9,7 @@ if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true) {
 
 // Vérifier si l'ID de l'utilisateur est fourni et correspond à l'utilisateur connecté
 if (!isset($_GET['user_id']) || $_GET['user_id'] != $_SESSION['user_id']) {
-    header('Location: ../user/profile.php?erreur=acces_non_autorise');
+    header('Location: ../user/me.php?erreur=acces_non_autorise');
     exit();
 }
 
@@ -45,7 +45,7 @@ if (isset($_POST['changer_abonnement'])) {
             if (mysqli_query($link, $update_query)) {
                 $success = "Votre abonnement a été mis à jour avec succès !";
                 // Rediriger vers le profil après 2 secondes
-                header("refresh:2;url=../user/profile.php");
+                header("refresh:2;url=../user/me.php");
             } else {
                 $error = "Une erreur est survenue lors de la mise à jour de votre abonnement.";
             }

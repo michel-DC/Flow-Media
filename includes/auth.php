@@ -2,15 +2,14 @@
 session_start();
 
 $chemin = $_SERVER['REQUEST_URI'];
-// strpos() cherche si un morceau de texte se trouve dans un autre texte et dit où
-
-
-
 
 if (!isset($_SESSION['connecté']) || $_SESSION['connecté'] !== true) {
     if (strpos($chemin, 'index.php') !== false) {
     } else if (strpos($chemin, '/admin') !== false) {
         header('Location: ../connexion/login-admin.php?erreur=non_connecte');
+        exit();
+    } else if (strpos($chemin, '/pages/user/') !== false) {
+        header('Location: ../../connexion/login.php?erreur=non_connecte');
         exit();
     } else if (strpos($chemin, '/pages/maps') !== false) {
         header('Location: ../../connexion/login.php?erreur=non_connecte');

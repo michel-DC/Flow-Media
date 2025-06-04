@@ -8,14 +8,10 @@ if (!isset($_GET['id'])) {
 
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-$query = "SELECT * FROM activites WHERE id = " . $_GET['id'];
+$query = "SELECT * FROM all_activites WHERE id = " . $_GET['id'];
 $result = mysqli_query($link, $query);
 $activity = mysqli_fetch_assoc($result);
 
-if (!$activity) {
-    header('Location: index.php');
-    exit;
-}
 
 ?>
 
@@ -66,7 +62,7 @@ if (!$activity) {
 
         .top-content {
             display: flex;
-            gap: 80px;
+            gap: 250px;
             align-items: flex-start;
             margin-bottom: 20px;
         }
@@ -420,94 +416,6 @@ if (!$activity) {
             background-color: #2d5f18;
         }
 
-        .newsletter-section {
-            background-color: #d4c8b8;
-            padding: clamp(1.5rem, 3vh, 2.5rem) 0;
-            text-align: center;
-        }
-
-        .newsletter-container {
-            max-width: clamp(300px, 50vw, 800px);
-            margin: 0 auto;
-            padding: 0 clamp(1rem, 2vw, 1.25rem);
-        }
-
-        .newsletter-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(1rem, 2vw, 1.875rem);
-            flex-wrap: wrap;
-        }
-
-        .newsletter-title {
-            font-size: clamp(1.25rem, 2vw, 1.8rem);
-            font-weight: 600;
-            color: #444;
-        }
-
-        .newsletter-form {
-            display: flex;
-            align-items: center;
-            background-color: var(--white);
-            border-radius: 1.875rem;
-            padding: 0.5rem;
-            box-shadow: var(--shadow-sm);
-            width: 100%;
-            max-width: clamp(250px, 40vw, 400px);
-        }
-
-        .newsletter-input {
-            flex-grow: 1;
-            border: none;
-            outline: none;
-            padding: clamp(0.5rem, 1vw, 0.625rem) clamp(1rem, 2vw, 1.25rem);
-            font-size: clamp(0.875rem, 1.2vw, 1rem);
-            border-radius: 1.875rem 0 0 1.875rem;
-        }
-
-        .newsletter-input::placeholder {
-            color: #aaa;
-        }
-
-        .newsletter-button {
-            background-color: #ff5757;
-            border: none;
-            border-radius: 50%;
-            width: clamp(2rem, 3vw, 2.5rem);
-            height: clamp(2rem, 3vw, 2.5rem);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .newsletter-button i {
-            color: var(--white);
-            font-size: clamp(0.875rem, 1.2vw, 1.2rem);
-            transform: translateX(1px);
-        }
-
-        .newsletter-button:hover {
-            background-color: #e04a4a;
-        }
-
-        @media (max-width: 600px) {
-            .newsletter-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .newsletter-form {
-                max-width: 300px;
-            }
-
-            .newsletter-title {
-                font-size: 1.5rem;
-            }
-        }
-
         @media (max-width: 1200px) {
             .main-section {
                 padding: 0 15px;
@@ -835,8 +743,8 @@ if (!$activity) {
     <!-- Section principale -->
     <section class="main-section">
         <div class="top-content">
-            <?php if (!empty($activity['image_url'])): ?>
-                <img src="../../<?php echo htmlspecialchars($activity['image_url']); ?>?t=<?php echo time(); ?>" alt="Image 1 - <?php echo htmlspecialchars($activity['titre']); ?>" class="palace-image">
+            <?php if (!empty($activity['image'])): ?>
+                <img src="../../<?php echo htmlspecialchars($activity['image']); ?>?t=<?php echo time(); ?>" alt="Image 1 - <?php echo htmlspecialchars($activity['titre']); ?>" class="palace-image">
             <?php endif; ?>
             <div class="title-and-buttons">
                 <h1 class="title"><?php echo htmlspecialchars($activity['titre']); ?></h1>
@@ -844,25 +752,21 @@ if (!$activity) {
                 <div class="place-info">
                     <div class="info-item">
                         <span class="info-label">Architecte :</span>
-                        <span class="info-value">Piouf </span>
+                        <span class="info-value"><?php echo htmlspecialchars($activity['architecte']); ?> </span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Adresse :</span>
-                        <span class="info-value">Piouf</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Période :</span>
-                        <span class="info-value">piouf</span>
+                        <span class="info-value"><?php echo htmlspecialchars($activity['adresse']); ?></span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Style :</span>
-                        <span class="info-value">piouf</span>
+                        <span class="info-value"><?php echo htmlspecialchars($activity['type_architecture']); ?></span>
                     </div>
                 </div>
 
                 <div class="buttons-container">
-                    <a href="#" class="btn btn-green">Visiter le site web</a>
-                    <a href="reservation.php?id=<?php echo $activity['id']; ?>" class="btn btn-red">Réserver les billets</a>
+                    <a href="<?php echo htmlspecialchars($activity['lien_plus']); ?>" class="btn btn-green">Visiter le site web</a>
+                    <a href="reservation/reservation.php?id=<?php echo $activity['id']; ?>" class="btn btn-red">Réserver les billets</a>
                 </div>
             </div>
         </div>
@@ -977,19 +881,7 @@ if (!$activity) {
         </div>
     </section>
 
-    <section class="newsletter-section">
-        <div class="newsletter-container">
-            <div class="newsletter-content">
-                <div class="newsletter-title">Newsletter</div>
-                <form method="POST" action="" class="newsletter-form">
-                    <input type="email" name="newsletter_email" class="newsletter-input" placeholder="Ton e-mail" required>
-                    <button type="submit" name="newsletter_submit" class="newsletter-button">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
+    <?php include '../../components/newsletter.php' ?>
 
     <?php include '../../includes/layout/footer.php' ?>
 

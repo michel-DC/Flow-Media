@@ -50,7 +50,6 @@ if (isset($_SESSION['user_id'])) {
                 </div>
                 <div class="nav-dropdown-content">
                     <a href="/pages/agenda"><i class="fas fa-calendar-alt"></i> Agenda culturel</a>
-                    <a href="/pages/fun-fact"><i class="fas fa-lightbulb"></i> Fun Facts</a>
                     <a href="/pages/activite"><i class="fas fa-running"></i> Activités</a>
                     <a href="/pages/podcast"><i class="fas fa-podcast"></i> Podcasts</a>
                 </div>
@@ -89,7 +88,7 @@ if (isset($_SESSION['user_id'])) {
         top: 0;
         left: 0;
         right: 0;
-        z-index: 1000;
+        z-index: 9999;
         padding: 10px 20px;
         background-color: rgba(255, 255, 255, 0.95);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

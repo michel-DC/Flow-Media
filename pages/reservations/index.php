@@ -4,9 +4,9 @@ require_once '../../includes/auth.php';
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
 // Récupérer toutes les réservations de l'utilisateur
-$query = "SELECT r.*, a.titre, a.date_activite, a.lieu, a.prix, a.image_url 
+$query = "SELECT r.*, a.titre, a.adresse, a.region, a.image 
           FROM reservations r 
-          JOIN activites a ON r.activite_id = a.id 
+          JOIN all_activites a ON r.activite_id = a.id 
           WHERE r.user_id = " . $_SESSION['user_id'] . " 
           ORDER BY r.date_reservation DESC";
 $result = mysqli_query($link, $query);
@@ -294,28 +294,28 @@ if (isset($_POST['cancel_reservation'])) {
                 <div class="reservations-grid">
                     <?php while ($reservation = mysqli_fetch_assoc($result)): ?>
                         <div class="reservation-card">
-                            <img src="../../<?php echo htmlspecialchars($reservation['image_url']); ?>" alt="<?php echo htmlspecialchars($reservation['titre']); ?>" class="reservation-image">
+                            <img src="../../<?php echo htmlspecialchars($reservation['image']); ?>" alt="<?php echo htmlspecialchars($reservation['titre']); ?>" class="reservation-image">
                             <div class="reservation-content">
                                 <h3 class="reservation-title"><?php echo htmlspecialchars($reservation['titre']); ?></h3>
                                 <div class="reservation-details">
                                     <div class="detail-item">
                                         <i class="far fa-calendar"></i>
-                                        <?php echo date('d/m/Y', strtotime($reservation['date_activite'])); ?>
+                                        <?php echo date('d/m/Y H:i', strtotime($reservation['date_reservation'])); ?>
                                     </div>
                                     <div class="detail-item">
                                         <i class="fas fa-map-marker-alt"></i>
-                                        <?php echo htmlspecialchars($reservation['lieu']); ?>
+                                        <?php echo htmlspecialchars($reservation['adresse']); ?>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-map"></i>
+                                        <?php echo htmlspecialchars($reservation['region']); ?>
                                     </div>
                                     <div class="detail-item">
                                         <i class="fas fa-user"></i>
                                         <?php echo $reservation['places']; ?> place(s)
                                     </div>
                                 </div>
-                                <div class="reservation-price">
-                                    Total: <?php echo number_format($reservation['prix'] * $reservation['places'], 2); ?> €
-                                </div>
                                 <a href="annuler.php?id=<?php echo $reservation['id']; ?>" class="cancel-button">
-
                                     Annuler la réservation
                                 </a>
                             </div>

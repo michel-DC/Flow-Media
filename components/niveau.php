@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
-$user_query = "SELECT fullname FROM users WHERE id = $user_id";
+$user_query = "SELECT * FROM users WHERE id = $user_id";
 $user_result = mysqli_query($link, $user_query);
 $user = mysqli_fetch_assoc($user_result);
 $user_fullname = $user['fullname'];
@@ -349,7 +349,7 @@ $user_progress = calculateUserProgress($total_points);
     </div>
 
     <div class="container">
-        <p>Votre total de points : <span style="font-weight: bold;"><?php echo $total_points; ?></span></p>
+        <p>Bravo <?php echo htmlspecialchars($user['fullname']); ?> tu as <span style="font-weight: bold;"><?php echo $total_points; ?></span> points continue comme ça.</p>
 
         <div class="points-scale">
             <div class="scale-item">

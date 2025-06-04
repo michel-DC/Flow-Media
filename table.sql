@@ -61,3 +61,37 @@ INSERT INTO all_activites (image, titre, nom_lieu, type_lieu, type_architecture,
 
 ('../../assets/uploads/activites/31.jpg', 'Mosquée de Strasbourg', 'Mosquée de Strasbourg', 'Mosquée', 'Islamique moderne', 'Grand Est', '67100 Strasbourg', 'Paolo Portoghesi', 'Plus grande mosquée de France (5.000 m²), l\'édifice se distingue par son dôme vert et son minaret de 24 mètres. Conçue par l\'architecte italien Paolo Portoghesi, elle mêle tradition islamique et modernité, avec une grande salle de prière ornée de calligraphies et une coupole évoquant une fleur ouverte. Le centre culturel attenant comprend une bibliothèque spécialisée dans les études islamiques et un restaurant halal.', 'https://grande-mosquee-strasbourg.com/', 'La mosquée possède une collection unique de 30.000 ouvrages sur l\'islam et le dialogue interreligieux, dont des manuscrits anciens. Son architecture symbolise l\'"arbre de vie" avec 72 colonnes représentant les branches.'),
 
+
+ALTER TABLE all_activites ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY FIRST;
+
+
+CREATE TABLE activite_quizz (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  activite_id INT NOT NULL,
+  
+  -- Question 1 et ses choix
+  question_1 VARCHAR(255) NOT NULL,
+  q1_choix_1 VARCHAR(100) NOT NULL,
+  q1_choix_2 VARCHAR(100) NOT NULL,
+  q1_choix_3 VARCHAR(100) NOT NULL,
+  q1_choix_4 VARCHAR(100) NOT NULL,
+  reponse_1 VARCHAR(100) NOT NULL,
+  
+  -- Question 2 et ses choix
+  question_2 VARCHAR(255) NOT NULL,
+  q2_choix_1 VARCHAR(100) NOT NULL,
+  q2_choix_2 VARCHAR(100) NOT NULL,
+  q2_choix_3 VARCHAR(100) NOT NULL,
+  q2_choix_4 VARCHAR(100) NOT NULL,
+  reponse_2 VARCHAR(100) NOT NULL,
+  
+  -- Question 3 et ses choix
+  question_3 VARCHAR(255) NOT NULL,
+  q3_choix_1 VARCHAR(100) NOT NULL,
+  q3_choix_2 VARCHAR(100) NOT NULL,
+  q3_choix_3 VARCHAR(100) NOT NULL,
+  q3_choix_4 VARCHAR(100) NOT NULL,
+  reponse_3 VARCHAR(100) NOT NULL,
+  
+  FOREIGN KEY (activite_id) REFERENCES all_activites(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

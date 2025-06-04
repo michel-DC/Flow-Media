@@ -17,7 +17,7 @@ $user = $queryUser->fetch();
 
 if (!$user) {
     http_response_code(404);
-    echo json_encode(['error' => 'User not found']);
+    echo json_encode(['error' => 'Utilisateur non trouvé']);
     exit;
 }
 
@@ -39,7 +39,7 @@ if (empty($interetIds)) {
     $interetFilter = "
         AND a.id IN (
             SELECT activite_id
-            FROM activite_interet
+            FROM activites_interet
             WHERE interet_id IN ($placeholders)
         )
     ";
@@ -47,8 +47,8 @@ if (empty($interetIds)) {
 
 // Construction de la requête
 $sql = "
-    SELECT a.id, a.titre, a.date_activite, a.lieu, a.latitude, a.longitude
-    FROM activites a
+    SELECT a.id, a.titre, a.adresse, a.type_lieu, a.architecte, a.latitude, a.longitude
+    FROM all_activites a
     WHERE
         SQRT(
             POW(111.2 * (a.latitude - ?), 2) +
@@ -70,7 +70,7 @@ $activities = $query->fetchAll(PDO::FETCH_ASSOC);
 
 // Endpoint pour récupérer toutes les activités
 if (isset($_GET['all'])) {
-    $queryAll = $pdo->prepare("SELECT id, titre, date_activite, lieu, latitude, longitude FROM activites");
+    $queryAll = $pdo->prepare("SELECT id, titre, adresse, type_lieu, architecte, latitude, longitude FROM all_activites");
     $queryAll->execute();
     $allActivities = $queryAll->fetchAll(PDO::FETCH_ASSOC);
 
