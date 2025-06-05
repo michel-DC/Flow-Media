@@ -901,7 +901,7 @@ $activity = mysqli_fetch_assoc($result);
             <span class="reward-popup-close" onclick="closeFunFactPopup()">&times;</span>
             <h2>Le Fun Fact</h2>
             <p style="font-size: 1.1rem; line-height: 1.6; margin: 20px 0;">
-                <?php echo htmlspecialchars($activity['fun_fact'] ?? 'Saviez-vous que ce lieu historique a été construit en seulement 3 ans ? Un véritable exploit architectural pour l\'époque !'); ?>
+                <?php echo htmlspecialchars($activity['fun_fact'] ?? 'Malheuresement le fun fact est indisponible pour le moment :('); ?>
             </p>
         </div>
     </div>
