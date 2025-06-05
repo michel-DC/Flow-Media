@@ -45,7 +45,7 @@
                             <h3 class="card-title">CENTRE POMPIDOU DE METZ</h3>
                             <p class="card-subtitle">Parvis des Droits de l'Homme, 57020 Metz</p>
                             <p class="card-distance">à 500m</p>
-                            <button class="card-button">Voir plus</button>
+                            <a href="../activite/details.php?id=2"><button class="card-button">Voir plus</button></a>
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
                             <h3 class="card-title">STATION ARTS ET MÉTIERS</h3>
                             <p class="card-subtitle">Paris 3e</p>
                             <p class="card-distance">à 2km</p>
-                            <button class="card-button">Voir plus</button>
+                            <a href="../activite/details.php?id=9"><button class="card-button">Voir plus</button></a>
                         </div>
                     </div>
 
@@ -69,7 +69,7 @@
                             <h3 class="card-title">LA CITÉ DU VIN</h3>
                             <p class="card-subtitle">134 Quai de Bacalan, 33300 Bordeaux</p>
                             <p class="card-distance">à 5km</p>
-                            <button class="card-button">Voir plus</button>
+                            <a href="../activite/details.php?id=14"><button class="card-button">Voir plus</button></a>
                         </div>
                     </div>
                 </div>
@@ -80,19 +80,7 @@
             </div>
         </section>
     </main>
-    <section class="newsletter-section">
-        <div class="newsletter-container">
-            <div class="newsletter-content">
-                <div class="newsletter-title">Newsletter</div>
-                <form method="POST" action="" class="newsletter-form">
-                    <input type="email" name="newsletter_email" class="newsletter-input" placeholder="Ton e-mail" required>
-                    <button type="submit" name="newsletter_submit" class="newsletter-button">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
+    <?php include '../../components/newsletter.php' ?>
 
     <?php include '../../includes/layout/footer.php'; ?>
 
@@ -382,7 +370,7 @@
             display: inline-block;
             margin-top: 8px;
             padding: clamp(4px, 2vw, 6px) clamp(8px, 2vw, 12px);
-            background-color: #007bff;
+            background-color: #3a791f;
             color: white;
             text-decoration: none;
             border-radius: 4px;
@@ -390,7 +378,7 @@
         }
 
         .leaflet-popup-content a.btn:hover {
-            background-color: #0056b3;
+            background-color: rgb(56, 100, 37);
         }
 
         @media (max-width: 768px) {
@@ -433,94 +421,6 @@
                 min-width: 220px;
             }
         }
-
-        .newsletter-section {
-            background-color: #d4c8b8;
-            padding: clamp(1.5rem, 3vh, 2.5rem) 0;
-            text-align: center;
-        }
-
-        .newsletter-container {
-            max-width: clamp(300px, 50vw, 800px);
-            margin: 0 auto;
-            padding: 0 clamp(1rem, 2vw, 1.25rem);
-        }
-
-        .newsletter-content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: clamp(1rem, 2vw, 1.875rem);
-            flex-wrap: wrap;
-        }
-
-        .newsletter-title {
-            font-size: clamp(1.25rem, 2vw, 1.8rem);
-            font-weight: 600;
-            color: #444;
-        }
-
-        .newsletter-form {
-            display: flex;
-            align-items: center;
-            background-color: var(--white);
-            border-radius: 1.875rem;
-            padding: 0.5rem;
-            box-shadow: var(--shadow-sm);
-            width: 100%;
-            max-width: clamp(250px, 40vw, 400px);
-        }
-
-        .newsletter-input {
-            flex-grow: 1;
-            border: none;
-            outline: none;
-            padding: clamp(0.5rem, 1vw, 0.625rem) clamp(1rem, 2vw, 1.25rem);
-            font-size: clamp(0.875rem, 1.2vw, 1rem);
-            border-radius: 1.875rem 0 0 1.875rem;
-        }
-
-        .newsletter-input::placeholder {
-            color: #aaa;
-        }
-
-        .newsletter-button {
-            background-color: #ff5757;
-            border: none;
-            border-radius: 50%;
-            width: clamp(2rem, 3vw, 2.5rem);
-            height: clamp(2rem, 3vw, 2.5rem);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .newsletter-button i {
-            color: var(--white);
-            font-size: clamp(0.875rem, 1.2vw, 1.2rem);
-            transform: translateX(1px);
-        }
-
-        .newsletter-button:hover {
-            background-color: #e04a4a;
-        }
-
-        @media (max-width: 600px) {
-            .newsletter-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .newsletter-form {
-                max-width: 300px;
-            }
-
-            .newsletter-title {
-                font-size: 1.5rem;
-            }
-        }
     </style>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -553,7 +453,7 @@
                             <strong>Type de lieu: </strong>${point.type_lieu}</br> 
                             <strong>Fait par: </strong>${point.architecte}</br>  
                             <strong>Adresse: </strong>${point.adresse}<br>
-                            <a href="/pages/activites/details.php?id=${point.id}" class="btn">Y aller</a>
+                            <a href="/pages/activite/details.php?id=${point.id}" class="btn">J'y vais</a>
                         `);
                     });
 
@@ -588,9 +488,11 @@
                     data.forEach(point => {
                         const marker = L.marker([point.latitude, point.longitude]).addTo(map);
                         marker.bindPopup(`
-                            <strong>${point.titre}</strong><br>
-                            <strong>À: </strong>${point.adresse}</br> 
-                            <a href="/pages/activites/details.php?id=${point.id}" class="btn">Réserver</a>
+                           <strong>${point.titre}</strong><br>
+                            <strong>Type de lieu: </strong>${point.type_lieu}</br> 
+                            <strong>Fait par: </strong>${point.architecte}</br>  
+                            <strong>Adresse: </strong>${point.adresse}<br>
+                            <a href="/pages/activite/details.php?id=${point.id}" class="btn">J'y vais</a>
                         `);
                     });
 

@@ -5,10 +5,10 @@ require_once '../includes/auth.php';
 $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", "micheldjoumessi_flow-media");
 
 
-$query = "SELECT r.*, u.fullname as nom_user, a.titre as nom_activite, a.date_activite as date_activite, places as nombre_place, prix as prix
+$query = "SELECT r.*, u.fullname as nom_user, a.titre as nom_activite, a.type_lieu as type_lieu, a.region as nom_region, r.places as nombre_place
           FROM reservations r 
           JOIN users u ON r.user_id = u.id 
-          JOIN activites a ON r.activite_id = a.id 
+          JOIN all_activites a ON r.activite_id = a.id 
           ORDER BY r.date_reservation DESC";
 $result = mysqli_query($link, $query);
 ?>
@@ -129,10 +129,10 @@ $result = mysqli_query($link, $query);
                     <th>ID</th>
                     <th>Utilisateur</th>
                     <th>Activité</th>
+                    <th>Type de lieu</th>
+                    <th>Région</th>
                     <th>Date de réservation</th>
-                    <th>Date de l'activité</th>
                     <th>Nombre de places</th>
-                    <th>Prix total</th>
                 </tr>
             </thead>
             <tbody>
@@ -141,11 +141,10 @@ $result = mysqli_query($link, $query);
                         <td><?php echo htmlspecialchars($row['id']); ?></td>
                         <td><?php echo htmlspecialchars($row['nom_user']); ?></td>
                         <td><?php echo htmlspecialchars($row['nom_activite']); ?></td>
+                        <td><?php echo htmlspecialchars($row['type_lieu']); ?></td>
+                        <td><?php echo htmlspecialchars($row['nom_region']); ?></td>
                         <td><?php echo date('d/m/Y H:i', strtotime($row['date_reservation'])); ?></td>
-                        <td><?php echo date('d/m/Y H:i', strtotime($row['date_activite'])); ?></td>
                         <td><?php echo htmlspecialchars($row['nombre_place']); ?></td>
-                        <td><?php echo htmlspecialchars($row['prix']); ?></td>
-
                     </tr>
                 <?php endwhile; ?>
             </tbody>

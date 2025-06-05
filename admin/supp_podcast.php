@@ -310,7 +310,7 @@ if (isset($_POST['delete_podcast'])) {
                         <div class="select-form">
                             <form method="POST" action="dashboard.php#supp-podcast-section" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce podcast ?');">
                                 <input type="hidden" name="podcast_id" value="<?= $podcast['id'] ?>">
-                                <button type="submit" class="select-button">Supprimer</button>
+                                <button type="submit" name="delete_podcast" class="select-button">Supprimer</button>
                             </form>
                         </div>
                     </div>

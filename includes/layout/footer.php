@@ -4,7 +4,7 @@
       <div class="footer-nav">
         <a href="../../index.php">Accueil</a>
         <a href="../../pages/about">À propos</a>
-        <a href="../../pages/activites">Découvrir</a>
+        <a href="../../pages/activite">Découvrir</a>
         <a href="../../pages/maps">Maps</a>
         <a href="../../pages/contact">Contact</a>
       </div>

@@ -310,6 +310,80 @@ $activity = mysqli_fetch_assoc($result);
             }
         }
 
+        .newsletter-section {
+            background-color: #d4c8b8;
+            padding: clamp(1.5rem, 3vh, 2.5rem) 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .newsletter-container {
+            max-width: clamp(300px, 50vw, 800px);
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 2vw, 1.25rem);
+        }
+
+        .newsletter-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(1rem, 2vw, 1.875rem);
+            flex-wrap: wrap;
+        }
+
+        .newsletter-title {
+            font-size: clamp(1.25rem, 2vw, 1.8rem);
+            font-weight: 600;
+            color: #444;
+        }
+
+        .newsletter-form {
+            display: flex;
+            align-items: center;
+            background-color: var(--white);
+            border-radius: 1.875rem;
+            padding: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            width: 100%;
+            max-width: clamp(250px, 40vw, 400px);
+        }
+
+        .newsletter-input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            padding: clamp(0.5rem, 1vw, 0.625rem) clamp(1rem, 2vw, 1.25rem);
+            font-size: clamp(0.875rem, 1.2vw, 1rem);
+            border-radius: 1.875rem 0 0 1.875rem;
+        }
+
+        .newsletter-input::placeholder {
+            color: #aaa;
+        }
+
+        .newsletter-button {
+            background-color: #ff5757;
+            border: none;
+            border-radius: 50%;
+            width: clamp(2rem, 3vw, 2.5rem);
+            height: clamp(2rem, 3vw, 2.5rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-button i {
+            color: var(--white);
+            font-size: clamp(0.875rem, 1.2vw, 1.2rem);
+            transform: translateX(1px);
+        }
+
+        .newsletter-button:hover {
+            background-color: #e04a4a;
+        }
+
         footer {
             margin-top: 0;
         }

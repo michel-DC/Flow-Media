@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chargement | Flow Media</title>
-    <link rel="shortcut icon" href="/assets/icons/logo.png" type="image/x-icon">
+    <title>Chargement - Flow Media</title>
     <style>
         * {
             margin: 0;
@@ -50,7 +48,7 @@
             bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
-            color: #000000;
+            color: #fff;
             font-size: 24px;
             font-weight: 500;
             text-align: center;
@@ -63,7 +61,6 @@
             from {
                 opacity: 0;
             }
-
             to {
                 opacity: 1;
             }
@@ -77,12 +74,11 @@
         }
     </style>
 </head>
-
 <body>
     <div class="loading-container">
         <div class="video-container">
             <video autoplay muted playsinline id="loadingVideo">
-                <source src="/animations/loader/animation.mp4" type="video/mp4">
+                <source src="animation.mp4" type="video/mp4">
                 Votre navigateur ne supporte pas la lecture de vidéos.
             </video>
         </div>
@@ -102,11 +98,10 @@
             }
         });
 
-        // Redirection après 3 secondes
+        // Fallback redirection in case video doesn't play
         setTimeout(() => {
-            window.location.href = 'home.php';
-        }, 3000);
+            window.location.href = '../../index.php';
+        }, 30000); // 30 seconds timeout
     </script>
 </body>
-
 </html>

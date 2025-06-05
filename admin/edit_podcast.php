@@ -28,7 +28,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-if (isset($_POST['edit_podcast'])) {
+if (isset($_POST['update_podcast'])) {
     $podcast_id = mysqli_real_escape_string($link, $_POST['podcast_id']);
     $titre = mysqli_real_escape_string($link, $_POST['titre']);
     $description = mysqli_real_escape_string($link, $_POST['description']);
@@ -86,7 +86,7 @@ if (isset($_POST['edit_podcast'])) {
     }
 
     if (!isset($error_message)) {
-        $query = "UPDATE podcast SET 
+        $query = "UPDATE podcasts SET 
                     titre = '$titre',
                     description = '$description',
                     fichier_audio_url = " . ($audio_url !== null ? "'$audio_url'" : "NULL") . ",
@@ -96,7 +96,7 @@ if (isset($_POST['edit_podcast'])) {
 
         if (mysqli_query($link, $query)) {
             $success_message = "Podcast mis à jour avec succès !";
-            $query_updated = "SELECT * FROM podcast WHERE id = '$podcast_id'";
+            $query_updated = "SELECT * FROM podcasts WHERE id = '$podcast_id'";
             $result_updated = mysqli_query($link, $query_updated);
             if ($result_updated && mysqli_num_rows($result_updated) > 0) {
                 $podcast_data = mysqli_fetch_assoc($result_updated);
@@ -399,7 +399,7 @@ if (isset($_POST['edit_podcast'])) {
 
         <?php if (!is_null($podcast_data)): ?>
             <div class="edit-podcast-form-container">
-                <form method="POST" enctype="multipart/form-data" action="dashboard.php#edit-podcast-section" class="form-section">
+                <form method="POST" action="dashboard.php#edit-podcast-section" enctype="multipart/form-data">
                     <input type="hidden" name="podcast_id" value="<?= htmlspecialchars($podcast_data['id']) ?>">
 
                     <div class="form-group">
@@ -435,7 +435,7 @@ if (isset($_POST['edit_podcast'])) {
                         <input type="text" id="youtube_url" name="youtube_url" value="<?= htmlspecialchars($podcast_data['youtube_url']) ?>" placeholder="Entrez le lien YouTube du podcast">
                     </div>
 
-                    <button type="submit" name="edit_podcast" class="btn">
+                    <button type="submit" name="update_podcast" class="btn">
                         Mettre à jour le podcast
                     </button>
                 </form>

@@ -6,14 +6,24 @@ $link = mysqli_connect("localhost", "micheldjoumessi_flow-media", "michouflow", 
 if (isset($_POST['delete_user'])) {
     $user_id = mysqli_real_escape_string($link, $_POST['user_id']);
 
+    // Supprimer d'abord les enregistrements dans user_interet
+    $delete_interets = "DELETE FROM user_interet WHERE user_id = '$user_id'";
+    mysqli_query($link, $delete_interets);
+
+    // Supprimer les enregistrements dans user_abonnement
     $delete_abonnement = "DELETE FROM user_abonnement WHERE user_id = '$user_id'";
     mysqli_query($link, $delete_abonnement);
 
+    // Supprimer les enregistrements dans reservations
+    $delete_reservations = "DELETE FROM reservations WHERE user_id = '$user_id'";
+    mysqli_query($link, $delete_reservations);
+
+    // Enfin, supprimer l'utilisateur
     $delete_user = "DELETE FROM users WHERE id = '$user_id'";
     if (mysqli_query($link, $delete_user)) {
         $success_message = "Utilisateur supprimé avec succès !";
     } else {
-        $error_message = "Erreur lors de la suppression de l'utilisateur";
+        $error_message = "Erreur lors de la suppression de l'utilisateur : " . mysqli_error($link);
     }
 }
 

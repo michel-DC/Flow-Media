@@ -10,6 +10,7 @@ $activity_id = null;
 $activity_data = null;
 $success_message = null;
 $error_message = null;
+$current_interests = [];
 
 // Récupérer toutes les activités pour le select
 $query_all = "SELECT id, titre FROM all_activites ORDER BY titre ASC";
@@ -495,7 +496,7 @@ if (isset($_POST['update_activity'])) {
 
         <?php if (!is_null($activity_data)): ?>
             <div class="edit-activity-form-container">
-                <form action="dashboard.php#edit-activity-section" method="POST" enctype="multipart/form-data" class="form-section">
+                <form method="POST" action="dashboard.php#edit-activity-section" enctype="multipart/form-data">
                     <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activity_data['id']) ?>">
                     <input type="hidden" name="existing_image" value="<?= htmlspecialchars($activity_data['image']) ?>">
 

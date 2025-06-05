@@ -137,6 +137,24 @@ if (isset($_POST['ajt_activite'])) {
         border-radius: 3px;
     }
 
+    .add-activity-component .add-activity-container h1 span::before {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background-color: #FF3131;
+        border-radius: 3px;
+        animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+
     .add-activity-component .add-activity-form-container {
         background-color: #ffffff;
         border-radius: 30px;
@@ -318,7 +336,7 @@ if (isset($_POST['ajt_activite'])) {
                 <div class="message error"><?= $error ?></div>
             <?php endif; ?>
 
-            <form method="POST" enctype="multipart/form-data" class="form-section">
+            <form method="POST" action="dashboard.php#add-activity-section" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="titre">Titre</label>
                     <input type="text" id="titre" name="titre" required>

@@ -165,13 +165,11 @@ $result = mysqli_query($link, $query);
     }
 
 
-    .supp-activity-component .delete-button {
+    .supp-activity-component .select-button {
         display: block;
-        /* Make button take full width */
         width: 100%;
         padding: 10px 20px;
         background-color: #E53E3E;
-        /* Red color for delete */
         color: white;
         border: none;
         border-radius: 4px;
@@ -182,7 +180,7 @@ $result = mysqli_query($link, $query);
         text-align: center;
     }
 
-    .supp-activity-component .delete-button:hover {
+    .supp-activity-component .select-button:hover {
         background-color: #C53030;
         /* Darker red on hover */
     }
@@ -306,7 +304,7 @@ $result = mysqli_query($link, $query);
                         <div class="select-form">
                             <form method="POST" action="dashboard.php#supp-activity-section" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette activité ?');">
                                 <input type="hidden" name="activity_id" value="<?= htmlspecialchars($activite['id']) ?>">
-                                <button type="submit" class="select-button">Supprimer</button>
+                                <button type="submit" name="delete_activity" class="select-button">Supprimer</button>
                             </form>
                         </div>
                     </div>

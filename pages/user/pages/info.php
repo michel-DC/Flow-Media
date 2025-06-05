@@ -10,9 +10,9 @@ $query = "SELECT * FROM users WHERE id='$user_id'";
 $result = mysqli_query($link, $query);
 $user = mysqli_fetch_assoc($result);
 
-$abonnement_query = "SELECT a.* FROM abonnements a JOIN users u ON a.id = u.abonnement_id WHERE u.id = '$user_id'";
-$abonnement_result = mysqli_query($link, $abonnement_query);
-$abonnement = mysqli_fetch_assoc($abonnement_result);
+// $abonnement_query = "SELECT a.* FROM abonnements a JOIN users u ON a.id = u.abonnement_id WHERE u.id = '$user_id'";
+// $abonnement_result = mysqli_query($link, $abonnement_query);
+// $abonnement = mysqli_fetch_assoc($abonnement_result);
 
 if (isset($_POST['update_profile'])) {
     $fullname = mysqli_real_escape_string($link, $_POST['nom']);
@@ -29,16 +29,6 @@ if (isset($_POST['update_profile'])) {
 
     $delete_query = "DELETE FROM user_interet WHERE user_id = '$user_id'";
     mysqli_query($link, $delete_query);
-
-    if (isset($_POST['interests']) && !empty($_POST['interests'])) {
-        $selected_interests = $_POST['interests'];
-
-        foreach ($selected_interests as $interest_id) {
-            $interest_id = mysqli_real_escape_string($link, $interest_id);
-            $insert_query = "INSERT INTO user_interet (user_id, interet_id) VALUES ('$user_id', '$interest_id')";
-            mysqli_query($link, $insert_query);
-        }
-    }
 
     $update_query = "UPDATE users SET
             fullname='$fullname',
